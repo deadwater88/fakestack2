@@ -13,8 +13,8 @@ home_town       | string    |
 image_url       | string    |
 other_names     | string    | default: [], array
 favorite_quotes | text      | default: [], array
-firstName       | string    | not null, indexed
-lastName        | string    | not null, indexed
+first_name       | string    | not null, indexed
+last_name        | string    | not null, indexed
 
 
 ## Comments
