@@ -30,7 +30,8 @@
 
 **EditProfileContainer**
  - EditProfileForm
-  + Subforms
+  + Subforms1
+  + Subforms2
 
 **FriendsContainer**
  - FriendsContainer
@@ -49,5 +50,4 @@
 | "/profile/:userid/friends" | "FriendsContainer" |
 | "/profile/:userid/edit" | "EditProfileContainer" |
 | "/profile/:userid/edit/:profileprop" | "subform" |
-| "/home/ | "NewsFeedContainer" |
 | "/home/ | "NewsFeedContainer" |
