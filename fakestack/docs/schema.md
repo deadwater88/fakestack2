@@ -54,5 +54,6 @@ column name | data type | details
 id          | integer   | not null, primary key
 user_id     | integer   | not null, foreign key (references users), indexed
 type        | string    | not null, inclusion [Sports, Music, Books, TV Shows]
-image_url   | string    | not null
+image_url   | string    |
 title       | string    | not null
+link_url    | string    |

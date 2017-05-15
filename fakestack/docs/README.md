@@ -58,7 +58,7 @@ with limited details.
 
   ### Phase 3: Friending (1 days)
 
-    **Objective:** Friends can be requested, confirmed, added and viewed. Integrate viewing permissions to correspond only to friends.
+  **Objective:** Friends can be requested, confirmed, added and viewed. Integrate viewing permissions to correspond only to friends.
 
   ### Phase 4: Comments (1 days)
 
