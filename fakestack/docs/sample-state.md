@@ -2,23 +2,37 @@
   currentUser: {
     id: 1,
     email: "david.wong.cal@gmail.com"
-    image_url: "example.com/image123"
-  },
-  currentUserProfile: {
-    id: 1,
-    firstName: "David"
-    lastName: "Wong"
+    imageUrl: "example.com/image123"
     profile: {
-      workEducation:{},
-      places: {home_town: "Sacramento"},
-      contact: {},
-      relations: {},
-      details: {Biography: "I'm the best AROUND. Nothing's ever gonna keep me down",
-                Other Names: ["Dave", "Mr. Wong"]
-                Favorite Quotes: "Hey! What the Hell! That was my daughter's pediatrician!"
-    }
+      places: {homeTown: "Sacramento"},
+      details: {biography: "I'm the best AROUND. Nothing's ever gonna keep me down",
+                otherNames: ["Dave", "Mr. Wong"]
+                favoriteQuotes: "Hey! What the Hell! That was my daughter's pediatrician!"}
+      interests {
+        music: { 1: { id: 1,
+                    title: "Red Hot Chili Peppers",
+                    image_url: "example.com/image/rhc",
+                    link_url: "example.com/rhc"
+                    }
+                },
+
+        sports: {4: { id: 4,
+                      title: "Golden State Warriors",
+                      image_url: "example.com/image/gsw",
+                      link_url: "example.com/gsw"} },
+
+        tvShows: {6, {id: 6,
+                      title: "Happy Days",
+                      image_url: "example.com/image/hd",
+                      link_url: "example.com/hd"
+          }}
+      }
 
     }
+    friends: [1, 2, 123]
+    friendsRequest: [4, 7, 9]
+  }
+
   forms: {
     signUp: {errors: []},
     logIn: {errors: []},
@@ -35,54 +49,39 @@
     2:{
       id: 2
       author_id: 2
-      author_firstName: "Sam"
-      author_lastName: "Uncle"
-      tagged_users: [1,3,6]
+      tagged_users: [1, 3, 6]
       content: "This wasn't too hard"
     }
   }
 
-  Comments: {
+  comments: {
     1:{
       id: 1
-      author_firstName: "David"
-      author_lastName: "Wong"
-      author_id: 2
-      post_id: 1
+      authorId: 2
+      postId: 1
       content: "It wasn't too bad"
     }
     2:{
       id: 2
-      author_firstName: "Sam"
-      author_lastName: "Uncle"
-      author_id: 2
-      post_id: 1
+      authorId: 2
+      postId: 1
       content: "It wasn't too bad"
     }
   }
 
-  userFriends: {
+  relevantUsers: {
     1:{
       id: 1,
       firstName: "David"
       lastName: "Wong"
-      image_url: "example.com/image123"
+      imageUrl: "example.com/image123"
     }
     2:{
       id: 2
       firstName: "Rick"
       lastName: "Sanchez"
-      image_url: "example.com/image413"
+      imageUrl: "example.com/image413"
     }
-    123:{
-      id: 123
-      firstName: "Gerry"
-      lastName: "Goodwin"
-      image_url: "example.com/image123124"
-    }
-  }
-
-  viewedUserFriends: {
     123:{
       id: 123
       firstName: "Gerry"
@@ -102,14 +101,21 @@
     firstName: "Kate"
     lastName: "Winslet"
     profile: {
-      workEducation:{},
-      places: {},
-      contact: {},
-      relations: {},
-      details: {}
+      places: {homeTown: "New York City"},
+      details: {biography: "Great Actress. Really great in Eternal Sunshine",
+                otherNames: ["Katie", "Kat"],
+                favoriteQuotes: "I'm Flying."}
+      interests {
+        music: {...
+
+        }
+
+        sports: {...}
+
+        tvShows: {...}
+      }
 
     }
-
-
+    friends: [1, 2, 123]
   }
 }

@@ -12,31 +12,37 @@
 
 **NewsFeedContainer**
  - NewsFeed
-  + Side bar
-  + Posts
-    + Comments
-    + CommentForm
-
-**PostsContainer**
- - Posts
+  + PostFormContainer
+  + SideBar
+  + PostsIndexContainer
+    + PostsIndexItem
+    + CommentsIndexContainer
+      + CommentIndexItem
+    + CommentFormContainer
 
 **ProfileContainer**
- - NotebookHeader
-  + NoteIndex
+ - Profile
+  + ProfileDetails
+  + InterestsContainer
+  + PostFormContainer
+  + WallContainer
 
 **SearchContainer**
- - Searchform
+ - SearchForm
  - SearchList
 
 **EditProfileContainer**
  - EditProfileForm
-  + Subforms1
-  + Subforms2
+  + ProfileDetailsFormContainer
+    + PlacesForm
+    + DetailsForm
+  + InterestsFormContainer
 
-**FriendsContainer**
- - FriendsContainer
-
-
+**FriendsListContainer**
+ - FriendsListContainer
+  + FriendRequestsContainer
+    + FriendRequestsItem
+  + FriendListItem
 
 
 ## Routes
@@ -44,10 +50,9 @@
 |Path   | Component   |
 |-------|-------------|
 | "/root" | "AuthFormContainer" |
-| "/root" | "AuthFormContainer" |
-| "/root" | "HeaderNav" |
 | "/profile/:userid" | "ProfileContainer" |
-| "/profile/:userid/friends" | "FriendsContainer" |
+| "/profile/:userid/friends" | "FriendsListContainer" |
 | "/profile/:userid/edit" | "EditProfileContainer" |
-| "/profile/:userid/edit/:profileprop" | "subform" |
+| "/profile/:userid/edit/Places" | "PlacesForm" |
+| "/profile/:userid/edit/Details" | "DetailsForm" |
 | "/home/ | "NewsFeedContainer" |

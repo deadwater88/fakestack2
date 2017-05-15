@@ -10,19 +10,16 @@
 ### Users
 
 - `POST /api/users`
-- `PATCH /api/users`
+- `PATCH /api/users/:userId`
+- `GET /api/users/:userId`
+
+### relevantUsers
+- `GET /api/users/:userId/relevant_users`
 
 ### Session
 
 - `POST /api/session`
 - `DELETE /api/session`
-
-### Profiles (resource profiles)
-
-- `GET /api/users/:user_id/profile`
-- `POST /api/users/:user_id/profile`
-- `PATCH /api/users/:user_id/profile`
-- `DELETE /api/users/:user_id/profile`
 
 ### Comments
 - `GET /api/comments/:comment_id`
