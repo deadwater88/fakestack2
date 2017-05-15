@@ -13,58 +13,13 @@ session_token   | string    | not null, indexed, unique
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-biography   | text      | not null
+Biography   | text      | not null
 current_city| string    |
 user_id     | integer   | not null, foreign key (references users), indexed
 home_town   | string    |
 image_url   | string    |
-skills      | string    | default: [], array
 other_names | string    | default: [], array
-favorite_quotes | string| 
-
-## Places
-column name | data type | details
-------------|-----------|-----------------------
-id          | integer   | not null, primary key
-user_id     | string    | not null, foreign key (references users), indexed
-city        | string    | not null,
-country     | string    | not null,
-
-## Contact Information
-column name  | data type | details
--------------|-----------|-----------------------
-id           | integer   | not null, primary key
-user_id      | string    | not null, foreign key (references users), indexed
-Mobile Phones| string    | default: [], array
-country      | string    | not null,
-websites     | string    | default: [], array
-
-
-## Work_history
-column name | data type | details
-------------|-----------|-----------------------
-id          | integer   | not null, primary key
-Organization| string    | not null
-Position    | string    |
-user_id     | integer   | not null, foreign key (references users), indexed
-City/Town   | string    |
-Description | text      |
-Start Date  | Date      |
-End Date    | Date      |
-
-## Education_history
-column name | data type | details
-------------|-----------|-----------------------
-id          | integer   | not null, primary key
-School      | string    | not null
-Graduated   | Boolean   | default true
-user_id     | integer   | not null, foreign key (references users), indexed
-Type        | string    | high_school, college
-City/Town   | string    |
-Focus       | text      |
-Start Date  | Date      |
-End Date    | Date      |
-
+favorite_quotes | string|
 
 ## Comments
 column name | data type | details
@@ -96,3 +51,11 @@ column name | data type | details
 id          | integer   | not null, primary key
 author_id   | integer   | not null, foreign key (references users), indexed
 content     | text      | not null
+
+## Interests
+column name | data type | details
+------------|-----------|-----------------------
+id          | integer   | not null, primary key
+user_id     | integer   | not null, foreign key (references users), indexed
+Type        | string    | not null, inclusion [Sports, Music, Books, TV Shows]
+image_url   | string    | not null
