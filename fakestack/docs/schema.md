@@ -4,7 +4,6 @@
 column name     | data type | details
 ----------------|-----------|-----------------------
 id              | integer   | not null, primary key
-username        | string    | not null, indexed, unique
 email           | string    | not null, indexed, unique
 password_digest | string    | not null, indexed, unique
 session_token   | string    | not null, indexed, unique
@@ -14,6 +13,8 @@ home_town       | string    |
 image_url       | string    |
 other_names     | string    | default: [], array
 favorite_quotes | text      | default: [], array
+firstName       | string    | not null, indexed
+lastName        | string    | not null, indexed
 
 
 ## Comments
