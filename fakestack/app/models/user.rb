@@ -7,6 +7,8 @@ class User < ApplicationRecord
             presence: true
   validates :password, length: { minimum: 8, allow_nil: true }
 
+  validates_email_format_of :email, :message => 'Invalid Email Address'
+
   after_initialize :ensure_token
   attr_reader :password
 

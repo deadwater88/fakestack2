@@ -1,0 +1,170 @@
+
+div#logoutBar {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ align-items: center;
+ height: 100px;
+ background: linear-gradient(#4E69A2, #3B5998);
+ border-bottom: 1px solid black;
+}
+
+div#logoutBar td {
+ color: white;
+ padding-left: 14px;
+ height: 100%;
+}
+
+table#loginForm {
+ margin-right: 50px;
+}
+div#logoutBar input {
+ border: 1px solid black;
+ font-size: 14px;
+ padding: 5px;
+ padding-bottom: 4px;
+ background-color:#FAFFBD
+}
+
+
+div#logoutBar input:focus {
+ border: 1px solid #4982E4;
+}
+div#logoutBar input:click {
+ background-color: white;
+}
+
+label.loginSubmit {
+ display: flex;
+ align-items: center;
+ min-height: 100%;
+ height: auto !important;
+ height: 100%;
+ border: 1px solid #2C4C83;
+ border-radius: 3px;
+ padding: 0 10px 0 10px;
+ background-color: #4267B2
+}
+label.loginSubmit:hover{
+ background-color: #365899;
+ cursor: pointer;
+}
+
+div.logo {
+ flex-grow: unset;
+ margin-left: 40px;
+ height: 35;
+ width: 170;
+ background-color: orange;
+ font-size: 24;
+ font-family: "KlavikaLT";
+}
+
+div#welcome {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #E9EBEE;
+  height: 650px;
+}
+
+div#welcome h2 {
+  font-size: 36px;
+  width: 400px;
+  padding-top: 50px;
+  padding-bottom: 25px;
+}
+div#welcome h3 {
+  font-size: 19px;
+}
+
+form#signup {
+  display: flex;
+  flex-direction: column;
+}
+form#signup div {
+  display: flex;
+  margin: 6px;
+  margin-left: 0;
+
+}
+
+form#signup input {
+  padding: 8px;
+  flex-grow: 1;
+  margin-right: 12px;
+  border: 1px solid #BDC7D8;
+  border-radius: 5px;
+  font-size: 18px;
+  width: 175px;
+
+}
+
+
+
+div#welcome button {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  height: 39px;
+  min-width: 194px;
+  border: 1px solid #36641F;
+  background: linear-gradient(#64A852, #568742);
+  width: calc(50% - 16px);
+  box-shadow: inset 0 0 1px 1px #73AE5E;
+  border-radius: 5px;
+  text-shadow: 1px 1px 2px black
+}
+div#welcome button:hover {
+  filter: brightness(110%);
+  cursor: pointer;
+}
+
+div#createcontainer {
+  border-radius: 5px;
+  border: 1px solid #3B6E22;
+
+}
+
+div#features {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Freight Sans Bold', Helvetica, Arial, sans-serif !important;
+}
+
+div#features h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
+div#features {
+  width: 550px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px
+}
+
+.sub {
+  font-size: 14px;
+  color: #6E667C;
+  margin-left: 15px;
+  letter-spacing: 1px
+}
+
+.icon {
+  height: 50px;
+  width: 50px;
+  margin-right: 20px;
+}
+
+.feature {
+  margin-top:  20px;
+  padding-bottom: 10px;
+}
+
+div.feature {}

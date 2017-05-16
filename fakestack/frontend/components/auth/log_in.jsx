@@ -1,24 +1,29 @@
-import React from 'react'
+import React from 'react';
 
 class LogIn extends React.Component {
   constructor(props){
-    super(props)
-    this.state = {email: "", password: ""}
-    this.inputBackgroundColor = {}
-    this.updateValue = this.updateValue.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    super(props);
+    this.state = {email: "", password: ""};
+    this.inputBackgroundColor = {};
+    this.updateValue = this.updateValue.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemo = this.handleDemo.bind(this);
   }
 
   updateValue(attr){
     return (e)=>{
-      e.currentTarget.setAttribute("style", "background-color: white")
-      this.setState({[attr]:e.currentTarget.value})
-      console.log(this.state)
-    }
+      e.currentTarget.setAttribute("style", "background-color: white");
+      this.setState({[attr]:e.currentTarget.value});
+      console.log(this.state);
+    };
   }
 
   handleSubmit(e){
-    this.props.login({user: this.state })
+    this.props.login({user: this.state });
+  }
+
+  handleDemo(e){
+    this.props.login({user:{email: "dVader@theEmpire.com", password: "password"}});
   }
 
   render(){
@@ -48,13 +53,17 @@ class LogIn extends React.Component {
               <input onChange={this.updateValue("password")} name="password"/>
             </td>
             <td>
-              <label id="loginSubmit" onClick={this.handleSubmit}> Log In</label>
+              <label className="loginSubmit" onClick={this.handleSubmit}> Log In</label>
             </td>
+            <td>
+              <label id="demo" className="loginSubmit" onClick={this.handleDemo}> Demo </label>
+            </td>
+
           </tr>
         </tbody>
       </table>
-    </div>)
+    </div>);
   }
 }
 
-export default LogIn
+export default LogIn;

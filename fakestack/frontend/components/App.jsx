@@ -1,12 +1,15 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import {AuthRoute} from '../utils/route_util';
-import AuthFormContainer from './auth/auth_form_container'
-
+import { Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
+import {AuthRoute, ProtectedRoute} from '../utils/route_util';
+import AuthFormContainer from './auth/auth_form_container';
+import HeaderContainer from './header_nav/header_container';
 const App = () => (
   <div>
     <header>
-      <AuthFormContainer/>
+      <Switch>
+        <ProtectedRoute path="/home" component={HeaderContainer} > LoggedIn </ProtectedRoute>
+        <AuthRoute path="/" component={AuthFormContainer}></AuthRoute>
+      </Switch>
     </header>
   </div>
 );
