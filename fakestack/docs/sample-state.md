@@ -1,8 +1,11 @@
 {
+  notices: []
   currentUser: {
     id: 1,
     email: "david.wong.cal@gmail.com"
     imageUrl: "example.com/image123"
+    firstName: "David"
+    lastName: "Wong"
     profile: {
       places: {homeTown: "Sacramento"},
       details: {biography: "I'm the best AROUND. Nothing's ever gonna keep me down",
@@ -36,19 +39,28 @@
   forms: {
     signUp: {errors: []},
     logIn: {errors: []},
-    createNote: {errors: ["body can't be blank"]}
   },
 
   Posts: {
     1:{
       id: 1
-      author_id: 1
+      author: {
+        id: 1,
+        firstName: "David"
+        lastName: "Wong"
+        imageUrl: "example.com/image123"
+      }
       tagged_users: [2, 4, 5]
       content: "This requires a lot of planning"
     }
     2:{
       id: 2
-      author_id: 2
+      author:{
+        id: 2
+        firstName: "Rick"
+        lastName: "Sanchez"
+        imageUrl: "example.com/image413"
+      }
       tagged_users: [1, 3, 6]
       content: "This wasn't too hard"
     }
@@ -57,13 +69,23 @@
   comments: {
     1:{
       id: 1
-      authorId: 2
       postId: 1
       content: "It wasn't too bad"
+      author: {
+        id: 1,
+        firstName: "David"
+        lastName: "Wong"
+        imageUrl: "example.com/image123"
+      }
     }
     2:{
       id: 2
-      authorId: 2
+      author:{
+        id: 2
+        firstName: "Rick"
+        lastName: "Sanchez"
+        imageUrl: "example.com/image413"
+      }
       postId: 1
       content: "It wasn't too bad"
     }
