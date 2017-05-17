@@ -15,6 +15,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   font-size: 100%;
   font-family: inherit;
   vertical-align: baseline;
+  display: flex;
 }
 /* remember to define focus styles! */
 :focus {
@@ -23,7 +24,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 body {
   line-height: 1;
   color: black;
-  background: white;
+  background-color: #E9EBEE;
 }
 ol, ul {
   list-style: none;

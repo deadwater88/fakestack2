@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {FaSearch} from 'react-icons/lib/fa/';
 
 class NavSearchBar extends React.Component {
   constructor(props){
@@ -12,6 +12,9 @@ class NavSearchBar extends React.Component {
     return (
   <div id="NavSearchBar">
       <input type="text" placeholder="Search FakeStack" />
+      <button id="searchButton">
+        <FaSearch/>
+      </button>
   </div>);
   }
 

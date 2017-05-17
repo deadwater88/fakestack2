@@ -1,5 +1,5 @@
 
-div#logoutBar {
+#logoutBar {
  display: flex;
  flex-direction: row;
  justify-content: space-around;
@@ -10,7 +10,7 @@ div#logoutBar {
  width: 100%;
 }
 
-div#logoutBar td {
+#logoutBar td {
  color: white;
  padding-left: 14px;
  height: 100%;
@@ -19,7 +19,7 @@ div#logoutBar td {
 table#loginForm {
  margin-right: 50px;
 }
-div#logoutBar input {
+#logoutBar input {
  border: 1px solid black;
  font-size: 14px;
  padding: 5px;
@@ -28,10 +28,10 @@ div#logoutBar input {
 }
 
 
-div#logoutBar input:focus {
+#logoutBar input:focus {
  border: 1px solid #4982E4;
 }
-div#logoutBar input:click {
+#logoutBar input:click {
  background-color: white;
 }
 

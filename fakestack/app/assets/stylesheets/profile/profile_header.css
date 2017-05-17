@@ -1,0 +1,25 @@
+#profileHeader {
+  margin: 0 auto;
+  min-width: 850px;
+  max-height: 360px;
+  background-color: blue;
+  flex-direction: column;
+}
+
+
+#coverImg {
+  height: 315px;
+  width: inherit;
+}
+
+#profileNav {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+#profileNav a {
+  height: 45px;
+  text-align: center;
+  align-content: center;
+}

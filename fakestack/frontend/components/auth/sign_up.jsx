@@ -79,7 +79,7 @@ class SignUp extends React.Component {
         </div>
         {this.secondEmailcomponent()}
         <div>
-          <input onChange={this.updateValue("password")} type="text" placeholder={"New Password"} value= {this.state.password}/>
+          <input onChange={this.updateValue("password")} type="password" placeholder={"New Password"} value= {this.state.password}/>
         </div>
             <button onClick={this.handleSubmit}> Create Account </button>
         </form>
