@@ -13652,7 +13652,6 @@ var LogIn = function (_React$Component) {
       return function (e) {
         e.currentTarget.setAttribute("style", "background-color: white");
         _this2.setState(_defineProperty({}, attr, e.currentTarget.value));
-        console.log(_this2.state);
       };
     }
   }, {
@@ -14002,7 +14001,8 @@ var HeaderNav = function (_React$Component) {
 
   _createClass(HeaderNav, [{
     key: 'handleClick',
-    value: function handleClick() {
+    value: function handleClick(e) {
+      e.preventDefault;
       this.props.logout();
     }
   }, {
@@ -14039,12 +14039,7 @@ var HeaderNav = function (_React$Component) {
               'Home'
             )
           ),
-          _react2.default.createElement(
-            _fa.FaUsers,
-            null,
-            _react2.default.createElement(Friend, { Requests: true })
-          ),
-          _react2.default.createElement(_fa.CommentsO, null)
+          _react2.default.createElement(_fa.FaGroup, null)
         ),
         _react2.default.createElement(
           'button',

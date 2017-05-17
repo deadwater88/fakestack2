@@ -14,7 +14,6 @@ class LogIn extends React.Component {
     return (e)=>{
       e.currentTarget.setAttribute("style", "background-color: white");
       this.setState({[attr]:e.currentTarget.value});
-      console.log(this.state);
     };
   }
 
@@ -26,7 +25,7 @@ class LogIn extends React.Component {
     this.props.login({user:{email: "dVader@theEmpire.com", password: "password"}});
   }
 
-  
+
 
   render(){
 

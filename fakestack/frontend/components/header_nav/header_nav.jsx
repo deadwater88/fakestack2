@@ -1,5 +1,5 @@
 import React from 'react';
-import {FaFacebookSquare, FaUsers, CommentsO} from 'react-icons/lib/fa/';
+import {FaFacebookSquare, FaGroup, FaCommentsO} from 'react-icons/lib/fa/';
 import NavSearchBar from './nav_search_bar';
 
 class HeaderNav extends React.Component {
@@ -8,7 +8,8 @@ class HeaderNav extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault;
     this.props.logout();
   }
 
@@ -30,11 +31,7 @@ class HeaderNav extends React.Component {
               Home
             </div>
           </div>
-          <FaUsers>
-            <Friend Requests/>
-          </FaUsers>
-          <CommentsO>
-          </CommentsO>
+          <FaGroup/>
         </div>
 
         <button onClick={this.handleClick}>Log Out</button>
