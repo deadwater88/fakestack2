@@ -5,20 +5,32 @@ import {FaNewspaperO, FaUser, FaMusic} from 'react-icons/lib/fa/';
 class SignUp extends React.Component {
   constructor(props){
     super(props);
-    this.state = {email: "", firstName: "", lastName: "", password: ""};
+    this.state = {email: "", first_name: "", last_name: "", password: "", email2:""};
     this.updateValue = this.updateValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.featureslist = this.featureslist.bind(this);
+    this.email2 = "";
+    this.showsecondemail = false;
+    this.secondEmailcomponent = this.secondEmailcomponent.bind(this);
   }
 
   updateValue(attr){
     return (e)=>{
+      this.revealEmail2();
       this.setState({[attr]:e.currentTarget.value}, ()=>console.log(this.state));
     };
   }
 
+  revealEmail2(){
+    let re = /@.+\..+/;
+    if (this.state.email.match(re)) {
+      this.showsecondemail = true;
+    }
+  }
+
   handleSubmit(e){
-    this.props.signup({user: this.state });
+    const {email, first_name, last_name, password} = this.state;
+    this.props.signup({user: {email, first_name, last_name, password} });
   }
 
   featureslist(){
@@ -43,9 +55,12 @@ class SignUp extends React.Component {
     </div>);
   }
 
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+
+  secondEmailcomponent() {
+    const email2 = (<div>
+      <input onChange={this.updateValue("email2")} type="text" placeholder={"Re-enter email"} value= {this.state.email2}/>
+    </div>);
+    return this.showsecondemail ? email2 : "";
   }
 
   render(){
@@ -57,17 +72,18 @@ class SignUp extends React.Component {
         <h2>Welcome!</h2>
         <h3>It's free... for now...</h3>
         <div>
-          <input onChange={this.updateValue("firstName")} type="text" placeholder={"First Name"} value= {this.state.firstName}/>
-          <input onChange={this.updateValue("lastName")} type="text" placeholder={"Last Name"} value= {this.state.lastName}/>
+          <input onChange={this.updateValue("first_name")} type="text" placeholder={"First Name"} value= {this.state.firstName}/>
+          <input onChange={this.updateValue("last_name")} type="text" placeholder={"Last Name"} value= {this.state.lastName}/>
         </div>
         <div>
           <input onChange={this.updateValue("email")} type="text" placeholder={"Email"} value= {this.state.email}/>
         </div>
+        {this.secondEmailcomponent()}
         <div>
           <input onChange={this.updateValue("password")} type="text" placeholder={"New Password"} value= {this.state.password}/>
         </div>
             <button onClick={this.handleSubmit}> Create Account </button>
-          </form>
+        </form>
     </div>);
   }
 }

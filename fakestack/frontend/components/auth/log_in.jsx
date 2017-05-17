@@ -26,11 +26,13 @@ class LogIn extends React.Component {
     this.props.login({user:{email: "dVader@theEmpire.com", password: "password"}});
   }
 
+  
+
   render(){
 
     return (<div id="logoutBar">
       <div className="logo">
-        Facebook
+        fakestack
       </div>
       <table id="loginForm">
         <tbody>
