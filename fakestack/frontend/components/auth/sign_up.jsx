@@ -16,13 +16,12 @@ class SignUp extends React.Component {
 
   updateValue(attr){
     return (e)=>{
-      this.revealEmail2();
-      this.setState({[attr]:e.currentTarget.value}, ()=>console.log(this.state));
+      this.setState({[attr]:e.currentTarget.value}, this.revealEmail2);
     };
   }
 
   revealEmail2(){
-    let re = /@.+\..+/;
+    let re = /@.+\./;
     if (this.state.email.match(re)) {
       this.showsecondemail = true;
     }
@@ -30,7 +29,7 @@ class SignUp extends React.Component {
 
   handleSubmit(e){
     const {email, first_name, last_name, password} = this.state;
-    this.props.signup({user: {email, first_name, last_name, password} });
+    this.props.signup({email, first_name, last_name, password});
   }
 
   featureslist(){

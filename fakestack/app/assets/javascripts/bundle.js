@@ -13802,16 +13802,13 @@ var SignUp = function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        _this2.revealEmail2();
-        _this2.setState(_defineProperty({}, attr, e.currentTarget.value), function () {
-          return console.log(_this2.state);
-        });
+        _this2.setState(_defineProperty({}, attr, e.currentTarget.value), _this2.revealEmail2);
       };
     }
   }, {
     key: 'revealEmail2',
     value: function revealEmail2() {
-      var re = /@.+\..+/;
+      var re = /@.+\./;
       if (this.state.email.match(re)) {
         this.showsecondemail = true;
       }
@@ -13825,7 +13822,7 @@ var SignUp = function (_React$Component) {
           last_name = _state.last_name,
           password = _state.password;
 
-      this.props.signup({ user: { email: email, first_name: first_name, last_name: last_name, password: password } });
+      this.props.signup({ email: email, first_name: first_name, last_name: last_name, password: password });
     }
   }, {
     key: 'featureslist',
@@ -13977,6 +13974,12 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _fa = __webpack_require__(653);
+
+var _nav_search_bar = __webpack_require__(1008);
+
+var _nav_search_bar2 = _interopRequireDefault(_nav_search_bar);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14006,9 +14009,48 @@ var HeaderNav = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'button',
-        { onClick: this.handleClick },
-        'Log Out'
+        'div',
+        { id: 'headerNav' },
+        _react2.default.createElement(_fa.FaFacebookSquare, null),
+        _react2.default.createElement(_nav_search_bar2.default, null),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'a',
+              null,
+              _react2.default.createElement(
+                'div',
+                null,
+                'Profile Image'
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'Name'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              'Home'
+            )
+          ),
+          _react2.default.createElement(
+            _fa.FaUsers,
+            null,
+            _react2.default.createElement(Friend, { Requests: true })
+          ),
+          _react2.default.createElement(_fa.CommentsO, null)
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.handleClick },
+          'Log Out'
+        )
       );
     }
   }]);
@@ -59439,6 +59481,57 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 1008 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NavSearchBar = function (_React$Component) {
+  _inherits(NavSearchBar, _React$Component);
+
+  function NavSearchBar(props) {
+    _classCallCheck(this, NavSearchBar);
+
+    return _possibleConstructorReturn(this, (NavSearchBar.__proto__ || Object.getPrototypeOf(NavSearchBar)).call(this, props));
+  }
+
+  _createClass(NavSearchBar, [{
+    key: "render",
+    value: function render() {
+
+      return _react2.default.createElement(
+        "div",
+        { id: "NavSearchBar" },
+        _react2.default.createElement("input", { type: "text", placeholder: "Search FakeStack" })
+      );
+    }
+  }]);
+
+  return NavSearchBar;
+}(_react2.default.Component);
+
+exports.default = NavSearchBar;
 
 /***/ })
 /******/ ]);

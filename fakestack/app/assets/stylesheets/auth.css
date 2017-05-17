@@ -2,7 +2,7 @@
 div#logoutBar {
  display: flex;
  flex-direction: row;
- justify-content: space-between;
+ justify-content: space-around;
  align-items: center;
  height: 80px;
  background: linear-gradient(#4E69A2, #3B5998);
@@ -123,6 +123,10 @@ div#welcome button {
 div#welcome button:hover {
   filter: brightness(110%);
   cursor: pointer;
+}
+
+div#welcome button:active {
+  margin-top: 12px;
 }
 
 div#createcontainer {
