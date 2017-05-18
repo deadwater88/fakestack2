@@ -14,3 +14,12 @@
  *= require_self
  *=
  */
+
+
+button, a {
+   display: flex;
+ }
+
+ button:hover, a:hover {
+   background-color: #E9EBEE;
+ }

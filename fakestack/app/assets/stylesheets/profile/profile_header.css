@@ -1,4 +1,10 @@
+#profilePage {
+  display: flex;
+  flex-direction: column;
+}
+
 #profileHeader {
+  display: flex;
   margin: 0 auto;
   min-width: 850px;
   height: 360px;
@@ -32,18 +38,21 @@
 
 #coverImg {
   height: 315px;
-  width: inherit;
+  width: 850px;
 }
 
 #profileNav {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: stretch;
   background-color: white;
   border: 1px solid #D3D6DB;
+  flex-grow: 1;
+  align-items: stretch;
 }
 
 #profileNav a {
+  display: flex;
   text-align: center;
   align-items: center;
   text-decoration: none;
@@ -64,6 +73,7 @@
 }
 
 #headerButton {
+  display: flex;
   position: absolute;
   right: 20px;
   bottom: 65px;

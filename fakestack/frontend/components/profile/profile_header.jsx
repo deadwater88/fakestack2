@@ -27,10 +27,10 @@ class ProfileHeader extends React.Component {
               <FaChevronDown/>
             </Link>
           </div>
-          <a id="headerButton">
+          <button id="headerButton">
             <FaPencil/>
             Edit Profile
-          </a>
+          </button>
         </div>
     );
   }

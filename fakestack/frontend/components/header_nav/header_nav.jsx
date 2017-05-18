@@ -20,14 +20,14 @@ class HeaderNav extends React.Component {
   render(){
     const {firstName, lastName} = this.props.currentUser;
     return (
-      <div>
-      <div id="headerNavContent"></div>
-      <div id="headerNav">
+      <div id="headerMaster">
+        <div id="headerNavContent"></div>
+        <div id="headerNav">
           <div id="searchContainer">
             <FaFacebookOfficial className="white"/>
             <NavSearchBar/>
           </div>
-          <div id="headerNavMenu">
+            <div id="headerNavMenu">
             <div id="menu1">
               <Link to='/profile' id={"profilelink"}>
                 <img src="http://www.starwarshelmets.com/2007/ANH_HD_vader04.jpg"/>
@@ -47,7 +47,7 @@ class HeaderNav extends React.Component {
           </div>
 
           <button onClick={this.handleClick}>Log Out</button>
-          </div>
+        </div>
       </div>);
   }
 }

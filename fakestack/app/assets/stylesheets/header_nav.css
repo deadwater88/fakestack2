@@ -1,4 +1,7 @@
-
+div#headerMaster {
+  display: flex;
+  flex-direction: column;
+}
 
 div#headerNav {
   display: flex;
@@ -9,11 +12,11 @@ div#headerNav {
   justify-content: space-around;
   width: 100vw;
   min-width: 800px;
-  position: fixed;
+  position: Fixed;
 }
 
 #headerNavContent {
-  height: 40px;
+  height: 42px;
 }
 
 div#headerNav * {
@@ -66,6 +69,8 @@ div#NavSearchBar svg {
   fill: black;
 }
 
+
+
 div#NavSearchBar {
   align-items: center;
   margin-left: 5px;
@@ -113,11 +118,15 @@ div#menu1 a:hover {
   background-color: #355089;
 }
 
-div#menu2 svg, div#menu3 svg {
+div#headerNavMenu svg {
   height: 23px;
   width: 23px;
   fill: black;
   margin-right: 15px;
+}
+
+div#headerNavMenu svg:hover {
+  fill: white;
 }
 
 
@@ -129,4 +138,5 @@ div#menu2 svg, div#menu3 svg {
 div#headerNavMenu {
   display: flex;
   justify-content: space-around;
+  margin-left: 20px;
 }

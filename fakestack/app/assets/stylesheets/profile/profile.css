@@ -1,10 +1,88 @@
 #profilePage {
-  height: 100vh;
-  width: 100vw;
   flex-direction: column;
   align-items: center;
 }
 
+
+
+#profilePage * {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#profilePage h5 {
+  font-size: 12px;
+}
+
 #panelContainer {
-  
+  display: flex;
+  width: 850px;
+  justify-content: center;
+  min-width: 850px;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+
+#panelContainer div {
+  background-color: #FFFFFF;
+}
+
+.left {
+  flex-grow: 1.2;
+  margin-right: 15px;
+
+}
+
+.right {
+  flex-grow: 2;
+}
+
+div.Panel {
+  border: 1px solid #D3D6DB;
+  background-color: none;
+}
+
+section.intro {
+  border-bottom: 1px solid #E9EBEE;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0 10px 0;
+}
+
+h1.intro {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+section.intro h5 {
+  align-self: center;
+}
+
+ul#profileDetails {
+  padding: 5px 0 5px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+li.profileDetail {
+  display: flex;
+  font-size: 12px;
+  padding: 2px 0 2px 0;
+  flex-direction:
+}
+
+
+
+svg#circle {
+  fill: #4267B2;
+  height: 28px;
+  width: 28px;
+}
+
+svg#globe {
+  fill: white;
+  background-color: #4267B2;
+  z-index: 1;
+  position: relative;
+  left: -22px;
 }
