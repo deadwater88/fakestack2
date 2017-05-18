@@ -15,7 +15,6 @@ class NewsFeed extends React.Component{
   render(){
     return (
     <div id="newsfeedpage">
-      <HeaderContainer/>
       <div id="mainNewsFeed">
         <div>
           SideBar

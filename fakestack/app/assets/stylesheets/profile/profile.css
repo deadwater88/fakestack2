@@ -1,4 +1,10 @@
 #profilePage {
   height: 100vh;
   width: 100vw;
+  flex-direction: column;
+  align-items: center;
+}
+
+#panelContainer {
+  
 }

@@ -8,11 +8,16 @@ import ProfileContainer from './profile/profile_container';
 
 
 const App = () => (
+  <div>
+    <header>
+      <ProtectedRoute path="/" component={HeaderContainer} > LoggedIn </ProtectedRoute>
+    </header>
     <Switch>
       <ProtectedRoute path="/home" component={NewsFeed} > LoggedIn </ProtectedRoute>
       <ProtectedRoute path="/profile" component={ProfileContainer} >  </ProtectedRoute>
       <AuthRoute path="/" component={AuthFormContainer}></AuthRoute>
     </Switch>
+  </div>
 );
 
 export default App;

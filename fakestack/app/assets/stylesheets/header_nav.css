@@ -9,6 +9,11 @@ div#headerNav {
   justify-content: space-around;
   width: 100vw;
   min-width: 800px;
+  position: fixed;
+}
+
+#headerNavContent {
+  height: 40px;
 }
 
 div#headerNav * {
@@ -26,7 +31,7 @@ div#headerNav input {
   height: 22px;
   padding-left: 8px;
   min-width: 250px;
-  width: 70%;
+  width: 100%;
   border-radius: 2px 0 0 2px;
   color: black;
 }
@@ -71,14 +76,13 @@ div#NavSearchBar {
 }
 
 div#headerNavSub {
-  align-self: center;
   min-width: 1020px;
   justify-content: space-between;
 }
 
 #searchContainer {
   align-self: center;
-
+  padding-left: 50px;
 }
 
 div#menu1 {

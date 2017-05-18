@@ -16381,19 +16381,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var App = function App() {
   return _react2.default.createElement(
-    _reactRouterDom.Switch,
+    'div',
     null,
     _react2.default.createElement(
-      _route_util.ProtectedRoute,
-      { path: '/home', component: _newsfeed2.default },
-      ' LoggedIn '
+      'header',
+      null,
+      _react2.default.createElement(
+        _route_util.ProtectedRoute,
+        { path: '/', component: _header_container2.default },
+        ' LoggedIn '
+      )
     ),
     _react2.default.createElement(
-      _route_util.ProtectedRoute,
-      { path: '/profile', component: _profile_container2.default },
-      '  '
-    ),
-    _react2.default.createElement(_route_util.AuthRoute, { path: '/', component: _auth_form_container2.default })
+      _reactRouterDom.Switch,
+      null,
+      _react2.default.createElement(
+        _route_util.ProtectedRoute,
+        { path: '/home', component: _newsfeed2.default },
+        ' LoggedIn '
+      ),
+      _react2.default.createElement(
+        _route_util.ProtectedRoute,
+        { path: '/profile', component: _profile_container2.default },
+        '  '
+      ),
+      _react2.default.createElement(_route_util.AuthRoute, { path: '/', component: _auth_form_container2.default })
+    )
   );
 };
 
@@ -17224,53 +17237,58 @@ var HeaderNav = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { id: 'headerNav' },
+        null,
+        _react2.default.createElement('div', { id: 'headerNavContent' }),
         _react2.default.createElement(
           'div',
-          { id: 'searchContainer' },
-          _react2.default.createElement(_fa.FaFacebookOfficial, { className: 'white' }),
-          _react2.default.createElement(_nav_search_bar2.default, null)
-        ),
-        _react2.default.createElement(
-          'div',
-          { id: 'headerNavMenu' },
+          { id: 'headerNav' },
           _react2.default.createElement(
             'div',
-            { id: 'menu1' },
+            { id: 'searchContainer' },
+            _react2.default.createElement(_fa.FaFacebookOfficial, { className: 'white' }),
+            _react2.default.createElement(_nav_search_bar2.default, null)
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'headerNavMenu' },
             _react2.default.createElement(
-              _reactRouterDom.Link,
-              { to: '/profile', id: "profilelink" },
-              _react2.default.createElement('img', { src: 'http://www.starwarshelmets.com/2007/ANH_HD_vader04.jpg' }),
+              'div',
+              { id: 'menu1' },
               _react2.default.createElement(
-                'h3',
-                { className: 'firstName' },
-                firstName
+                _reactRouterDom.Link,
+                { to: '/profile', id: "profilelink" },
+                _react2.default.createElement('img', { src: 'http://www.starwarshelmets.com/2007/ANH_HD_vader04.jpg' }),
+                _react2.default.createElement(
+                  'h3',
+                  { className: 'firstName' },
+                  firstName
+                )
+              ),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/home' },
+                'Home'
               )
             ),
             _react2.default.createElement(
-              _reactRouterDom.Link,
-              { to: '/home' },
-              'Home'
+              'div',
+              { id: 'menu2' },
+              _react2.default.createElement(_fa.FaGroup, { className: 'icon' }),
+              _react2.default.createElement(_fa.FaCommentsO, { className: 'icon' }),
+              _react2.default.createElement(_fa.FaGlobe, { className: 'icon' })
+            ),
+            _react2.default.createElement(
+              'div',
+              { id: 'menu3' },
+              _react2.default.createElement(_fa.FaQuestionCircle, { className: 'icon' }),
+              _react2.default.createElement(_fa.FaChevronDown, { className: 'icon' })
             )
           ),
           _react2.default.createElement(
-            'div',
-            { id: 'menu2' },
-            _react2.default.createElement(_fa.FaGroup, { className: 'icon' }),
-            _react2.default.createElement(_fa.FaCommentsO, { className: 'icon' }),
-            _react2.default.createElement(_fa.FaGlobe, { className: 'icon' })
-          ),
-          _react2.default.createElement(
-            'div',
-            { id: 'menu3' },
-            _react2.default.createElement(_fa.FaQuestionCircle, { className: 'icon' }),
-            _react2.default.createElement(_fa.FaChevronDown, { className: 'icon' })
+            'button',
+            { onClick: this.handleClick },
+            'Log Out'
           )
-        ),
-        _react2.default.createElement(
-          'button',
-          { onClick: this.handleClick },
-          'Log Out'
         )
       );
     }
@@ -60517,7 +60535,6 @@ var NewsFeed = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'newsfeedpage' },
-        _react2.default.createElement(_header_container2.default, null),
         _react2.default.createElement(
           'div',
           { id: 'mainNewsFeed' },
@@ -60604,6 +60621,10 @@ var _profile_header = __webpack_require__(1018);
 
 var _profile_header2 = _interopRequireDefault(_profile_header);
 
+var _header_container = __webpack_require__(154);
+
+var _header_container2 = _interopRequireDefault(_header_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60628,7 +60649,21 @@ var Profile = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'profilePage' },
-        _react2.default.createElement(_profile_header2.default, null)
+        _react2.default.createElement(_profile_header2.default, null),
+        _react2.default.createElement(
+          'div',
+          { id: 'panelContainer' },
+          _react2.default.createElement(
+            'div',
+            { id: 'leftPanel' },
+            'LeftPanel'
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'rightPanel' },
+            'RightPanel'
+          )
+        )
       );
     }
   }]);
@@ -60657,6 +60692,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(78);
 
+var _fa = __webpack_require__(76);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60674,6 +60711,7 @@ var ProfileHeader = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ProfileHeader.__proto__ || Object.getPrototypeOf(ProfileHeader)).call(this, props));
 
     _this.testimage = "https://lumiere-a.akamaihd.net/v1/images/Death-Star-II_b5760154.jpeg?region=0%2C68%2C2160%2C1080";
+    _this.headShot = "https://assets3.thrillist.com/v1/image/1165873/size/tmg-article_default_mobile;jpeg_quality=20.jpg";
     return _this;
   }
 
@@ -60683,6 +60721,12 @@ var ProfileHeader = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'profileHeader' },
+        _react2.default.createElement(
+          'a',
+          { id: 'profileImg' },
+          _react2.default.createElement('img', { src: this.headShot })
+        ),
+        _react2.default.createElement('div', { className: 'shadow' }),
         _react2.default.createElement('img', { src: this.testimage, id: 'coverImg' }),
         _react2.default.createElement(
           'div',
@@ -60710,8 +60754,15 @@ var ProfileHeader = function (_React$Component) {
           _react2.default.createElement(
             _reactRouterDom.Link,
             { to: 'More' },
-            ' More '
+            ' More',
+            _react2.default.createElement(_fa.FaChevronDown, null)
           )
+        ),
+        _react2.default.createElement(
+          'a',
+          { id: 'headerButton' },
+          _react2.default.createElement(_fa.FaPencil, null),
+          'Edit Profile'
         )
       );
     }

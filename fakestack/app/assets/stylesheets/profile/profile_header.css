@@ -1,11 +1,34 @@
 #profileHeader {
   margin: 0 auto;
   min-width: 850px;
-  max-height: 360px;
-  background-color: blue;
+  height: 360px;
+  background-color: gray;
   flex-direction: column;
+  position: relative;
 }
 
+#profileHeader * {
+  color: #365899;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#profileImg {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  border: 1px solid #B3B3B3;
+  border-radius: 3px;
+}
+
+#profileImg img {
+  height: 168px;
+  width: 168px;
+  border: 4px solid white;
+}
+
+#headerButtonsContainer {
+
+}
 
 #coverImg {
   height: 315px;
@@ -15,11 +38,56 @@
 #profileNav {
   flex-grow: 1;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
+  background-color: white;
+  border: 1px solid #D3D6DB;
 }
 
 #profileNav a {
-  height: 45px;
   text-align: center;
-  align-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #365899;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 0 17px 0 17px;
+  border-right: 1px solid #D3D6DB;
+}
+
+#profileNav a:first-child {
+  border-left: 1px solid #D3D6DB;
+}
+
+#profileNav svg {
+  margin-left: 3px;
+
+}
+
+#headerButton {
+  position: absolute;
+  right: 20px;
+  bottom: 65px;
+  background-color: #F6F7F9;
+  width: auto;
+  height: 26px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #4B4F56;
+  padding: 0 10px 0 10px;
+  border: 1px solid black;
+  border-radius: 1px;
+}
+
+#headerButton:hover {
+  background-color: #E9EBEE;
+  cursor: pointer;
+}
+
+#headerButton:active {
+  box-shadow: 0 0 3px 3px #5275BB;
+}
+
+#headerButton svg {
+  margin-right: 5px;
 }

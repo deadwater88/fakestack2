@@ -20,6 +20,8 @@ class HeaderNav extends React.Component {
   render(){
     const {firstName, lastName} = this.props.currentUser;
     return (
+      <div>
+      <div id="headerNavContent"></div>
       <div id="headerNav">
           <div id="searchContainer">
             <FaFacebookOfficial className="white"/>
@@ -45,6 +47,7 @@ class HeaderNav extends React.Component {
           </div>
 
           <button onClick={this.handleClick}>Log Out</button>
+          </div>
       </div>);
   }
 }
