@@ -19,11 +19,11 @@ class ProfileHeader extends React.Component {
           <div className="shadow"></div>
           <img src={this.testimage} id="coverImg"/>
           <div id="profileNav">
-            <Link to="/"> Timeline </Link>
-            <Link to="About"> About </Link>
-            <Link to="Friends"> Friends </Link>
-            <Link to="Photos"> Photos </Link>
-            <Link to="More"> More
+            <Link to="/profile/Timeline"> Timeline </Link>
+            <Link to="/profile/About"> About </Link>
+            <Link to="/profile/Friends"> Friends </Link>
+            <Link to="/profile/Photos"> Photos </Link>
+            <Link to="/profile/More"> More
               <FaChevronDown/>
             </Link>
           </div>

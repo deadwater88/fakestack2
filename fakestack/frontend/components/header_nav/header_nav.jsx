@@ -6,10 +6,11 @@ import {Link, Redirect, withRouter} from 'react-router-dom';
 class HeaderNav extends React.Component {
   constructor(props){
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
+
   }
 
-  handleClick(e) {
+  handleLogOut(e) {
     e.preventDefault;
     this.props.logout();
   }
@@ -43,10 +44,11 @@ class HeaderNav extends React.Component {
             <div id="menu3">
               <FaQuestionCircle className="icon"/>
               <FaChevronDown className="icon"/>
+              <ul className="dropDown">
+                <a onClick={this.handleLogOut}>Log Out</a>
+              </ul>
             </div>
           </div>
-
-          <button onClick={this.handleClick}>Log Out</button>
         </div>
       </div>);
   }

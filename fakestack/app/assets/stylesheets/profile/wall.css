@@ -1,0 +1,105 @@
+
+#PostForm {
+  border: inherit;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+#PostForm > div {
+  border-bottom: 1px solid #D3D6DB;
+}
+
+#PostForm:last-child {
+  border-bottom: none;
+}
+
+div#formNav {
+  display: flex;
+  flex-direction: row;
+  background-color: #F6F7F9;
+}
+
+#formNav a {
+  margin:  8px 0 8px 0;
+  padding: 1px 7px 1px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #365899;
+  border-right: 1px solid #D3D6DB;
+  align-items: center;
+
+}
+
+#formNav a:hover{
+  cursor: pointer;
+  background-color: #F6F7F9;
+
+}
+
+#formNav a svg {
+  margin-right: 5px;
+  height: 16px;
+  width: 16px;
+}
+
+#postFormInput {
+  display: flex;
+  align-items: center;
+}
+
+#postFormInput input {
+  border: none;
+  font-size: 24px;
+  padding: 15px 10px 30px 10px;
+}
+
+.profileThumb {
+  height: 40px;
+  width: 40px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+div#pfButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  border-bottom-width: 0px;
+}
+
+.submitPost {
+  margin: 10px;
+  padding: 5px 15px 5px 15px;
+  border-style: none;
+  border-radius: 3px;
+  background-color: #4267B2;
+  font-weight: bold;
+  color: white;
+}
+
+.submitPost:hover {
+  background-color: #355089;
+  cursor: pointer;
+}
+
+.submitPost:active {
+  box-shadow: 0 0 2px 2px #A0B8E7;
+}
+
+#postOptions {
+  display: flex;
+  align-items: center;
+  border-bottom: none;;
+}
+
+#postOptions svg {
+  fill: gray;
+  height: 16px;
+  width: 16px;
+  margin-right: 12px;
+  margin-left: 12px;
+}
+#postOptions svg:hover{
+  cursor: pointer;
+}

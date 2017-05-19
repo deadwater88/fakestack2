@@ -13,19 +13,19 @@ div#headerNav {
   width: 100vw;
   min-width: 800px;
   position: Fixed;
+  z-index: 3;
 }
 
 #headerNavContent {
   height: 42px;
 }
 
-div#headerNav * {
+div#headerNav  * {
   display: flex;
-  border-radius: 3px;
   align-items: center;
-  color: white;
   font-family: Helvetica, Arial, sans-serif;
 }
+
 
 div#headerNav input {
   border: none;
@@ -129,10 +129,18 @@ div#headerNavMenu svg:hover {
   fill: white;
 }
 
+div#menu1 a {
+  color: white;
+}
+
 
 
 #menu2 {
   margin-right: 25px;
+}
+
+#menu3 {
+  position: relative;
 }
 
 div#headerNavMenu {

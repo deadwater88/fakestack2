@@ -1,11 +1,12 @@
-import NewsFeed from "./newsfeed";
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
-import Profile from './profile';
+import Wall from './wall';
+import {selectCurrentUserComments} from '../../utils/selectors';
 
 
 const mapStateToProps = (state) =>({
-  currentUser: state.currentUser
+  currentUser: state.currentUser,
+  comments: selectCurrentUserComments(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -13,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps,
-               mapDispatchToProps)(NewsFeed);
+               mapDispatchToProps)(Wall);

@@ -1,7 +1,10 @@
 import React from 'react';
 import ProfileHeader from './profile_header';
 import HeaderContainer from '../header_nav/header_container';
-import {FaGlobe, FaCircle} from 'react-icons/lib/fa/';
+import ProfileDetailsContainer from './profile_details_container';
+import WallContainer from './wall_container';
+
+
 class Profile extends React.Component{
   constructor(props){
       super(props);
@@ -14,25 +17,11 @@ class Profile extends React.Component{
         <ProfileHeader/>
          <div id="panelContainer">
            <div className="left Panel">
-             <section className="intro">
-               <h1 className="intro">
-
-                 <div id="circleIcon">
-                   <FaCircle id="circle">
-                   </FaCircle>
-                   <FaGlobe id="globe"/>
-                 </div>
-                 Introduction
-               </h1>
-              <h5>Test Introduction</h5>
-             </section>
-             <ul id="profileDetails">
-               <li className= "profileDetail"> <FaGlobe/> Test Profile Detail</li>
-             </ul>
+             <ProfileDetailsContainer/>
            </div>
-           <div className="right Panel">
+           <WallContainer >
              RightPanel
-           </div>
+           </WallContainer>
         </div>
       </div>
     );

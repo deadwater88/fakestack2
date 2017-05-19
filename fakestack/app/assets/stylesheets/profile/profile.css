@@ -27,9 +27,8 @@
 }
 
 .left {
-  flex-grow: 1.2;
+  flex-grow: 2;
   margin-right: 15px;
-
 }
 
 .right {
@@ -37,15 +36,18 @@
 }
 
 div.Panel {
-  border: 1px solid #D3D6DB;
   background-color: none;
+}
+
+div#panelContainer > div {
+  border: 1px solid #D3D6DB;
 }
 
 section.intro {
   border-bottom: 1px solid #E9EBEE;
   display: flex;
   flex-direction: column;
-  padding: 10px 0 10px 0;
+  padding: 10px 10px 10px 10px;
 }
 
 h1.intro {
@@ -67,22 +69,31 @@ ul#profileDetails {
 li.profileDetail {
   display: flex;
   font-size: 12px;
-  padding: 2px 0 2px 0;
-  flex-direction:
+  padding: 2px 0 2px 10px;
+
 }
 
+li.profileDetail svg {
+  margin-right: 10px;
+  fill: gray;
+}
+
+div#circleIcon {
+  position: relative;
+}
 
 
 svg#circle {
   fill: #4267B2;
   height: 28px;
   width: 28px;
+  margin-right: 10px;
 }
 
 svg#globe {
   fill: white;
   background-color: #4267B2;
-  z-index: 1;
-  position: relative;
-  left: -22px;
+  position: absolute;
+  left: 6px;
+  top: 6px;
 }

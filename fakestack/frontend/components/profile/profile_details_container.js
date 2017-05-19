@@ -1,7 +1,6 @@
-import NewsFeed from "./newsfeed";
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
-import Profile from './profile';
+import ProfileDetails from './profile_details';
 
 
 const mapStateToProps = (state) =>({
@@ -13,4 +12,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps,
-               mapDispatchToProps)(NewsFeed);
+               mapDispatchToProps)(ProfileDetails);
