@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {FaChevronDown, FaPencil} from 'react-icons/lib/fa/';
-
+import ProfilePicture from './profile_picture';
 
 class ProfileHeader extends React.Component {
   constructor(props){
@@ -13,9 +13,7 @@ class ProfileHeader extends React.Component {
   render(){
     return (
         <div id="profileHeader">
-          <a id="profileImg">
-            <img src={this.headShot}/>
-          </a>
+          <ProfilePicture className="profileImg"/>
           <div className="shadow"></div>
           <img src={this.testimage} id="coverImg"/>
           <div id="profileNav">

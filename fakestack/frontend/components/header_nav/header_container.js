@@ -4,7 +4,7 @@ import HeaderNav from './header_nav';
 
 
 const mapStateToProps = (state) =>({
-  currentUser: state.currentUser
+  currentUser: state.currentUserProfile
 });
 
 const mapDispatchToProps = (dispatch) => ({

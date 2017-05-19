@@ -18,7 +18,7 @@
   font-family: Helvetica, Arial, sans-serif;
 }
 
-#profileImg {
+.profileImg {
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -26,10 +26,11 @@
   border-radius: 3px;
 }
 
-#profileImg img {
+.profileImg img, .profileImg svg {
   height: 168px;
   width: 168px;
   border: 4px solid white;
+  background: #D1D5DA;
 }
 
 #headerButtonsContainer {

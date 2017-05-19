@@ -4,7 +4,8 @@ import AuthForm from './auth_form';
 
 
 const mapStateToProps = (state) =>({
-  currentUser: state.currentUser
+  currentUserProfile: state.currentUserProfile,
+  sessionErrors: state.session.errors
 });
 
 const mapDispatchToProps = (dispatch) => ({

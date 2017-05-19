@@ -58,3 +58,15 @@ ul.dropDown-content a {
 ul.show {
   display: flex;
 }
+
+.alert {
+  color: #a94442;
+  border: 1px solid #ebcccc;
+  background-color: #f2dede;
+  padding: 15px 10px 15px 10px;
+  border-radius: 3px;
+}
+
+.alert li {
+  padding: 5px 10px 5px 10px;
+}

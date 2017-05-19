@@ -8,6 +8,7 @@
  background: linear-gradient(#4E69A2, #3B5998);
  border-bottom: 1px solid black;
  width: 100%;
+ font-family: Helvetica, Arial, sans-serif;;
 }
 
 #logoutBar td {
@@ -107,6 +108,8 @@ form#signup input:focus {
 
 
 div#welcome button {
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
   font-size: 18px;
   font-weight: bold;
@@ -215,4 +218,9 @@ div.feature {}
 
   td, a {
     white-space: nowrap;
+  }
+
+  .frontpage {
+    position: relative;
+    bottom: 300px;
   }

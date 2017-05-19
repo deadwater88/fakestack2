@@ -5,12 +5,12 @@ class Api::SessionsController < ApplicationController
       login
       render :show
     else
-      render json: { login:{ errors: ["Incorrect Password"] } }, status: 400
+      render json: ["Incorrect email/password"], status: 400
     end
   end
 
   def destroy
     logout
-    render json: { current_user: nil, errors: {} }
+    render json: { current_user: nil, errors: [] }
   end
 end
