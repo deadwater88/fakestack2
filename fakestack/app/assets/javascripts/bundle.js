@@ -8653,84 +8653,31 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _reactRedux = __webpack_require__(17);
 
-var _react = __webpack_require__(0);
+var _profiles_actions = __webpack_require__(88);
 
-var _react2 = _interopRequireDefault(_react);
+var _profile_picture = __webpack_require__(171);
 
-var _fa = __webpack_require__(21);
+var _profile_picture2 = _interopRequireDefault(_profile_picture);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserProfile: state.currentUserProfile
+  };
+};
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ProfilePicture = function (_React$Component) {
-  _inherits(ProfilePicture, _React$Component);
-
-  function ProfilePicture(props) {
-    _classCallCheck(this, ProfilePicture);
-
-    var _this = _possibleConstructorReturn(this, (ProfilePicture.__proto__ || Object.getPrototypeOf(ProfilePicture)).call(this, props));
-
-    _this.uploadProfilePic = _this.uploadProfilePic.bind(_this);
-    return _this;
-  }
-
-  _createClass(ProfilePicture, [{
-    key: "uploadProfilePic",
-    value: function uploadProfilePic(e) {
-      var upLoadProfilePic = this.props.uploadProfilePic;
-      var userId = this.props.currentUserProfile.id;
-      console.log("clicked");
-      window.cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
-        if (error === null) {
-          upLoadProfilePic({ profile_img_url: images[0].url }, userId);
-        } else {}
-      });
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    uploadProfilePic: function uploadProfilePic(profile_img_url, userId) {
+      dispatch((0, _profiles_actions.uploadProfilePic)(profile_img_url, userId));
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _props = this.props,
-          currentUserProfile = _props.currentUserProfile,
-          className = _props.className;
+  };
+};
 
-      var img = void 0;
-      if (currentUserProfile && currentUserProfile.profileImgUrl !== "") {
-        img = _react2.default.createElement("img", { src: currentUserProfile.profileImgUrl });
-      } else {
-        img = _react2.default.createElement(_fa.FaUser, null);
-      }
-
-      return _react2.default.createElement(
-        "div",
-        { className: className },
-        img,
-        className === 'profileImg' ? _react2.default.createElement(
-          "a",
-          { onClick: this.uploadProfilePic, className: "profilePicLink" },
-          _react2.default.createElement(_fa.FaCamera, null),
-          _react2.default.createElement(
-            "p",
-            null,
-            " Update Profile ",
-            _react2.default.createElement("br", null),
-            " Picture"
-          )
-        ) : ""
-      );
-    }
-  }]);
-
-  return ProfilePicture;
-}(_react2.default.Component);
-
-exports.default = ProfilePicture;
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_profile_picture2.default);
 
 /***/ }),
 /* 57 */
@@ -18096,7 +18043,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _fa = __webpack_require__(21);
 
-var _profile_picture_container = __webpack_require__(171);
+var _profile_picture_container = __webpack_require__(56);
 
 var _profile_picture_container2 = _interopRequireDefault(_profile_picture_container);
 
@@ -18236,7 +18183,7 @@ var _nav_search_bar2 = _interopRequireDefault(_nav_search_bar);
 
 var _reactRouterDom = __webpack_require__(38);
 
-var _profile_picture_container = __webpack_require__(171);
+var _profile_picture_container = __webpack_require__(56);
 
 var _profile_picture_container2 = _interopRequireDefault(_profile_picture_container);
 
@@ -18752,7 +18699,7 @@ var _reactRouterDom = __webpack_require__(38);
 
 var _fa = __webpack_require__(21);
 
-var _profile_picture_container = __webpack_require__(171);
+var _profile_picture_container = __webpack_require__(56);
 
 var _profile_picture_container2 = _interopRequireDefault(_profile_picture_container);
 
@@ -18848,31 +18795,84 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(17);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _profiles_actions = __webpack_require__(88);
+var _react = __webpack_require__(0);
 
-var _profile_picture = __webpack_require__(56);
+var _react2 = _interopRequireDefault(_react);
 
-var _profile_picture2 = _interopRequireDefault(_profile_picture);
+var _fa = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    currentUserProfile: state.currentUserProfile
-  };
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    uploadProfilePic: function uploadProfilePic(profile_img_url, userId) {
-      dispatch((0, _profiles_actions.uploadProfilePic)(profile_img_url, userId));
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ProfilePicture = function (_React$Component) {
+  _inherits(ProfilePicture, _React$Component);
+
+  function ProfilePicture(props) {
+    _classCallCheck(this, ProfilePicture);
+
+    var _this = _possibleConstructorReturn(this, (ProfilePicture.__proto__ || Object.getPrototypeOf(ProfilePicture)).call(this, props));
+
+    _this.uploadProfilePic = _this.uploadProfilePic.bind(_this);
+    return _this;
+  }
+
+  _createClass(ProfilePicture, [{
+    key: "uploadProfilePic",
+    value: function uploadProfilePic(e) {
+      var upLoadProfilePic = this.props.uploadProfilePic;
+      var userId = this.props.currentUserProfile.id;
+      console.log("clicked");
+      window.cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
+        if (error === null) {
+          upLoadProfilePic({ profile_img_url: images[0].url }, userId);
+        } else {}
+      });
     }
-  };
-};
+  }, {
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          currentUserProfile = _props.currentUserProfile,
+          className = _props.className;
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_profile_picture2.default);
+      var img = void 0;
+      if (currentUserProfile && currentUserProfile.profileImgUrl !== "") {
+        img = _react2.default.createElement("img", { src: currentUserProfile.profileImgUrl });
+      } else {
+        img = _react2.default.createElement(_fa.FaUser, null);
+      }
+
+      return _react2.default.createElement(
+        "div",
+        { className: className },
+        img,
+        className === 'profileImg' ? _react2.default.createElement(
+          "a",
+          { onClick: this.uploadProfilePic, className: "profilePicLink" },
+          _react2.default.createElement(_fa.FaCamera, null),
+          _react2.default.createElement(
+            "p",
+            null,
+            " Update Profile ",
+            _react2.default.createElement("br", null),
+            " Picture"
+          )
+        ) : ""
+      );
+    }
+  }]);
+
+  return ProfilePicture;
+}(_react2.default.Component);
+
+exports.default = ProfilePicture;
 
 /***/ }),
 /* 172 */
