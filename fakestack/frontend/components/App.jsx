@@ -8,7 +8,7 @@ import ProfileContainer from './profile/profile_container';
 
 
 const App = () => (
-  <div>
+  <div id="AppElement">
     <header>
       <ProtectedRoute path="/" component={HeaderContainer} > LoggedIn </ProtectedRoute>
     </header>
@@ -19,5 +19,7 @@ const App = () => (
     </Switch>
   </div>
 );
+
+
 
 export default App;

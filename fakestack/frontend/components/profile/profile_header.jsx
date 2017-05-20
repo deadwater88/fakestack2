@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {FaChevronDown, FaPencil} from 'react-icons/lib/fa/';
-import ProfilePicture from './profile_picture';
+import ProfilePictureContainer from './profile_picture_container';
+
+
 
 class ProfileHeader extends React.Component {
   constructor(props){
@@ -10,10 +12,14 @@ class ProfileHeader extends React.Component {
     this.headShot = "https://assets3.thrillist.com/v1/image/1165873/size/tmg-article_default_mobile;jpeg_quality=20.jpg";
   }
 
+
   render(){
+    const {uploadProfilePic} = this.props;
     return (
         <div id="profileHeader">
-          <ProfilePicture className="profileImg"/>
+          <div id="profilePictureContainer">
+            <ProfilePictureContainer uploadProfilePic={uploadProfilePic} className="profileImg"/>
+          </div>
           <div className="shadow"></div>
           <img src={this.testimage} id="coverImg"/>
           <div id="profileNav">

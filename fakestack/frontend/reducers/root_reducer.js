@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import SessionReducer from './session_reducer';
-import CurrentUserReducer from './current_user_reducer';
+import CurrentUserProfileReducer from './current_user_profile_reducer';
 
 const rootReducer = combineReducers({
   session: SessionReducer,
-  currentUserProfile: CurrentUserReducer
+  currentUserProfile: CurrentUserProfileReducer
 });
 
 export default rootReducer;

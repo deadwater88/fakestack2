@@ -11,10 +11,10 @@ class Profile extends React.Component{
   }
 
   render(){
-
+    const {uploadProfilePic} = this.props;
     return (
       <div id="profilePage">
-        <ProfileHeader/>
+        <ProfileHeader uploadProfilePic={uploadProfilePic}/>
          <div id="panelContainer">
            <div className="left Panel">
              <ProfileDetailsContainer/>

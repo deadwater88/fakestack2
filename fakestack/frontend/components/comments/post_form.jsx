@@ -1,6 +1,6 @@
 import React from 'react';
 import {FaFlag, FaPencil, FaCamera, FaUserPlus} from 'react-icons/lib/fa/';
-import ProfilePicture from '../profile/profile_picture';
+import ProfilePictureContainer from '../profile/profile_picture_container';
 class PostForm extends React.Component{
   constructor(props){
     super(props);
@@ -30,7 +30,7 @@ class PostForm extends React.Component{
         </a>
       </div>
       <div id="postFormInput">
-        <ProfilePicture className="profileThumb"/>
+        <ProfilePictureContainer className="profileThumb"/>
         <input placeholder="What's on your mind?"/>
       </div>
       <div id="pfButtonContainer">

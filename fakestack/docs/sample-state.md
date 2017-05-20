@@ -8,9 +8,9 @@
     lastName: "Wong"
     profile: {
       places: {homeTown: "Sacramento"},
-      details: {biography: "I'm the best AROUND. Nothing's ever gonna keep me down",
-                otherNames: ["Dave", "Mr. Wong"]
-                favoriteQuotes: "Hey! What the Hell! That was my daughter's pediatrician!"}
+      details: {intro: "I'm the best AROUND. Nothing's ever gonna keep me down",
+                otherNames: ["Dave", "Mr. Wong"],
+                favoriteQuotes: "Hey! What the Hell! That was my daughter's, pediatrician!"}
       interests {
         music: { 1: { id: 1,
                     title: "Red Hot Chili Peppers",

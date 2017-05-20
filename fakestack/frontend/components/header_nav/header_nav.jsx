@@ -2,7 +2,7 @@ import React from 'react';
 import {FaFacebookOfficial, FaGroup, FaCommentsO, FaQuestionCircle, FaGlobe, FaChevronDown} from 'react-icons/lib/fa/';
 import NavSearchBar from './nav_search_bar';
 import {Link, Redirect, withRouter} from 'react-router-dom';
-import ProfilePicture from '../profile/profile_picture';
+import ProfilePicture from '../profile/profile_picture_container';
 
 class HeaderNav extends React.Component {
   constructor(props){
@@ -17,13 +17,9 @@ class HeaderNav extends React.Component {
   }
 
   showDropdown(e) {
+    e.preventDefault;
     document.getElementsByClassName("dropDown-content")[0].classList.toggle("show");
   }
-
-
-
-
-
 
   render(){
     const {firstName, lastName} = this.props.currentUser;

@@ -1,20 +1,50 @@
 import React from "react";
-import {FaUser} from 'react-icons/lib/fa/';
+import {FaUser, FaCamera} from 'react-icons/lib/fa/';
 
-const ProfilePicture = (props) => {
-  const {currentUserProfile, className} = props;
-  let img;
-  if (currentUserProfile && currentUserProfile.profile_image_url !== "") {
-    img = (<img src={currentUserProfile.profile_image_url}/>);
-  } else {
-    img = (<FaUser/>);
+
+class ProfilePicture extends React.Component {
+  constructor(props){
+    super(props);
+    this.uploadProfilePic = this.uploadProfilePic.bind(this);
   }
 
-  return (
-    <div className={className}>
-      {img}
-    </div>
-  );
-};
+
+  uploadProfilePic(e){
+    const upLoadProfilePic = this.props.uploadProfilePic;
+    const userId = this.props.currentUserProfile.id;
+    console.log("clicked");
+    window.cloudinary.openUploadWidget(window.cloudinary_options,
+    (error, images)=>{
+      if (error === null) {
+        upLoadProfilePic({profile_img_url: images[0].url}, userId);
+      } else {
+      }
+    });
+  }
+
+  render () {
+    const {currentUserProfile, className} = this.props;
+    let img;
+    if (currentUserProfile && currentUserProfile.profileImgUrl !== "") {
+      img = (<img src={currentUserProfile.profileImgUrl}/>);
+    } else {
+      img = (<FaUser/>);
+    }
+
+    return (
+      <div className={className}>
+        {img}
+        {className === 'profileImg' ? (<a onClick={this.uploadProfilePic} className="profilePicLink">
+          <FaCamera/>
+          <p> Update Profile <br/> Picture</p>
+        </a>) : ""}
+      </div>
+    );
+
+  }
+
+
+}
+
 
 export default ProfilePicture;

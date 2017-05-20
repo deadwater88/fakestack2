@@ -7,14 +7,15 @@ id              | integer   | not null, primary key
 email           | string    | not null, indexed, unique
 password_digest | string    | not null, indexed, unique
 session_token   | string    | not null, indexed, unique
-biography       | string    |
+intro       | string    |
 current_city    | string    |
 home_town       | string    |
-image_url       | string    |
+profile_image_url | string    | default: ""
 other_names     | string    | default: [], array
 favorite_quotes | text      | default: [], array
 first_name       | string    | not null, indexed
 last_name        | string    | not null, indexed
+places          | string    | default: [], array
 
 
 ## Comments
