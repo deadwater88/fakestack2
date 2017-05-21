@@ -1,0 +1,190 @@
+#editProfileContent {
+  display: flex;
+  flex-direction: row;
+}
+
+.imgPropContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top: 1px solid #DDDFE2;
+}
+
+.imgPropContent > svg {
+  height: 36px;
+  width: 36px;
+  fill: #4080ff;
+  margin-right: 10px;
+}
+
+.imgPropContent > a {
+  font-size: 20px;
+  color: #4080ff;
+  padding: 20px 10px 20px 0px;
+}
+
+.addContent:hover {
+  cursor: pointer;
+}
+
+.addContent:active {
+  box-shadow: 0 0 3px 3px #7DA8FB;
+}
+
+div.propertyContainer > div:last-child {
+  padding-bottom: 30px;
+}
+
+
+div.propertyForm {
+    padding-top: 30px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-left: 1px solid #D3D6DB;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.contentHeader {
+  margin-bottom: 15px;
+  color: #90949C;
+  font-weight: bold;
+  font-size: 14px;
+  height: 10px;
+}
+
+.propForm {
+  background-color: #f6f7f9;
+  padding: 15px 0 15px 0;
+  margin:  -1px -25px -1px -25px;
+  border-top: 1px solid #E9EBEE;
+  border-bottom: 1px solid #E9EBEE;
+
+}
+
+div.entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 15px;
+  margin: 0 30px 0 30px;
+  border-bottom: 1px solid #DDDFE2;
+}
+
+div.entry h3 {
+  color: #90949C;
+  font-size: 18px;
+  padding-right: 20px;
+}
+
+div.entry input {
+  font-size: 20px;
+  color: black;
+  height: 30px;
+  width: 250px;
+  border: 1px solid #D3D6DB;
+  padding-left: 10px;
+}
+
+div.formButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
+}
+
+button:focus {
+  box-shadow: 0 0 3px 3px #7DA8FB;
+}
+
+button.submitForm {
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  background-color: #4267b2;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  margin-right: 10px;
+  transition: background-color .4s;
+}
+
+button.submitForm:hover {
+  background-color: #365899;
+}
+
+div.imgPropContent.showContent {
+  padding: 15px 0 15px 0;
+}
+
+div.imgPropContent.showContent:hover div.editDisplay {
+  display: flex;
+}
+
+
+div.infoDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+
+}
+
+div.editDisplay {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.editDisplay a {
+  margin-right: 10px;
+  color: #4080ff;
+  padding: 5px;
+  border-right: 1px solid #E9EBEE;
+
+}
+div.editDisplay > *:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+div.deletePropButton:hover {
+  background-color: black;
+  color: white;
+}
+
+h1.valueDisplay {
+  font-size: 20px;
+  font-weight: bold;
+  color: #365899;
+  background-color: white;
+  padding-bottom: 5px;
+}
+
+div.valueDisplay {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+button.cancelForm {
+  font-size: 14px;
+  color: #4b4f56;
+  font-weight: bold;
+  background-color: #F6F7F9;
+  border: 1px solid #ced0d4;
+  border-radius: 3px;
+  padding: 10px;
+  margin-right: 10px;
+  transition: background-color .4s;
+}
+
+
+
+button.cancelForm:hover {
+  background-color: #E9EBEE;
+
+}

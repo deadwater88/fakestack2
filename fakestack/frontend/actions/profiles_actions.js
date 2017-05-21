@@ -12,6 +12,14 @@ export const uploadProfilePic = (profile_img_url, userId)=> dispatch => {
   );
 };
 
+export const updateProp = (prop, userId) => dispatch => {
+  return ProfileAPIUtil.updateProp(prop, userId).then(
+    res=> dispatch(receiveCurrentUserProfile(res)),
+    err => dispatch(receiveErrors(err.responseJSON))
+  );
+
+}; 
+
 export const receiveCurrentUserProfile = currentUserProfile => ({
   type: RECEIVE_CURRENT_USER_PROFILE,
   currentUserProfile

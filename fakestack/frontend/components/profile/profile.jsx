@@ -1,8 +1,9 @@
 import React from 'react';
 import ProfileHeader from './profile_header';
 import HeaderContainer from '../header_nav/header_container';
-import ProfileDetailsContainer from './profile_details_container';
-import WallContainer from './wall_container';
+import {Route} from 'react-router-dom';
+import Timeline from './timeline/timeline';
+import EditProfileContainer from './editprofile/edit_profile_container';
 
 
 class Profile extends React.Component{
@@ -10,24 +11,20 @@ class Profile extends React.Component{
       super(props);
   }
 
+  componentWillReceiveProps(newprops){
+    console.log(newprops);
+  }
+
   render(){
     const {uploadProfilePic} = this.props;
     return (
       <div id="profilePage">
         <ProfileHeader uploadProfilePic={uploadProfilePic}/>
-         <div id="panelContainer">
-           <div className="left Panel">
-             <ProfileDetailsContainer/>
-           </div>
-           <WallContainer >
-             RightPanel
-           </WallContainer>
-        </div>
+        <Route path="/profile/timeline" component={Timeline}></Route>
+        <Route path="/profile/edit" component={EditProfileContainer}></Route>
       </div>
     );
-
   }
-
 }
 
 export default Profile;

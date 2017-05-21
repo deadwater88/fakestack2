@@ -1,5 +1,5 @@
 import React from 'react';
-import PostFormContainer from '../comments/post_form_container';
+import PostFormContainer from '../../posts/post_form_container';
 
 
 class Wall extends React.Component {

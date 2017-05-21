@@ -16,13 +16,11 @@
  */
 
 
+
 button, a {
    display: flex;
  }
 
- button:hover, a:hover {
-   background-color: #E9EBEE;
- }
 
 .dropDown {
   position: relative;

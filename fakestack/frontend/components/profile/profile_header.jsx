@@ -23,18 +23,20 @@ class ProfileHeader extends React.Component {
           <div className="shadow"></div>
           <img src={this.testimage} id="coverImg"/>
           <div id="profileNav">
-            <Link to="/profile/Timeline"> Timeline </Link>
-            <Link to="/profile/About"> About </Link>
-            <Link to="/profile/Friends"> Friends </Link>
-            <Link to="/profile/Photos"> Photos </Link>
-            <Link to="/profile/More"> More
+            <Link to="/profile/timeline"> Timeline </Link>
+            <Link to="/profile/edit"> About </Link>
+            <Link to="/profile/friends"> Friends </Link>
+            <Link to="/profile/photos"> Photos </Link>
+            <Link to="/profile/more"> More
               <FaChevronDown/>
             </Link>
           </div>
-          <button id="headerButton">
-            <FaPencil/>
-            Edit Profile
-          </button>
+            <Link to="/profile/edit">
+              <button id="headerButton">
+                <FaPencil/>
+                Edit Profile
+              </button>
+            </Link>
         </div>
     );
   }

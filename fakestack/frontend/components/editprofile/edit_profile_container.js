@@ -1,12 +1,10 @@
+import EditProfile from "./edit_profile";
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
-import Wall from './wall';
-import {selectCurrentUserComments} from '../../utils/selectors';
 
 
 const mapStateToProps = (state) =>({
-  currentUser: state.currentUser,
-  comments: selectCurrentUserComments(state)
+  currentUserProfile: state.currentUserProfile
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,4 +12,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps,
-               mapDispatchToProps)(Wall);
+               mapDispatchToProps)(EditProfile);

@@ -107,6 +107,10 @@ a.profilePicLink svg {
   align-items: stretch;
 }
 
+#profileNav a:hover {
+   background-color: #E9EBEE;
+ }
+
 #profileNav a {
   display: flex;
   text-align: center;

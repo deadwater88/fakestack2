@@ -20,8 +20,12 @@ button, a {
    display: flex;
  }
 
- button:hover, a:hover {
+ #profileNav a:hover {
    background-color: #E9EBEE;
+ }
+
+ button:hover {
+   cursor: pointer;
  }
 
 .dropDown {
@@ -57,4 +61,47 @@ ul.dropDown-content a {
 
 ul.show {
   display: flex;
+
+}
+
+.primaryContainer {
+  margin-top: 25px;
+  border: 1px solid #D3D6DB;
+  border-radius: 3px;
+  min-width: 850px;
+
+}
+
+.primaryContainer > h1 {
+  display: flex;
+  font-size: 26px;
+  font-weight: bold;
+  color: #4B4F56;
+  padding: 15px;
+  background-color: #F6F7F9;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #D3D6DB;
+}
+
+.primaryContainer > div {
+  background-color: white;
+}
+
+.primaryContainer h1 svg {
+  margin-right: 15px;
+  height: 30px;
+  width: 30px;
+  fill: #ADB3BC;
+}
+
+a.navLink {
+  color: #90949C;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 15px;
+}
+
+a.navLink:hover {
+  color: black;
 }

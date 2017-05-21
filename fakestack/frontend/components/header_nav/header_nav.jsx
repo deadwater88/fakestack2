@@ -33,7 +33,7 @@ class HeaderNav extends React.Component {
           </div>
             <div id="headerNavMenu">
             <div id="menu1">
-              <Link to='/profile' id={"profilelink"}>
+              <Link to='/profile/timeline' id={"profilelink"}>
                 <ProfilePicture className="profileIcon"/>
                 <h3 className="firstName">{firstName}</h3>
               </Link>
