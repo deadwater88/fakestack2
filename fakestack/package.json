@@ -2,7 +2,7 @@
   "name": "fake_stack",
   "version": "1.0.0",
   "description": "== README",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "directories": {
     "doc": "docs",
     "test": "test"
@@ -18,7 +18,6 @@
       "webpack": "webpack --watch"
     }
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
