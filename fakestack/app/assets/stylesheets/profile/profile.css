@@ -58,6 +58,7 @@ h1.intro {
 
 section.intro h5 {
   align-self: center;
+  padding: 10px;
 }
 
 ul#profileDetails {

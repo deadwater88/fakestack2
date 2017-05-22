@@ -48,6 +48,7 @@ handleSubmit(propName, idx1){
     value.pop();
     value[idx1] = this.state[propName][idx1];
     this.state.editMode[idx1] = false;
+    debugger
     this.props.updateProp({[propName]: value}, userId);
   };
 }

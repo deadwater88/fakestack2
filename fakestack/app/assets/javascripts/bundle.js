@@ -19129,6 +19129,7 @@ var UnitFormArray = function (_React$Component) {
         value.pop();
         value[idx1] = _this4.state[propName][idx1];
         _this4.state.editMode[idx1] = false;
+        debugger;
         _this4.props.updateProp(_defineProperty({}, propName, value), userId);
       };
     }
