@@ -26,3 +26,9 @@
 - `POST /api/comments/`
 - `PATCH /api/comments/:comment_id/`
 - `DELETE /api/comments/:comment_id/`
+
+### Posts
+- `GET /api/posts/:post_id`
+- `POST /api/posts/`
+- `PATCH /api/posts/:post_id/`
+- `DELETE /api/posts/:post_id/`

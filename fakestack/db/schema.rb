@@ -10,10 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519221506) do
+ActiveRecord::Schema.define(version: 20170522035017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "author_id",   null: false
+    t.text     "content",     null: false
+    t.string   "parent_type"
+    t.integer  "parent_id",   null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["author_id"], name: "index_comments_on_author_id", using: :btree
+    t.index ["parent_type", "parent_id"], name: "index_comments_on_parent_type_and_parent_id", using: :btree
+  end
+
+  create_table "friendings", force: :cascade do |t|
+    t.integer  "requester_id",                 null: false
+    t.integer  "recipient_id",                 null: false
+    t.boolean  "approved",     default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer  "author_id",   null: false
+    t.text     "content",     null: false
+    t.integer  "location_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["author_id"], name: "index_posts_on_author_id", using: :btree
+    t.index ["location_id"], name: "index_posts_on_location_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                        null: false
@@ -28,8 +57,10 @@ ActiveRecord::Schema.define(version: 20170519221506) do
     t.string   "hometown",        default: ""
     t.string   "current_city",    default: ""
     t.text     "other_names",     default: [],              array: true
-    t.text     "favorite_quotes", default: [],              array: true
+    t.string   "favorite_quotes", default: ""
     t.text     "places",          default: [],              array: true
+    t.string   "cover_img_url",   default: ""
+    t.string   "biography",       default: ""
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["first_name"], name: "index_users_on_first_name", using: :btree
     t.index ["last_name"], name: "index_users_on_last_name", using: :btree

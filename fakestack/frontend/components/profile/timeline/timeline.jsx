@@ -10,7 +10,6 @@ const Timeline = (props) => {
         </div>
         <WallContainer >
         </WallContainer>
-        Test
       </div>
     )
 

@@ -2,6 +2,9 @@ import React from 'react';
 import {FaUser, FaPlus} from 'react-icons/lib/fa/';
 import {Route, NavLink} from 'react-router-dom';
 import UnitForm from './unit_form'
+import EditDetailsContainer from './edit_details_container'
+
+
 class EditProfile extends React.Component {
 
   constructor(props) {
@@ -14,19 +17,17 @@ class EditProfile extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    console.log(newProps)
   }
 
   navLinks(){
-
     return (<ul id= "editProfileTabs">
       {this.profileDetails.map((detail, idx)=>(
-        <NavLink className="navLink" key={idx + "profilenav"}
-          to={`/profile/edit/${detail[1]}`}
-          activeClassName="activeLink"
-          activeStyle={{ fontWeight: 'bold', color: 'black' }}>
-          {detail[0]}
-        </NavLink>
+          <NavLink className="navLink" key={idx + "profilenav"}
+            to={`/profile/edit/${detail[1]}`}
+            activeClassName="activeLink"
+            activeStyle={{ fontWeight: 'bold', color: 'black' }}>
+            {detail[0]}
+          </NavLink>
       ))}
     </ul>)
   }
@@ -78,7 +79,7 @@ class EditProfile extends React.Component {
         <div id="editProfileContent"  className="primaryContent">
           {this.navLinks()}
           <Route path='/profile/edit/places' render={this.content}/>
-          <Route path='/details' render={this.content} />
+          <Route path='/profile/edit/details' component={EditDetailsContainer} />
 
         </div>
 

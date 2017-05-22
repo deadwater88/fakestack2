@@ -1,6 +1,25 @@
 #editProfileContent {
   display: flex;
   flex-direction: row;
+
+}
+
+#editProfileContent .activeLink {
+  border-left: 3px solid #3B5998;
+  padding-left: 12px;
+}
+
+ul#editProfileTabs {
+  padding: 10px 0 10px 0;;
+}
+
+a.navLink {
+  color: #90949C;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px 15px 10px 15px;
+  margin: 5px 0 5px 0;
+
 }
 
 .imgPropContent {
@@ -59,7 +78,9 @@ div.propertyForm {
   margin:  -1px -25px -1px -25px;
   border-top: 1px solid #E9EBEE;
   border-bottom: 1px solid #E9EBEE;
-
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 div.entry {
@@ -76,7 +97,12 @@ div.entry h3 {
   color: #90949C;
   font-size: 18px;
   padding-right: 20px;
+  width: 100px;
+  display: flex;
+  justify-content: flex-end;
 }
+
+
 
 div.entry input {
   font-size: 20px;
@@ -93,6 +119,8 @@ div.formButtons {
   justify-content: center;
   align-items: center;
   padding-top: 15px;
+  align-self: center;
+  flex-grow: 1;
 }
 
 button:focus {
@@ -151,7 +179,7 @@ div.editDisplay > *:hover {
 }
 
 div.deletePropButton:hover {
-  background-color: black;
+  background-color: #3B5998;
   color: white;
 }
 
@@ -187,4 +215,20 @@ button.cancelForm {
 button.cancelForm:hover {
   background-color: #E9EBEE;
 
+}
+
+#autocomplete {
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
+}
+
+#autocomplete li {
+  padding: 5px 10px 5px 10px;
+}
+
+#autocomplete li:hover {
+  background-color:#3B5998;
+  color: white;
+  cursor: pointer;
 }

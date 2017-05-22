@@ -23,7 +23,7 @@ column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
 author_id   | integer   | not null, foreign key (references users), indexed
-post_id     | integer   | foreign key (references Posts), indexed
+parent_id     | integer   | foreign key (references Posts), indexed
 content     | text      | not null
 
 ## Friend_requests
@@ -38,9 +38,8 @@ approved    | Boolean   | not null, inclusion: [true, false] default: false
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-comment_id  | integer   | not null, foreign key (references comments), unique in context of user_id
+post_id     | integer   | not null, foreign key (references posts), unique in context of user_id
 user_id     | integer   | not null, foreign key (references users), indexed
-tagger_id   | integer   | not null, foreign key (references users)
 
 ## Posts
 column name | data type | details

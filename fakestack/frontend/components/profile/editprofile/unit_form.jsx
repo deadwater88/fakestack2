@@ -4,26 +4,43 @@ import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
 class UnitForm extends React.Component {
   constructor(props){
     super(props);
+    this.autocomplete = this.autocomplete.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
     this.showComponent = this.showComponent.bind(this);
     this.editComponent = this.editComponent.bind(this);
     this.deleteProp = this.deleteProp.bind(this);
+    this.selectAutoresult = this.selectAutoresult.bind(this)
     this.state = {[props.profileInfo.propName]: props.profileInfo.value,
                   currentUserId: props.currentUserProfile.id,
-                  editMode: false}
+                  editMode: false,
+                  autocompleteOptions: [],
+                  showauto: false}
 
   }
 
 handleChange(e){
+  console.log(this.state)
   e.preventDefault();
   const {propName} = this.props.profileInfo
-  this.setState({[propName]: e.currentTarget.value}, ()=> console.log(this.state))
+  this.setState({[propName]: e.currentTarget.value})
+}
+
+autocomplete(){
+  let input = this.state[this.props.profileInfo.propName]
+  if (input.length > 2){
+    $.ajax({
+      url:`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&type=(cities)&key=${window.places_key}`
+    }).then(res=>{console.log(res);
+      this.setState({autocompleteOptions: res.predictions},()=>{
+        this.setState({showauto: true})
+      })
+    })
+  }
 }
 
 handleSubmit(propName){
-
   return (e)=> {
     const {propName} = this.props.profileInfo
     const userId = this.state.currentUserId
@@ -38,6 +55,14 @@ toggleEditMode(e){
   this.setState({editMode: !editMode})
 }
 
+autoresults(){
+  return this.state.showauto ?
+  (<ul id="autocomplete">
+    {this.state.autocompleteOptions.map((option, idx)=>(
+      <li key={idx + "autocomplete"} onClick={this.selectAutoresult}> {option.description} </li>
+    ))}
+  </ul>) : ""
+}
 
 deleteProp(e){
   e.stopPropagation();
@@ -45,7 +70,11 @@ deleteProp(e){
   const userId = this.state.currentUserId
   this.state.editMode = false
   this.props.updateProp({[propName]: ""}, this.state.currentUserId)
+}
 
+selectAutoresult(e) {
+  const {propName} = this.props.profileInfo
+  this.setState({[propName]: e.currentTarget.innerText, showauto: false })
 }
 
 showComponent(value, instruction, inputLabel){
@@ -85,7 +114,8 @@ editComponent(inputLabel, value, propName){
     <div className="entry">
       <h3> {inputLabel} </h3>
       <div>
-        <input onChange={this.handleChange} type="text" placeholder= {value} value={this.state.propsName} />
+        <input onChange={this.handleChange} type="text" placeholder= {value} value={this.state[propName]} />
+        {this.autoresults()}
       </div>
     </div>
     <div className="formButtons">

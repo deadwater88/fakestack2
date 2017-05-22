@@ -10,6 +10,34 @@ class User < ApplicationRecord
   after_initialize :ensure_token
   attr_reader :password
 
+  has_many :received_requests,
+    primary_key: :id,
+    foreign_key: :recipient_id,
+    class_name: :Friending
+
+  has_many :requesters,
+    through: :received_requests,
+    source: :requester
+
+  has_many :issued_requests,
+    primary_key: :id,
+    foreign_key: :requester_id,
+    class_name: :Friending
+
+  has_many :recipients,
+    through: :issued_requests,
+    class_name: :User
+
+  has_many :authored_posts,
+    foreign_key: :author_id,
+    class_name: :Post
+  has_many :wall_posts,
+    foreign_key: :location_id,
+    class_name: :Post
+
+  def friends
+    
+  end
 
   def reset_token
     self.session_token = SecureRandom::urlsafe_base64
