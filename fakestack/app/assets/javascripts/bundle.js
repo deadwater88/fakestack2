@@ -18273,9 +18273,7 @@ var NewsFeed = function (_React$Component) {
 
   _createClass(NewsFeed, [{
     key: 'componentWillReceiveNewProps',
-    value: function componentWillReceiveNewProps(newProps) {
-      console.log("url changed");
-    }
+    value: function componentWillReceiveNewProps(newProps) {}
   }, {
     key: 'render',
     value: function render() {
@@ -18352,9 +18350,7 @@ var PostForm = function (_React$Component) {
 
   _createClass(PostForm, [{
     key: 'componentWillReceiveNewProps',
-    value: function componentWillReceiveNewProps(newProps) {
-      console.log("url changed");
-    }
+    value: function componentWillReceiveNewProps(newProps) {}
   }, {
     key: 'render',
     value: function render() {
@@ -18623,6 +18619,10 @@ var _edit_details_container = __webpack_require__(166);
 
 var _edit_details_container2 = _interopRequireDefault(_edit_details_container);
 
+var _unit_form_array_img = __webpack_require__(1051);
+
+var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18682,8 +18682,8 @@ var EditProfile = function (_React$Component) {
       var profileInfoPlaces = { updateProp: this.props.updateProp,
         instruction: "Add a Place",
         inputLabel: "Place",
-        propName: "place",
-        value: this.props.currentUserProfile.places };
+        propName: "places",
+        values: this.props.currentUserProfile.places };
       return _react2.default.createElement(
         'div',
         { className: 'propertyForm' },
@@ -18711,7 +18711,7 @@ var EditProfile = function (_React$Component) {
             ' OTHER PLACES LIVED '
           )
         ),
-        _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoPlaces,
+        _react2.default.createElement(_unit_form_array_img2.default, { profileInfo: profileInfoPlaces,
           currentUserProfile: this.props.currentUserProfile,
           updateProp: this.props.updateProp })
       );
@@ -18840,7 +18840,6 @@ var UnitForm = function (_React$Component) {
   _createClass(UnitForm, [{
     key: 'handleChange',
     value: function handleChange(e) {
-      console.log(this.state);
       e.preventDefault();
       var propName = this.props.profileInfo.propName;
 
@@ -19082,7 +19081,7 @@ var UnitFormArray = function (_React$Component) {
     _this.toggleEditMode = _this.toggleEditMode.bind(_this);
     _this.deleteProp = _this.deleteProp.bind(_this);
     _this.selectAutoresult = _this.selectAutoresult.bind(_this);
-    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.values), _defineProperty(_this$state, 'currentUserId', props.currentUserProfile.id), _defineProperty(_this$state, 'editMode', Array(props.profileInfo.values.length + 1).fill(false)), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
+    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.values), _defineProperty(_this$state, 'currentUserId', props.currentUserProfile.id), _defineProperty(_this$state, 'editMode', Array(props.profileInfo.values.length).fill(false)), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
 
     return _this;
   }
@@ -19093,7 +19092,6 @@ var UnitFormArray = function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        console.log(_this2.state);
         e.preventDefault();
         var propName = _this2.props.profileInfo.propName;
 
@@ -19126,14 +19124,11 @@ var UnitFormArray = function (_React$Component) {
       var _this4 = this;
 
       return function (e) {
-        var propName = _this4.props.profileInfo.propName;
-
         var userId = _this4.state.currentUserId;
         var value = _this4.state[propName].concat([]);
         value.pop();
         value[idx1] = _this4.state[propName][idx1];
         _this4.state.editMode[idx1] = false;
-        debugger;
         _this4.props.updateProp(_defineProperty({}, propName, value), userId);
       };
     }
@@ -19268,7 +19263,7 @@ var UnitFormArray = function (_React$Component) {
             _react2.default.createElement(
               'div',
               null,
-              _react2.default.createElement('input', { onChange: this.handleChange(idx1), type: 'text', placeholder: value, value: this.state[propName][idx1] })
+              _react2.default.createElement('input', { onChange: this.handleChange(idx1), type: 'text', placeholder: value, value: this.state[propName][idx1] || "" })
             )
           )
         ),
@@ -19304,7 +19299,7 @@ var UnitFormArray = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'imgPropUnit' },
-        values.slice(1).map(function (value, idx1) {
+        values.map(function (value, idx1) {
           return _this8.state.editMode[idx1] ? _this8.editComponent(inputLabel, value, propName, idx1) : _this8.showValues(value, idx1);
         }),
         this.state.editMode[lastidx] ? this.editComponent(inputLabel, "", propName, lastidx) : this.showInstruction(instruction, lastidx)
@@ -19372,7 +19367,6 @@ var UnitFormText = function (_React$Component) {
   _createClass(UnitFormText, [{
     key: 'handleChange',
     value: function handleChange(e) {
-      console.log(this.state);
       e.preventDefault();
       var propName = this.props.profileInfo.propName;
 
@@ -19401,8 +19395,6 @@ var UnitFormText = function (_React$Component) {
       var _this3 = this;
 
       return function (e) {
-        var propName = _this3.props.profileInfo.propName;
-
         var userId = _this3.state.currentUserId;
         var value = _this3.state[propName];
         _this3.state.editMode = false;
@@ -20304,7 +20296,7 @@ Object.defineProperty(exports, "__esModule", {
 var uploadProfilePic = exports.uploadProfilePic = function uploadProfilePic(profile_img_url, userId) {
   return $.ajax({
     method: "PATCH",
-    url: "/api/users/" + userId,
+    url: "api/users/" + userId,
     data: { user: profile_img_url }
   });
 };
@@ -20312,8 +20304,9 @@ var uploadProfilePic = exports.uploadProfilePic = function uploadProfilePic(prof
 var updateProp = exports.updateProp = function updateProp(prop, userId) {
   return $.ajax({
     method: "PATCH",
-    url: "/api/users/" + userId,
-    data: { user: prop }
+    url: "api/users/" + userId,
+    contentType: "application/json",
+    data: JSON.stringify({ user: prop })
   });
 };
 
@@ -64700,6 +64693,263 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 1051 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fa = __webpack_require__(14);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UnitFormArrayImg = function (_React$Component) {
+  _inherits(UnitFormArrayImg, _React$Component);
+
+  function UnitFormArrayImg(props) {
+    var _this$state;
+
+    _classCallCheck(this, UnitFormArrayImg);
+
+    var _this = _possibleConstructorReturn(this, (UnitFormArrayImg.__proto__ || Object.getPrototypeOf(UnitFormArrayImg)).call(this, props));
+
+    _this.autocomplete = _this.autocomplete.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.toggleEditMode = _this.toggleEditMode.bind(_this);
+    _this.deleteProp = _this.deleteProp.bind(_this);
+    _this.selectAutoresult = _this.selectAutoresult.bind(_this);
+    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.values), _defineProperty(_this$state, 'currentUserId', props.currentUserProfile.id), _defineProperty(_this$state, 'editMode', Array(props.profileInfo.values.length).fill(false)), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
+
+    return _this;
+  }
+
+  _createClass(UnitFormArrayImg, [{
+    key: 'handleChange',
+    value: function handleChange(idx1) {
+      var _this2 = this;
+
+      return function (e) {
+        e.preventDefault();
+        var propName = _this2.props.profileInfo.propName;
+
+        var newState = _this2.state[propName];
+        newState = newState.concat([]);
+        newState[idx1] = e.currentTarget.value;
+        _this2.setState(_defineProperty({}, propName, newState));
+      };
+    }
+  }, {
+    key: 'autocomplete',
+    value: function autocomplete() {
+      var _this3 = this;
+
+      var input = this.state[this.props.profileInfo.propName];
+      if (input.length > 2) {
+        $.ajax({
+          url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&type=(cities)&key=' + window.places_key
+        }).then(function (res) {
+          console.log(res);
+          _this3.setState({ autocompleteOptions: res.predictions }, function () {
+            _this3.setState({ showauto: true });
+          });
+        });
+      }
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(propName, idx1) {
+      var _this4 = this;
+
+      return function (e) {
+        var userId = _this4.state.currentUserId;
+        var value = _this4.state[propName].concat([]);
+        value.pop();
+        value[idx1] = _this4.state[propName][idx1];
+        _this4.state.editMode[idx1] = false;
+        _this4.props.updateProp(_defineProperty({}, propName, value), userId);
+      };
+    }
+  }, {
+    key: 'toggleEditMode',
+    value: function toggleEditMode(idx1) {
+      var _this5 = this;
+
+      return function (e) {
+        e.preventDefault();
+        var editMode = [].concat(_this5.state.editMode);
+        editMode[idx1] = !editMode[idx1];
+        _this5.setState({ editMode: editMode });
+      };
+    }
+  }, {
+    key: 'deleteProp',
+    value: function deleteProp(idx1) {
+      var _this6 = this;
+
+      return function (e) {
+        e.stopPropagation();
+        var propName = _this6.props.profileInfo.propName;
+
+        var userId = _this6.state.currentUserId;
+        _this6.state.editMode[idx1] = false;
+        var oldState = _this6.state[propName];
+        var newState = oldState.slice(0, idx1).concat(oldState.slice(idx1 + 1));
+        _this6.state[propName] = newState;
+        _this6.props.updateProp(_defineProperty({}, propName, newState), _this6.state.currentUserId);
+      };
+    }
+  }, {
+    key: 'selectAutoresult',
+    value: function selectAutoresult(e) {
+      var _setState;
+
+      var propName = this.props.profileInfo.propName;
+
+      this.setState((_setState = {}, _defineProperty(_setState, propName, e.currentTarget.innerText), _defineProperty(_setState, 'showauto', false), _setState));
+    }
+  }, {
+    key: 'showValues',
+    value: function showValues(value, idx1) {
+      return _react2.default.createElement(
+        'div',
+        { key: "value" + idx1, className: 'imgPropContent showContent' },
+        _react2.default.createElement(
+          'div',
+          { className: 'infoDisplay' },
+          _react2.default.createElement(
+            'div',
+            { className: 'valueDisplay' },
+            _react2.default.createElement(
+              'h1',
+              { className: 'valueDisplay text' },
+              value
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { onClick: this.toggleEditMode(idx1), className: 'editDisplay' },
+            _react2.default.createElement(
+              'a',
+              null,
+              _react2.default.createElement(_fa.FaPencil, null),
+              'Edit'
+            ),
+            _react2.default.createElement(
+              'div',
+              { onClick: this.deleteProp(idx1), className: 'deletePropButton' },
+              _react2.default.createElement(_fa.FaClose, null)
+            )
+          )
+        )
+      );
+    }
+  }, {
+    key: 'showInstruction',
+    value: function showInstruction(instruction, lastidx) {
+      return _react2.default.createElement(
+        'div',
+        { onClick: this.toggleEditMode(lastidx), className: 'imgPropContent addContent' },
+        _react2.default.createElement(_fa.FaPlus, null),
+        _react2.default.createElement(
+          'a',
+          null,
+          ' ',
+          instruction,
+          ' '
+        )
+      );
+    }
+  }, {
+    key: 'editComponent',
+    value: function editComponent(inputLabel, value, propName, idx1) {
+      return _react2.default.createElement(
+        'form',
+        { className: 'propForm' },
+        _react2.default.createElement(
+          'ul',
+          { className: 'entryTextContainer' },
+          _react2.default.createElement(
+            'div',
+            { className: 'entry' },
+            _react2.default.createElement(
+              'h3',
+              null,
+              ' ',
+              inputLabel,
+              ' '
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement('input', { onChange: this.handleChange(idx1), type: 'text', placeholder: value, value: this.state[propName][idx1] || "" })
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'formButtons' },
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleSubmit(propName, idx1), className: 'submitForm' },
+            ' Save Changes '
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.toggleEditMode(idx1), className: 'cancelForm' },
+            ' Cancel '
+          )
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this7 = this;
+
+      var _props$profileInfo = this.props.profileInfo,
+          updateProp = _props$profileInfo.updateProp,
+          instruction = _props$profileInfo.instruction,
+          inputLabel = _props$profileInfo.inputLabel,
+          propName = _props$profileInfo.propName,
+          values = _props$profileInfo.values;
+
+      var lastidx = values.length;
+      return _react2.default.createElement(
+        'div',
+        { className: 'imgPropUnit' },
+        values.map(function (value, idx1) {
+          return _this7.state.editMode[idx1] ? _this7.editComponent(inputLabel, value, propName, idx1) : _this7.showValues(value, idx1);
+        }),
+        this.state.editMode[lastidx] ? this.editComponent(inputLabel, "", propName, lastidx) : this.showInstruction(instruction, lastidx)
+      );
+    }
+  }]);
+
+  return UnitFormArrayImg;
+}(_react2.default.Component);
+
+exports.default = UnitFormArrayImg;
 
 /***/ })
 /******/ ]);

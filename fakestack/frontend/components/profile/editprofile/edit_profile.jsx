@@ -1,19 +1,20 @@
 import React from 'react';
 import {FaUser, FaPlus} from 'react-icons/lib/fa/';
 import {Route, NavLink} from 'react-router-dom';
-import UnitForm from './unit_form'
-import EditDetailsContainer from './edit_details_container'
+import UnitForm from './unit_form';
+import EditDetailsContainer from './edit_details_container';
+import UnitFormArrayImg from './unit_form_array_img';
 
 
 class EditProfile extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.profileDetails = [["Overview", "overview"],
                            ["Places You've Lived", "places"],
-                           ["Details About You", "details"]]
-    this.navLinks = this.navLinks.bind(this)
-    this.content = this.content.bind(this)
+                           ["Details About You", "details"]];
+    this.navLinks = this.navLinks.bind(this);
+    this.content = this.content.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -29,7 +30,7 @@ class EditProfile extends React.Component {
             {detail[0]}
           </NavLink>
       ))}
-    </ul>)
+    </ul>);
   }
 
   content() {
@@ -37,17 +38,17 @@ class EditProfile extends React.Component {
                          instruction: "Add your current city",
                          inputLabel: "Current City",
                          propName: "current_city",
-                         value: this.props.currentUserProfile.currentCity}
+                         value: this.props.currentUserProfile.currentCity};
     let profileInfoHometown = {updateProp: this.props.updateProp,
                          instruction: "Add your hometown",
                          inputLabel: "Hometown",
                          propName: "hometown",
-                     value: this.props.currentUserProfile.hometown}
+                     value: this.props.currentUserProfile.hometown};
      let profileInfoPlaces = {updateProp: this.props.updateProp,
                           instruction: "Add a Place",
                           inputLabel: "Place",
-                          propName: "place",
-                          value: this.props.currentUserProfile.places}
+                          propName: "places",
+                          values: this.props.currentUserProfile.places};
     return (
     <div className="propertyForm">
       <div className="propertyContainer">
@@ -62,7 +63,7 @@ class EditProfile extends React.Component {
       <div className="propertyContainer">
         <h3 className="contentHeader"> OTHER PLACES LIVED </h3>
       </div>
-      <UnitForm profileInfo={profileInfoPlaces}
+      <UnitFormArrayImg profileInfo={profileInfoPlaces}
         currentUserProfile={this.props.currentUserProfile}
         updateProp={this.props.updateProp} />
     </div>

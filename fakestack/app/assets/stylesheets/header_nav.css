@@ -115,15 +115,12 @@ div#menu1 img {
   margin-right: 15px;
 }
 
-#profilelink {
-  padding-left: 1px !important;
-}
 
 
 div#menu1 a {
   font-size: 12px;
   font-weight: bold;
-  padding: 0 7px 0 7px;
+  padding: 5px 7px 5px 7px;
   height: 28px;
   text-align: center;
   text-decoration: none;

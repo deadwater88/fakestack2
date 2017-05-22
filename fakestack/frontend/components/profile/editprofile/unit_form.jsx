@@ -4,55 +4,54 @@ import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
 class UnitForm extends React.Component {
   constructor(props){
     super(props);
-    this.autocomplete = this.autocomplete.bind(this)
+    this.autocomplete = this.autocomplete.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
     this.showComponent = this.showComponent.bind(this);
     this.editComponent = this.editComponent.bind(this);
     this.deleteProp = this.deleteProp.bind(this);
-    this.selectAutoresult = this.selectAutoresult.bind(this)
+    this.selectAutoresult = this.selectAutoresult.bind(this);
     this.state = {[props.profileInfo.propName]: props.profileInfo.value,
                   currentUserId: props.currentUserProfile.id,
                   editMode: false,
                   autocompleteOptions: [],
-                  showauto: false}
+                  showauto: false};
 
   }
 
 handleChange(e){
-  console.log(this.state)
   e.preventDefault();
-  const {propName} = this.props.profileInfo
-  this.setState({[propName]: e.currentTarget.value})
+  const {propName} = this.props.profileInfo;
+  this.setState({[propName]: e.currentTarget.value});
 }
 
 autocomplete(){
-  let input = this.state[this.props.profileInfo.propName]
+  let input = this.state[this.props.profileInfo.propName];
   if (input.length > 2){
     $.ajax({
       url:`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&type=(cities)&key=${window.places_key}`
     }).then(res=>{console.log(res);
       this.setState({autocompleteOptions: res.predictions},()=>{
-        this.setState({showauto: true})
-      })
-    })
+        this.setState({showauto: true});
+      });
+    });
   }
 }
 
 handleSubmit(propName){
   return (e)=> {
-    const {propName} = this.props.profileInfo
-    const userId = this.state.currentUserId
-    const value = this.state[propName]
-    this.state.editMode = false
-    this.props.updateProp({[propName]: this.state[propName]}, userId)
-  }
+    const {propName} = this.props.profileInfo;
+    const userId = this.state.currentUserId;
+    const value = this.state[propName];
+    this.state.editMode = false;
+    this.props.updateProp({[propName]: this.state[propName]}, userId);
+  };
 }
 toggleEditMode(e){
   e.preventDefault();
-  const editMode = this.state.editMode
-  this.setState({editMode: !editMode})
+  const editMode = this.state.editMode;
+  this.setState({editMode: !editMode});
 }
 
 autoresults(){
@@ -105,7 +104,7 @@ showComponent(value, instruction, inputLabel){
       </div>
 
     </div>
-  </div>)
+  </div>);
 }
 
 editComponent(inputLabel, value, propName){

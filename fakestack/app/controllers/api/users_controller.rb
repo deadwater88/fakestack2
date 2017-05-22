@@ -16,15 +16,20 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    if @user.update_attributes(user_params)
-      render :show
+    if @user
+      if @user.update_attributes(user_params)
+        render :show
+      else
+        render json: @user.errors.full_messages, status: 400
+      end
     else
-      render json: @user.errors.full_messages, status: 400
+      render json: ["User could not be found"], status: 404
     end
   end
 
   def user_params
-    params.require(:user).permit(:id,
+    params.require(:user).permit(
+     :id,
      :email,
      :password,
      :first_name,

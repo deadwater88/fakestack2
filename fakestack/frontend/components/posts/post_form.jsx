@@ -9,7 +9,6 @@ class PostForm extends React.Component{
 
 
   componentWillReceiveNewProps(newProps){
-    console.log("url changed");
   }
 
   render(){

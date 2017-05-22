@@ -1,7 +1,7 @@
 import React from 'react';
 import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
 
-class UnitFormArray extends React.Component {
+class UnitFormArrayImg extends React.Component {
   constructor(props){
     super(props);
     this.autocomplete = this.autocomplete.bind(this);
@@ -60,15 +60,6 @@ toggleEditMode(idx1){
 };
 }
 
-autoresults(){
-  return this.state.showauto ?
-  (<ul id="autocomplete">
-    {this.state.autocompleteOptions.map((option, idx)=>(
-      <li key={idx + "autocomplete"} onClick={this.selectAutoresult}> {option.description} </li>
-    ))}
-  </ul>) : "";
-}
-
 deleteProp(idx1){
   return (e)=> {
   e.stopPropagation();
@@ -111,7 +102,7 @@ showValues(value, idx1){
 }
 
 showInstruction(instruction, lastidx) {
-  return (<div onClick={this.toggleEditMode(lastidx)} className="imgPropContent addtext">
+  return (<div onClick={this.toggleEditMode(lastidx)} className="imgPropContent addContent">
     <FaPlus/>
     <a> {instruction} </a>
   </div>);
@@ -122,7 +113,7 @@ editComponent(inputLabel, value, propName, idx1){
   return (
   <form className="propForm">
     <ul className="entryTextContainer">
-      <div className="entry text">
+      <div className="entry">
         <h3> {inputLabel} </h3>
         <div>
           <input onChange={this.handleChange(idx1)} type="text" placeholder= {value} value={this.state[propName][idx1]||""} />
@@ -155,4 +146,4 @@ editComponent(inputLabel, value, propName, idx1){
   }
 }
 
-export default UnitFormArray;
+export default UnitFormArrayImg;
