@@ -1,8 +1,8 @@
-export const uploadProfilePic = (profile_img_url, userId) => {
+export const uploadPic = (prop, userId) => {
   return $.ajax({
     method: "PATCH",
     url: `api/users/${userId}`,
-    data: {user: profile_img_url}
+    data: {user: prop}
   });
 };
 
@@ -14,4 +14,11 @@ export const updateProp = (prop, userId) => {
     data: JSON.stringify({user: prop})
   });
 
+};
+
+export const fetchUser = (userId) => {
+  return $.ajax({
+    method: "GET",
+    url: `api/users/${userId}`
+  });
 };

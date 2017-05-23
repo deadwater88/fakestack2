@@ -22,7 +22,7 @@
   margin-top: 15px;
 }
 
-#panelContainer div {
+#panelContainer > div {
   background-color: #FFFFFF;
 }
 
@@ -59,6 +59,86 @@ h1.intro {
 section.intro h5 {
   align-self: center;
   padding: 10px;
+}
+
+#introContainer {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#introContainer:hover > svg {
+  display: flex;
+}
+
+#introContainer svg {
+  position: absolute;
+  right: 10px;
+  display: none;
+}
+
+  svg.editPencil {
+    height: 13px;
+    width: 13px;
+    padding: 3px;
+    color: gray;
+  }
+
+  svg.editPencil:hover {
+    background-color: #3B5998;
+    color: white;
+    cursor: pointer;
+  }
+
+
+#introForm {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 10px;
+  border: 1px solid #E9EBEE;
+  background-color: #F6F7F9;
+}
+
+#introForm textarea {
+  border-style: none;
+  resize: none;
+  text-align: center;
+  height: 72px;
+  border-bottom: 1px solid #E9EBEE;
+}
+
+#introFormButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  flex-grow: 1;
+  margin: 5px;
+}
+
+#introFormButtonContainer > div.formButtons {
+  padding-top: 5px;
+}
+
+#introFormButtonContainer > div > button {
+  font-size: 12px;
+  padding: 7px;
+}
+
+#introFormButtonContainer > div > button:last-child {
+  margin-right: 0px;
+}
+
+
+
+#introCount {
+  align-self: flex-end;
+  font-size: 11px;
+  color: #90949c;
+  padding: 5px;
+
 }
 
 ul#profileDetails {

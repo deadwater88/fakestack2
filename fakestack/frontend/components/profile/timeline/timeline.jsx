@@ -11,8 +11,8 @@ const Timeline = (props) => {
         <WallContainer >
         </WallContainer>
       </div>
-    )
+    );
 
-}
+};
 
 export default Timeline;

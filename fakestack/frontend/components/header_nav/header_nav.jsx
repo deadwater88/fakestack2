@@ -16,6 +16,10 @@ class HeaderNav extends React.Component {
     this.props.logout();
   }
 
+  componentDidMount(){
+    this.props.fetchCurrentUser(this.props.currentUser.id);
+  }
+
   showDropdown(e) {
     e.preventDefault;
     document.getElementsByClassName("dropDown-content")[0].classList.toggle("show");

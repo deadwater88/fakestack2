@@ -7135,7 +7135,7 @@ module.exports = SyntheticUIEvent;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.receiveErrors = exports.receiveCurrentUserProfile = exports.updateProp = exports.uploadProfilePic = exports.RECEIVE_ERRORS = exports.RECEIVE_CURRENT_USER_PROFILE = undefined;
+exports.receiveProfileErrors = exports.receiveCurrentUserProfile = exports.fetchCurrentUser = exports.updateProp = exports.uploadPic = exports.RECEIVE_PROFILE_ERRORS = exports.RECEIVE_CURRENT_USER_PROFILE = undefined;
 
 var _profile_api_util = __webpack_require__(186);
 
@@ -7145,14 +7145,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var RECEIVE_CURRENT_USER_PROFILE = exports.RECEIVE_CURRENT_USER_PROFILE = 'RECEIVE_CURRENT_USER_PROFILE';
 
-var RECEIVE_ERRORS = exports.RECEIVE_ERRORS = 'RECEIVE_ERRORS';
+var RECEIVE_PROFILE_ERRORS = exports.RECEIVE_PROFILE_ERRORS = 'RECEIVE_PROFILE_ERRORS';
 
-var uploadProfilePic = exports.uploadProfilePic = function uploadProfilePic(profile_img_url, userId) {
+var uploadPic = exports.uploadPic = function uploadPic(prop, userId) {
   return function (dispatch) {
-    return ProfileAPIUtil.uploadProfilePic(profile_img_url, userId).then(function (res) {
+    return ProfileAPIUtil.uploadPic(prop, userId).then(function (res) {
       return dispatch(receiveCurrentUserProfile(res));
     }, function (err) {
-      return dispatch(receiveErrors(err.responseJSON));
+      return dispatch(receiveProfileErrors(err.responseJSON));
     });
   };
 };
@@ -7162,7 +7162,17 @@ var updateProp = exports.updateProp = function updateProp(prop, userId) {
     return ProfileAPIUtil.updateProp(prop, userId).then(function (res) {
       return dispatch(receiveCurrentUserProfile(res));
     }, function (err) {
-      return dispatch(receiveErrors(err.responseJSON));
+      return dispatch(receiveProfileErrors(err.responseJSON));
+    });
+  };
+};
+
+var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser(id) {
+  return function (dispatch) {
+    return ProfileAPIUtil.fetchUser(id).then(function (res) {
+      return dispatch(receiveCurrentUserProfile(res));
+    }, function (err) {
+      return dispatch(receiveProfileErrors(err.responseJSON));
     });
   };
 };
@@ -7174,9 +7184,9 @@ var receiveCurrentUserProfile = exports.receiveCurrentUserProfile = function rec
   };
 };
 
-var receiveErrors = exports.receiveErrors = function receiveErrors(errors) {
+var receiveProfileErrors = exports.receiveProfileErrors = function receiveProfileErrors(errors) {
   return {
-    type: RECEIVE_ERRORS,
+    type: RECEIVE_PROFILE_ERRORS,
     errors: errors
   };
 };
@@ -8676,6 +8686,8 @@ var _reactRedux = __webpack_require__(15);
 
 var _session_actions = __webpack_require__(39);
 
+var _profiles_actions = __webpack_require__(38);
+
 var _header_nav = __webpack_require__(161);
 
 var _header_nav2 = _interopRequireDefault(_header_nav);
@@ -8684,7 +8696,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUser: state.currentUserProfile
+    currentUser: state.session.currentUser
   };
 };
 
@@ -8692,6 +8704,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     logout: function logout(user) {
       dispatch((0, _session_actions.logout)(user));
+    },
+    fetchCurrentUser: function fetchCurrentUser(id) {
+      dispatch((0, _profiles_actions.fetchCurrentUser)(id));
     }
   };
 };
@@ -8728,7 +8743,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     uploadProfilePic: function uploadProfilePic(profile_img_url, userId) {
-      dispatch((0, _profiles_actions.uploadProfilePic)(profile_img_url, userId));
+      dispatch((0, _profiles_actions.uploadPic)(profile_img_url, userId));
     }
   };
 };
@@ -18091,6 +18106,11 @@ var HeaderNav = function (_React$Component) {
       this.props.logout();
     }
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchCurrentUser(this.props.currentUser.id);
+    }
+  }, {
     key: 'showDropdown',
     value: function showDropdown(e) {
       e.preventDefault;
@@ -18619,6 +18639,10 @@ var _edit_details_container = __webpack_require__(166);
 
 var _edit_details_container2 = _interopRequireDefault(_edit_details_container);
 
+var _edit_places_container = __webpack_require__(1052);
+
+var _edit_places_container2 = _interopRequireDefault(_edit_places_container);
+
 var _unit_form_array_img = __webpack_require__(1051);
 
 var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
@@ -18641,7 +18665,6 @@ var EditProfile = function (_React$Component) {
 
     _this.profileDetails = [["Overview", "overview"], ["Places You've Lived", "places"], ["Details About You", "details"]];
     _this.navLinks = _this.navLinks.bind(_this);
-    _this.content = _this.content.bind(_this);
     return _this;
   }
 
@@ -18667,56 +18690,6 @@ var EditProfile = function (_React$Component) {
       );
     }
   }, {
-    key: 'content',
-    value: function content() {
-      var profileInfoCurrentCity = { updateProp: this.props.updateProp,
-        instruction: "Add your current city",
-        inputLabel: "Current City",
-        propName: "current_city",
-        value: this.props.currentUserProfile.currentCity };
-      var profileInfoHometown = { updateProp: this.props.updateProp,
-        instruction: "Add your hometown",
-        inputLabel: "Hometown",
-        propName: "hometown",
-        value: this.props.currentUserProfile.hometown };
-      var profileInfoPlaces = { updateProp: this.props.updateProp,
-        instruction: "Add a Place",
-        inputLabel: "Place",
-        propName: "places",
-        values: this.props.currentUserProfile.places };
-      return _react2.default.createElement(
-        'div',
-        { className: 'propertyForm' },
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' CURRENT CITY AND HOMETOWN '
-          ),
-          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoCurrentCity,
-            currentUserProfile: this.props.currentUserProfile,
-            updateProp: this.props.updateProp }),
-          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoHometown,
-            currentUserProfile: this.props.currentUserProfile,
-            updateProp: this.props.updateProp })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' OTHER PLACES LIVED '
-          )
-        ),
-        _react2.default.createElement(_unit_form_array_img2.default, { profileInfo: profileInfoPlaces,
-          currentUserProfile: this.props.currentUserProfile,
-          updateProp: this.props.updateProp })
-      );
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -18736,7 +18709,7 @@ var EditProfile = function (_React$Component) {
           'div',
           { id: 'editProfileContent', className: 'primaryContent' },
           this.navLinks(),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit/places', render: this.content }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit/places', render: _edit_places_container2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit/details', component: _edit_details_container2.default })
         )
       );
@@ -19129,7 +19102,6 @@ var UnitFormArray = function (_React$Component) {
         value.pop();
         value[idx1] = _this4.state[propName][idx1];
         _this4.state.editMode[idx1] = false;
-        debugger;
         _this4.props.updateProp(_defineProperty({}, propName, value), userId);
       };
     }
@@ -19617,12 +19589,14 @@ var Profile = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var uploadProfilePic = this.props.uploadProfilePic;
+      var _props = this.props,
+          uploadPic = _props.uploadPic,
+          currentUserProfile = _props.currentUserProfile;
 
       return _react2.default.createElement(
         'div',
         { id: 'profilePage' },
-        _react2.default.createElement(_profile_header2.default, { uploadProfilePic: uploadProfilePic }),
+        _react2.default.createElement(_profile_header2.default, { uploadPic: uploadPic, currentUserProfile: currentUserProfile }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/timeline', component: _timeline2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit', component: _edit_profile_container2.default })
       );
@@ -19659,7 +19633,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    currentUserProfile: state.currentUserProfile
   };
 };
 
@@ -19668,8 +19642,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     logout: function logout(user) {
       dispatch((0, _session_actions.logout)(user));
     },
-    uploadProfilePic: function uploadProfilePic(profile_img_url, userId) {
-      dispatch((0, _profiles_actions.uploadProfilePic)(profile_img_url, userId));
+    uploadPic: function uploadPic(prop, userId) {
+      dispatch((0, _profiles_actions.uploadPic)(prop, userId));
     }
   };
 };
@@ -19717,15 +19691,30 @@ var ProfileHeader = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ProfileHeader.__proto__ || Object.getPrototypeOf(ProfileHeader)).call(this, props));
 
+    _this.uploadCoverPic = _this.uploadCoverPic.bind(_this);
     _this.profileNavs = [["timeline", "Timeline"], ["edit", "About"], ["friends", "Friends"], ["photos", "Photos"]];
     return _this;
   }
 
   _createClass(ProfileHeader, [{
+    key: 'uploadCoverPic',
+    value: function uploadCoverPic(e) {
+      var uploadPic = this.props.uploadPic;
+      var userId = this.props.currentUserProfile.id;
+      window.cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
+        if (error === null) {
+          uploadPic({ cover_img_url: images[0].url }, userId);
+        } else {}
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var uploadProfilePic = this.props.uploadProfilePic;
+      var _props = this.props,
+          uploadProfilePic = _props.uploadProfilePic,
+          currentUserProfile = _props.currentUserProfile;
 
+      var coverImgUrl = currentUserProfile.coverImgUrl;
       return _react2.default.createElement(
         'div',
         { id: 'profileHeader' },
@@ -19734,8 +19723,17 @@ var ProfileHeader = function (_React$Component) {
           { id: 'profilePictureContainer' },
           _react2.default.createElement(_profile_picture_container2.default, { uploadProfilePic: uploadProfilePic, className: 'profileImg' })
         ),
-        _react2.default.createElement('div', { className: 'shadow' }),
-        _react2.default.createElement('img', { src: this.testimage, id: 'coverImg' }),
+        _react2.default.createElement(
+          'div',
+          { id: 'coverImgHolder' },
+          _react2.default.createElement(_fa.FaCamera, { id: 'editCoverCamera' }),
+          _react2.default.createElement(
+            'div',
+            { onClick: this.uploadCoverPic, id: 'editCoverButton' },
+            'Add Cover Photo'
+          ),
+          coverImgUrl === "" ? _react2.default.createElement('div', { id: 'coverImg' }) : _react2.default.createElement('img', { src: currentUserProfile.coverImgUrl, id: 'coverImg' })
+        ),
         _react2.default.createElement(
           'div',
           { id: 'profileNav' },
@@ -19746,8 +19744,7 @@ var ProfileHeader = function (_React$Component) {
                 to: '/profile/' + nav[0],
                 activeClassName: 'headerLink selected',
                 activeStyle: { color: 'black' } },
-              nav[1],
-              _react2.default.createElement('span', { className: 'selectorChevron' })
+              nav[1]
             );
           }),
           _react2.default.createElement(
@@ -19897,16 +19894,94 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ProfileDetails = function (_React$Component) {
   _inherits(ProfileDetails, _React$Component);
 
-  function ProfileDetails() {
+  function ProfileDetails(props) {
     _classCallCheck(this, ProfileDetails);
 
-    return _possibleConstructorReturn(this, (ProfileDetails.__proto__ || Object.getPrototypeOf(ProfileDetails)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ProfileDetails.__proto__ || Object.getPrototypeOf(ProfileDetails)).call(this, props));
+
+    _this.state = { introEditMode: false,
+      introCount: props.currentUserProfile.intro.length,
+      intro: props.currentUserProfile.intro
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.toggleEditMode = _this.toggleEditMode.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
   }
 
   _createClass(ProfileDetails, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      e.preventDefault();
+      this.setState({ intro: e.currentTarget.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.props.updateProp({ intro: this.state.intro }, this.props.currentUserProfile.id);
+      this.toggleEditMode();
+    }
+  }, {
+    key: 'toggleEditMode',
+    value: function toggleEditMode(e) {
+      this.setState({ introEditMode: !this.state.introEditMode });
+    }
+  }, {
+    key: 'editProp',
+    value: function editProp() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'introForm' },
+        _react2.default.createElement('textarea', { onChange: this.handleChange,
+          placeholder: 'Describe who you are',
+          value: this.state.intro }),
+        _react2.default.createElement(
+          'div',
+          { id: 'introFormButtonContainer' },
+          _react2.default.createElement(
+            'div',
+            { id: 'introCount' },
+            ' ',
+            101 - this.state.introCount,
+            ' '
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'formButtons' },
+            _react2.default.createElement(
+              'button',
+              { onClick: this.toggleEditMode,
+                className: 'cancelForm' },
+              ' Cancel '
+            ),
+            _react2.default.createElement(
+              'button',
+              { onClick: this.handleSubmit,
+                className: 'submitForm' },
+              ' Save '
+            )
+          )
+        )
+      );
+    }
+  }, {
+    key: 'showProp',
+    value: function showProp() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'introContainer' },
+        _react2.default.createElement(
+          'h5',
+          null,
+          this.state.intro
+        ),
+        _react2.default.createElement(_fa.FaPencil, { onClick: this.toggleEditMode, className: 'editPencil' })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
-
       return _react2.default.createElement(
         'div',
         { id: 'profile' },
@@ -19922,13 +19997,9 @@ var ProfileDetails = function (_React$Component) {
               _react2.default.createElement(_fa.FaCircle, { id: 'circle' }),
               _react2.default.createElement(_fa.FaGlobe, { id: 'globe' })
             ),
-            'Introduction'
+            'Intro'
           ),
-          _react2.default.createElement(
-            'h5',
-            null,
-            'Test Introduction'
-          )
+          this.state.introEditMode ? this.editProp() : this.showProp()
         ),
         _react2.default.createElement(
           'ul',
@@ -19967,18 +20038,20 @@ var _profile_details = __webpack_require__(177);
 
 var _profile_details2 = _interopRequireDefault(_profile_details);
 
+var _profiles_actions = __webpack_require__(38);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    currentUserProfile: state.currentUserProfile
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    logout: function logout(user) {
-      return null;
+    updateProp: function updateProp(prop, userId) {
+      dispatch((0, _profiles_actions.updateProp)(prop, userId));
     }
   };
 };
@@ -20262,6 +20335,7 @@ var SessionReducer = function SessionReducer() {
   var action = arguments[1];
 
   Object.freeze(state);
+  var newState = (0, _merge2.default)({}, state);
   switch (action.type) {
     case _session_actions.RECEIVE_CURRENT_USER:
       return {
@@ -20269,12 +20343,9 @@ var SessionReducer = function SessionReducer() {
         errors: []
       };
     case _session_actions.RECEIVE_ERRORS:
-      return {
-        currentUser: null,
-        errors: action.errors
-      };
+      newState.errors = action.errors;
+      return newState;
     case _session_actions.CLEAR_ERRORS:
-      var newState = (0, _merge2.default)({}, state);
       newState.errors = [];
       return newState;
     default:
@@ -20294,11 +20365,11 @@ exports.default = SessionReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var uploadProfilePic = exports.uploadProfilePic = function uploadProfilePic(profile_img_url, userId) {
+var uploadPic = exports.uploadPic = function uploadPic(prop, userId) {
   return $.ajax({
     method: "PATCH",
     url: "api/users/" + userId,
-    data: { user: profile_img_url }
+    data: { user: prop }
   });
 };
 
@@ -20308,6 +20379,13 @@ var updateProp = exports.updateProp = function updateProp(prop, userId) {
     url: "api/users/" + userId,
     contentType: "application/json",
     data: JSON.stringify({ user: prop })
+  });
+};
+
+var fetchUser = exports.fetchUser = function fetchUser(userId) {
+  return $.ajax({
+    method: "GET",
+    url: "api/users/" + userId
   });
 };
 
@@ -64951,6 +65029,143 @@ var UnitFormArrayImg = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = UnitFormArrayImg;
+
+/***/ }),
+/* 1052 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _edit_places_form = __webpack_require__(1053);
+
+var _edit_places_form2 = _interopRequireDefault(_edit_places_form);
+
+var _reactRedux = __webpack_require__(15);
+
+var _profiles_actions = __webpack_require__(38);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+console.log(_edit_places_form2.default);
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserProfile: state.currentUserProfile
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateProp: function updateProp(prop, userId) {
+      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_edit_places_form2.default);
+
+/***/ }),
+/* 1053 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _unit_form_text = __webpack_require__(172);
+
+var _unit_form_text2 = _interopRequireDefault(_unit_form_text);
+
+var _unit_form_array = __webpack_require__(171);
+
+var _unit_form_array2 = _interopRequireDefault(_unit_form_array);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EditPlacesForm = function (_React$Component) {
+  _inherits(EditPlacesForm, _React$Component);
+
+  function EditPlacesForm() {
+    _classCallCheck(this, EditPlacesForm);
+
+    return _possibleConstructorReturn(this, (EditPlacesForm.__proto__ || Object.getPrototypeOf(EditPlacesForm)).apply(this, arguments));
+  }
+
+  _createClass(EditPlacesForm, [{
+    key: 'render',
+    value: function render() {
+      var profileInfoCurrentCity = {
+        instruction: "Add your current city",
+        inputLabel: "Current City",
+        propName: "current_city",
+        value: this.props.currentUserProfile.currentCity };
+      var profileInfoHometown = {
+        instruction: "Add your hometown",
+        inputLabel: "Hometown",
+        propName: "hometown",
+        value: this.props.currentUserProfile.hometown };
+      var profileInfoPlaces = {
+        instruction: "Add a Place",
+        inputLabel: "Place",
+        propName: "places",
+        values: this.props.currentUserProfile.places };
+      return _react2.default.createElement(
+        'div',
+        { className: 'propertyForm' },
+        _react2.default.createElement(
+          'div',
+          { className: 'propertyContainer' },
+          _react2.default.createElement(
+            'h3',
+            { className: 'contentHeader' },
+            ' CURRENT CITY AND HOMETOWN '
+          ),
+          _react2.default.createElement(UnitForm, { profileInfo: profileInfoCurrentCity,
+            currentUserProfile: this.props.currentUserProfile,
+            updateProp: this.props.updateProp }),
+          _react2.default.createElement(UnitForm, { profileInfo: profileInfoHometown,
+            currentUserProfile: this.props.currentUserProfile,
+            updateProp: this.props.updateProp })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'propertyContainer' },
+          _react2.default.createElement(
+            'h3',
+            { className: 'contentHeader' },
+            ' OTHER PLACES LIVED '
+          )
+        ),
+        _react2.default.createElement(UnitFormArrayImg, { profileInfo: profileInfoPlaces,
+          currentUserProfile: this.props.currentUserProfile,
+          updateProp: this.props.updateProp })
+      );
+    }
+  }]);
+
+  return EditPlacesForm;
+}(_react2.default.Component);
+
+exports.default = EditPlacesForm;
 
 /***/ })
 /******/ ]);

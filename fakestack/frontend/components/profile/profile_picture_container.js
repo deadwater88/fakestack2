@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { uploadProfilePic } from '../../actions/profiles_actions';
+import { uploadPic } from '../../actions/profiles_actions';
 import ProfilePicture from './profile_picture';
 
 
@@ -8,7 +8,7 @@ const mapStateToProps = (state) =>({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  uploadProfilePic: (profile_img_url, userId) => { dispatch(uploadProfilePic(profile_img_url, userId));},
+  uploadProfilePic: (profile_img_url, userId) => { dispatch(uploadPic(profile_img_url, userId));},
 });
 
 export default connect(mapStateToProps,

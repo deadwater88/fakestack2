@@ -8,7 +8,7 @@
   margin: 0 auto;
   min-width: 850px;
   height: 360px;
-  background-color: gray;
+  background-color: none;
   flex-direction: column;
   position: relative;
 }
@@ -77,7 +77,6 @@ a.profilePicLink svg {
   margin-right: 15px;
   margin-left: 15px;
   fill:white;
-  background-color: inherit;
   transition: width .25s, height .25s, visibility .25s, transform .25s, font .35s;
 }
 
@@ -89,7 +88,7 @@ a.profilePicLink svg {
    margin-right: 15px;
    margin-left: 15px;
    fill:white;
-   background-color: inherit;
+   background-color: none;
    color: white !important;
    font-size: 14px;
  }
@@ -106,9 +105,55 @@ a.profilePicLink svg {
 
 }
 
+#editCoverCamera {
+  position: absolute;
+  fill: #B9B9BA;
+  height: 20px;
+  width: 20px;
+  top: 27px;
+  left: 28px;
+  z-index: 1;
+  transition: height .20s, width .20s, top .20s, left .20s;
+}
+
+#editCoverButton {
+  color: #E9EBEE;
+  font-size: 12px;
+  position: absolute;
+  top: 23px;
+  left: 20px;
+  border: 1px solid #E9EBEE;
+  padding: 7px;
+  padding-left: 35px;
+  opacity: 0;
+  background: black;
+  transition: opacity .20s
+}
+#editCoverButton:hover {
+  cursor: pointer;
+}
+
+#coverImgHolder {
+  display: flex;
+  position: relative;
+}
+
+#coverImgHolder:hover > #editCoverCamera {
+  height: 15px;
+  width: 15px;
+  top: 29px;
+  left: 30px;
+}
+
+#coverImgHolder:hover > #editCoverButton {
+  opacity: 1;
+}
+
 #coverImg {
   height: 315px;
   width: 850px;
+  background-color: #1D2129;
+  z-index: -1
 }
 
 #profileNav {
@@ -117,6 +162,7 @@ a.profilePicLink svg {
   justify-content: center;
   background-color: white;
   border: 1px solid #D3D6DB;
+  border-top: 0px;
   flex-grow: 1;
   align-items: stretch;
 }

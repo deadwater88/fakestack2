@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 import ProfileDetails from './profile_details';
+import { updateProp } from '../../../actions/profiles_actions';
 
 
 const mapStateToProps = (state) =>({
-  currentUser: state.currentUser
+  currentUserProfile: state.currentUserProfile
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logout: (user) => null
+  updateProp: (prop, userId) => {dispatch(updateProp(prop, userId));}
 });
 
 export default connect(mapStateToProps,

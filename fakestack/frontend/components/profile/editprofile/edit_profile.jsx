@@ -3,8 +3,8 @@ import {FaUser, FaPlus} from 'react-icons/lib/fa/';
 import {Route, NavLink} from 'react-router-dom';
 import UnitForm from './unit_form';
 import EditDetailsContainer from './edit_details_container';
+import EditPlacesContainer from './edit_places_container';
 import UnitFormArrayImg from './unit_form_array_img';
-
 
 class EditProfile extends React.Component {
 
@@ -14,7 +14,6 @@ class EditProfile extends React.Component {
                            ["Places You've Lived", "places"],
                            ["Details About You", "details"]];
     this.navLinks = this.navLinks.bind(this);
-    this.content = this.content.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -33,43 +32,6 @@ class EditProfile extends React.Component {
     </ul>);
   }
 
-  content() {
-    let profileInfoCurrentCity = {updateProp: this.props.updateProp,
-                         instruction: "Add your current city",
-                         inputLabel: "Current City",
-                         propName: "current_city",
-                         value: this.props.currentUserProfile.currentCity};
-    let profileInfoHometown = {updateProp: this.props.updateProp,
-                         instruction: "Add your hometown",
-                         inputLabel: "Hometown",
-                         propName: "hometown",
-                     value: this.props.currentUserProfile.hometown};
-     let profileInfoPlaces = {updateProp: this.props.updateProp,
-                          instruction: "Add a Place",
-                          inputLabel: "Place",
-                          propName: "places",
-                          values: this.props.currentUserProfile.places};
-    return (
-    <div className="propertyForm">
-      <div className="propertyContainer">
-        <h3 className="contentHeader"> CURRENT CITY AND HOMETOWN </h3>
-        <UnitForm profileInfo={profileInfoCurrentCity}
-          currentUserProfile={this.props.currentUserProfile}
-          updateProp={this.props.updateProp} />
-        <UnitForm profileInfo={profileInfoHometown}
-          currentUserProfile={this.props.currentUserProfile}
-          updateProp={this.props.updateProp} />
-      </div>
-      <div className="propertyContainer">
-        <h3 className="contentHeader"> OTHER PLACES LIVED </h3>
-      </div>
-      <UnitFormArrayImg profileInfo={profileInfoPlaces}
-        currentUserProfile={this.props.currentUserProfile}
-        updateProp={this.props.updateProp} />
-    </div>
-    )
-  }
-
   render(){
     return (
       <div id="editProfile" className="primaryContainer">
@@ -79,14 +41,11 @@ class EditProfile extends React.Component {
         </h1>
         <div id="editProfileContent"  className="primaryContent">
           {this.navLinks()}
-          <Route path='/profile/edit/places' render={this.content}/>
+          <Route path='/profile/edit/places' render={EditPlacesContainer}/>
           <Route path='/profile/edit/details' component={EditDetailsContainer} />
-
         </div>
-
-
       </div>
-    )
+    );
 
   }
 

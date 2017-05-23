@@ -11,6 +11,8 @@
 
 ul#editProfileTabs {
   padding: 10px 0 10px 0;;
+  width: 200px;
+  max-width: 200px;
 }
 
 a.navLink {

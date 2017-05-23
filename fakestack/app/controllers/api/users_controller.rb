@@ -38,11 +38,12 @@ class Api::UsersController < ApplicationController
      :intro,
      :hometown,
      :current_city,
-     :places,
+
      :biography,
      :cover_img_url,
-      favorite_quotes: [],
-      other_names: [])
+     favorite_quotes: [],
+     other_names: [],
+     places: [])
   end
 
 end

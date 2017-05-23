@@ -16,10 +16,10 @@ class Profile extends React.Component{
   }
 
   render(){
-    const {uploadProfilePic} = this.props;
+    const {uploadPic, currentUserProfile} = this.props;
     return (
       <div id="profilePage">
-        <ProfileHeader uploadProfilePic={uploadProfilePic}/>
+        <ProfileHeader uploadPic={uploadPic} currentUserProfile={currentUserProfile}/>
         <Route path="/profile/timeline" component={Timeline}></Route>
         <Route path="/profile/edit" component={EditProfileContainer}></Route>
       </div>

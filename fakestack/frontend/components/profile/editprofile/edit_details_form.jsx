@@ -11,18 +11,18 @@ class EditDetailsForm extends React.Component {
                              instruction: "Write some details about yourself",
                              inputLabel: "About You",
                              propName: "biography",
-                             value: this.props.currentUserProfile.biography}
+                             value: this.props.currentUserProfile.biography};
     const otherNamesInfo = {updateProp: this.props.updateProp,
                              instruction: "Add a nickname or alternate name...",
                              inputLabel: "Name",
                              propName: "other_names",
-                             values: this.props.currentUserProfile.otherNames}
+                             values: this.props.currentUserProfile.otherNames};
     const favoriteQuotesInfo = {updateProp: this.props.updateProp,
                              instruction: "Add your favorite quotations",
                              inputLabel: "Favorite Quotes",
                              propName: "favorite_quotes",
-                             value: this.props.currentUserProfile.favoriteQuotes}
-    const {updateProp, currentUserProfile} = this.props
+                             value: this.props.currentUserProfile.favoriteQuotes};
+    const {updateProp, currentUserProfile} = this.props;
 
       return (
       <div className="propertyForm">
@@ -44,9 +44,9 @@ class EditDetailsForm extends React.Component {
               currentUserProfile={currentUserProfile}
               updateProp={updateProp}/>
         </div>
-      </div>)
+      </div>);
     }
 }
 
 
-export default EditDetailsForm
+export default EditDetailsForm;
