@@ -11,18 +11,25 @@ class Profile extends React.Component{
       super(props);
   }
 
+  componentWillReceiveProps(newProps){
+    const newId = newProps.match.params.userId;
+    if (newId && parseInt(newId) !== this.props.viewedUserProfile.id) {
+      this.props.fetchViewedProfile(newProps.match.params.userId);
+    }
+  }
+
   componentWillMount(){
     const {viewedUserProfile} = this.props;
-    if ( !viewedUserProfile || viewedUserProfile.id !== parseInt(this.props.match.params.userId)) {
+    if ( viewedUserProfile.id !== parseInt(this.props.match.params.userId)) {
       this.props.fetchViewedProfile(this.props.match.params.userId);
     }
   }
 
   render(){
-    const {uploadPic, currentUserProfile} = this.props;
-    return (
+    const {uploadPic, viewedUserProfile, currentUserProfile, match} = this.props;
+    return viewedUserProfile.id === undefined ? <div></div> : (
       <div id="profilePage">
-        <ProfileHeader uploadPic={uploadPic} currentUserProfile={currentUserProfile}/>
+        <ProfileHeader uploadPic={uploadPic} currentUserProfile={currentUserProfile} viewedUserProfile={viewedUserProfile} match={match}/>
         <Route path="/profile/:userId/timeline" component={Timeline}></Route>
         <Route path="/profile/:userId/about" component={EditProfileContainer}></Route>
       </div>

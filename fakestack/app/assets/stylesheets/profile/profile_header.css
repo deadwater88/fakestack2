@@ -24,7 +24,7 @@
   height: 176px;
 }
 
-.profileImg img {
+.profileImg img, .profileImg svg {
   height: 168px;
   width: 168px;
   border: 4px solid white;

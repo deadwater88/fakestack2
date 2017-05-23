@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { updateProp } from '../../../actions/profiles_actions';
 
 const mapStateToProps = (state) =>({
-  currentUserProfile: state.currentUserProfile
+  currentUserProfile: state.currentUserProfile,
+  viewedUserProfile: state.viewedUserProfile
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -9,25 +9,28 @@ class EditPlacesForm extends React.Component {
                         ['Add a school', "education", "education", "Attended"],
                         ['Add a your current city', "places", "currentCity", "Lives in"],
                         ['Add your hometown', "places", "hometown", "From"]];
-      const currentProfile = this.props.currentUserProfile;
+      const {currentUserProfile, viewedUserProfile} = this.props;
+      const currentViewId = this.props.match.params.id;
+      const editCheck = currentUserProfile.id === currentViewId ? {}: {display: "none"};
       return (
       <div className="propertyForm">
         <ul id="overviewItems">
             {overviews.map((overviewitem, idx)=>(
-              <li key={"overviewitem" + idx} className="overviewItem">
-                <Link to={`/profile/edit/${overviewitem[1]}`}>
-                  {currentProfile[overviewitem[2]] ?
-                  (<div className="imgPropContent addContent overview" >
-                  <p className= "overviewTitle value"> {`${overviewitem[3]} ${currentProfile[overviewitem[2]]}`} </p>
-
+               currentUserProfile[overviewitem[2]] ?
+              (<li key={"overviewitem" + idx} className="overviewItem">
+                <Link to={`/profile/${this.props.match.params.userId}/edit/${overviewitem[1]}`}>
+                  <div className="imgPropContent addContent overview" >
+                    <p className= "overviewTitle value"> {`${overviewitem[3]} ${currentUserProfile[overviewitem[2]]}`} </p>
                   </div>
-                ) :
-                (<div className="imgPropContent addContent overview">
-                <FaPlus/>
-                <p className= "overviewTitle"> {overviewitem[0]} </p>
-              </div>)
-
-                }
+                </Link>
+              </li>)
+                 :
+              <li key={"overviewitem" + idx} className="overviewItem"  style={editCheck}>
+                <Link to={`/profile/edit/${overviewitem[1]}`}>
+                (<div className="imgPropContent addContent overview" >
+                  <FaPlus/>
+                  <p className= "overviewTitle"> {overviewitem[0]} </p>
+                </div>)
                 </Link>
               </li>
             ))}

@@ -2,12 +2,12 @@ import React from 'react';
 import {FaUser, FaPlus} from 'react-icons/lib/fa/';
 import {Route, NavLink} from 'react-router-dom';
 import UnitForm from './unit_form';
-import EditDetailsContainer from './edit_details_container';
-import EditPlacesContainer from './edit_places_container';
+import AboutDetailsContainer from './edit_details_container';
+import AboutPlacesContainer from './edit_places_container';
 import UnitFormArrayImg from './unit_form_array_img';
 import OverviewContainer from './overview_container';
 
-class EditProfile extends React.Component {
+class AboutProfile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -20,11 +20,11 @@ class EditProfile extends React.Component {
   componentWillReceiveProps(newProps){
   }
 
-  navLinks(){
+  navLinks(userId){
     return (<ul id= "editProfileTabs">
       {this.profileDetails.map((detail, idx)=>(
           <NavLink className="navLink" key={idx + "profilenav"}
-            to={`/profile/${this.props.match.params.userId}/about/${detail[1]}`}
+            to={`/profile/${userId}/about/${detail[1]}`}
             activeClassName="activeLink"
             activeStyle={{ fontWeight: 'bold', color: 'black' }}>
             {detail[0]}
@@ -34,6 +34,7 @@ class EditProfile extends React.Component {
   }
 
   render(){
+    const userId = this.props.match.params.userId;
     return (
       <div id="editProfile" className="primaryContainer">
         <h1>
@@ -41,10 +42,10 @@ class EditProfile extends React.Component {
           <a>About</a>
         </h1>
         <div id="editProfileContent"  className="primaryContent">
-          {this.navLinks()}
-          <Route path='/profile/:userId/about/overview' component={OverviewContainer} />
-          <Route path='/profile/:userId/about/places'   component={EditPlacesContainer}/>
-          <Route path='/profile/:userId/about/details' component={EditDetailsContainer} />
+          {this.navLinks(userId)}
+          <Route path={`/profile/${userId}/about/overview`} component={OverviewContainer} />
+          <Route path={`/profile/${userId}/aboutplaces`} component={AboutPlacesContainer} />
+          <Route path={`/profile/${userId}/about/details`} component={AboutDetailsContainer} />
 
         </div>
       </div>
@@ -54,4 +55,4 @@ class EditProfile extends React.Component {
 
 }
 
-export default EditProfile;
+export default AboutProfile;

@@ -13,10 +13,11 @@ class UnitForm extends React.Component {
     this.deleteProp = this.deleteProp.bind(this);
     this.selectAutoresult = this.selectAutoresult.bind(this);
     this.state = {[props.profileInfo.propName]: props.profileInfo.value,
-                  currentUserId: props.currentUserProfile.id,
+                  viewedUserId: props.viewedUserProfile.id,
                   editMode: false,
                   autocompleteOptions: [],
-                  showauto: false};
+                  showauto: false,
+                  editCheck: this.props.editCheck};
 
   }
 
@@ -41,7 +42,7 @@ autocomplete(){
 
 handleSubmit(propName){
   return (e)=> {
-    const userId = this.state.currentUserId;
+    const userId = this.state.viewedUserId;
     const value = this.state[propName];
     this.state.editMode = false;
     this.props.updateProp({[propName]: this.state[propName]}, userId);
@@ -77,7 +78,7 @@ selectAutoresult(e) {
 
 showComponent(value, instruction, inputLabel){
   return value === "" ?
-  (<div onClick={this.toggleEditMode} className="imgPropContent addContent">
+  (<div onClick={this.toggleEditMode} className="imgPropContent addContent" style={this.state.editCheck}>
     <FaPlus/>
     <a> {instruction} </a>
   </div>) :
@@ -92,7 +93,7 @@ showComponent(value, instruction, inputLabel){
           {inputLabel}
         </h4>
       </div>
-      <div onClick={this.toggleEditMode} className="editDisplay">
+      <div onClick={this.toggleEditMode} className="editDisplay" style={this.state.editCheck}>
         <a>
           <FaPencil/>
           Edit
@@ -108,7 +109,7 @@ showComponent(value, instruction, inputLabel){
 
 editComponent(inputLabel, value, propName){
   return (
-  <form className="propForm">
+  <form className="propForm" style={this.state.editCheck}>
     <div className="entry">
       <h3> {inputLabel} </h3>
       <div>
@@ -121,7 +122,7 @@ editComponent(inputLabel, value, propName){
       <button onClick={this.toggleEditMode} className="cancelForm"> Cancel </button>
     </div>
   </form>
-  )
+);
 }
 
 
@@ -133,7 +134,7 @@ editComponent(inputLabel, value, propName){
           this.editComponent(inputLabel, value, propName) :
           this.showComponent(value, instruction, inputLabel)
         }
-      </div>)
+      </div>);
 
   }
 }

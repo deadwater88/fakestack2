@@ -28,24 +28,26 @@ class ProfileHeader extends React.Component {
   }
 
   render(){
-    const {uploadProfilePic, currentUserProfile} = this.props;
+
+    const {uploadProfilePic, currentUserProfile, viewedUserProfile} = this.props;
     const coverImgUrl = currentUserProfile.coverImgUrl;
+    const editCheck = currentUserProfile.id === viewedUserProfile.id ? {}: {display: "none"};
     return (
         <div id="profileHeader">
           <div id="profilePictureContainer">
             <ProfilePictureContainer uploadProfilePic={uploadProfilePic} className="profileImg"/>
           </div>
           <div id="coverImgHolder">
-            <FaCamera id="editCoverCamera"/>
-            <div onClick={this.uploadCoverPic} id="editCoverButton">
+            <FaCamera id="editCoverCamera" style={editCheck}/>
+            <div onClick={this.uploadCoverPic} id="editCoverButton" style={editCheck}>
               Add Cover Photo
             </div>
-            { coverImgUrl === "" ? <div id="coverImg"></div> : <img src={currentUserProfile.coverImgUrl} id="coverImg"/>}
+            { coverImgUrl === "" ? <div id="coverImg"></div> : <img src={viewedUserProfile.coverImgUrl} id="coverImg"/>}
           </div>
           <div id="profileNav">
             {this.profileNavs.map((nav, idx)=>(
               <NavLink className="headerLink" key={idx + "headernav"}
-                to={`/profile/${nav[0]}`}
+                to={`/profile/${viewedUserProfile.id}/${nav[0]}`}
                 activeClassName="headerLink selected"
                 activeStyle={{ color: 'black' }}>
                 {nav[1]}
@@ -58,7 +60,7 @@ class ProfileHeader extends React.Component {
             </Link>
           </div>
             <Link to="/profile/about/overview">
-              <button id="headerButton">
+              <button id="headerButton" style={editCheck} >
                 <FaPencil/>
                 Edit Profile
               </button>

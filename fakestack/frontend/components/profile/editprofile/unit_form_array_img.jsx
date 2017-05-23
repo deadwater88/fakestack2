@@ -11,10 +11,11 @@ class UnitFormArrayImg extends React.Component {
     this.deleteProp = this.deleteProp.bind(this);
     this.selectAutoresult = this.selectAutoresult.bind(this);
     this.state = {[props.profileInfo.propName]: props.profileInfo.values,
-                  currentUserId: props.currentUserProfile.id,
+                  viewedUserId: props.viewedUserProfile.id,
                   editMode: Array(props.profileInfo.values.length).fill(false),
                   autocompleteOptions: [],
-                  showauto: false};
+                  showauto: false,
+                  editCheck: this.props.profileInfo.editCheck};
 
   }
 

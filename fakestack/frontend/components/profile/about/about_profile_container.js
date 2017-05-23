@@ -1,10 +1,9 @@
-import Overview from "./overview";
+import AboutProfile from "./about_profile";
 import { connect } from 'react-redux';
 import { updateProp } from '../../../actions/profiles_actions';
 
 const mapStateToProps = (state) => ({
-  currentUserProfile: state.currentUserProfile,
-  viewedUserProfile: state.viewedUserProfile
+  currentUserProfile: state.currentUserProfile
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -12,4 +11,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps,
-               mapDispatchToProps)(Overview);
+               mapDispatchToProps)(AboutProfile);
