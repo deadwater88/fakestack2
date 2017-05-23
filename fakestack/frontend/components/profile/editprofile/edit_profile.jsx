@@ -5,6 +5,7 @@ import UnitForm from './unit_form';
 import EditDetailsContainer from './edit_details_container';
 import EditPlacesContainer from './edit_places_container';
 import UnitFormArrayImg from './unit_form_array_img';
+import OverviewContainer from './overview_container';
 
 class EditProfile extends React.Component {
 
@@ -41,8 +42,10 @@ class EditProfile extends React.Component {
         </h1>
         <div id="editProfileContent"  className="primaryContent">
           {this.navLinks()}
-          <Route path='/profile/edit/places' render={EditPlacesContainer}/>
+          <Route path='/profile/edit/overview' component={OverviewContainer} />
+          <Route path='/profile/edit/places'   component={EditPlacesContainer}/>
           <Route path='/profile/edit/details' component={EditDetailsContainer} />
+
         </div>
       </div>
     );

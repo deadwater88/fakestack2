@@ -39,7 +39,7 @@ a.navLink {
 }
 
 .imgPropContent > a {
-  font-size: 20px;
+  font-size: 16px;
   color: #4080ff;
   padding: 20px 10px 20px 0px;
 }
@@ -58,7 +58,7 @@ div.propertyContainer > div:last-child {
 
 
 div.propertyForm {
-    padding-top: 30px;
+    padding-top: 20px;
     padding-left: 25px;
     padding-right: 25px;
     border-left: 1px solid #D3D6DB;
@@ -171,7 +171,7 @@ div.editDisplay {
 div.editDisplay a {
   margin-right: 10px;
   color: #4080ff;
-  padding: 5px;
+  padding: 1px;
   border-right: 1px solid #E9EBEE;
 
 }
@@ -233,4 +233,34 @@ button.cancelForm:hover {
   background-color:#3B5998;
   color: white;
   cursor: pointer;
+}
+
+li.overviewItem {
+  padding: 5px 0 15px 0;
+  border-bottom: 1px solid #E9EBEE;
+}
+
+ul#overviewItems li:last-child{
+  border: 0 none;
+  padding-bottom: 15px;
+}
+
+ul#overviewItems a:active, ul#overviewItems a {
+  text-decoration: none;
+}
+
+div.imgPropContent.addContent.overview {
+  border: 0 none;
+}
+
+p.overviewTitle {
+  color: #4080ff;
+  text-decoration: none;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+p.overviewTitle.value {
+  color: gray;
 }

@@ -18647,6 +18647,10 @@ var _unit_form_array_img = __webpack_require__(1051);
 
 var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
 
+var _overview_container = __webpack_require__(1054);
+
+var _overview_container2 = _interopRequireDefault(_overview_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18709,7 +18713,8 @@ var EditProfile = function (_React$Component) {
           'div',
           { id: 'editProfileContent', className: 'primaryContent' },
           this.navLinks(),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit/places', render: _edit_places_container2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit/overview', component: _overview_container2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit/places', component: _edit_places_container2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/edit/details', component: _edit_details_container2.default })
         )
       );
@@ -18841,8 +18846,6 @@ var UnitForm = function (_React$Component) {
       var _this3 = this;
 
       return function (e) {
-        var propName = _this3.props.profileInfo.propName;
-
         var userId = _this3.state.currentUserId;
         var value = _this3.state[propName];
         _this3.state.editMode = false;
@@ -19692,7 +19695,7 @@ var ProfileHeader = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ProfileHeader.__proto__ || Object.getPrototypeOf(ProfileHeader)).call(this, props));
 
     _this.uploadCoverPic = _this.uploadCoverPic.bind(_this);
-    _this.profileNavs = [["timeline", "Timeline"], ["edit", "About"], ["friends", "Friends"], ["photos", "Photos"]];
+    _this.profileNavs = [["timeline", "Timeline"], ["edit/overview", "About"], ["friends", "Friends"], ["photos", "Photos"]];
     return _this;
   }
 
@@ -19913,7 +19916,7 @@ var ProfileDetails = function (_React$Component) {
     key: 'handleChange',
     value: function handleChange(e) {
       e.preventDefault();
-      this.setState({ intro: e.currentTarget.value });
+      this.setState({ intro: e.currentTarget.value, introCount: e.currentTarget.value.length });
     }
   }, {
     key: 'handleSubmit',
@@ -64964,7 +64967,7 @@ var UnitFormArrayImg = function (_React$Component) {
     value: function editComponent(inputLabel, value, propName, idx1) {
       return _react2.default.createElement(
         'form',
-        { className: 'propForm' },
+        { key: propName + idx1, className: 'propForm' },
         _react2.default.createElement(
           'ul',
           { className: 'entryTextContainer' },
@@ -65089,9 +65092,13 @@ var _unit_form_text = __webpack_require__(172);
 
 var _unit_form_text2 = _interopRequireDefault(_unit_form_text);
 
-var _unit_form_array = __webpack_require__(171);
+var _unit_form_array_img = __webpack_require__(1051);
 
-var _unit_form_array2 = _interopRequireDefault(_unit_form_array);
+var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
+
+var _unit_form = __webpack_require__(170);
+
+var _unit_form2 = _interopRequireDefault(_unit_form);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65139,10 +65146,10 @@ var EditPlacesForm = function (_React$Component) {
             { className: 'contentHeader' },
             ' CURRENT CITY AND HOMETOWN '
           ),
-          _react2.default.createElement(UnitForm, { profileInfo: profileInfoCurrentCity,
+          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoCurrentCity,
             currentUserProfile: this.props.currentUserProfile,
             updateProp: this.props.updateProp }),
-          _react2.default.createElement(UnitForm, { profileInfo: profileInfoHometown,
+          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoHometown,
             currentUserProfile: this.props.currentUserProfile,
             updateProp: this.props.updateProp })
         ),
@@ -65155,9 +65162,137 @@ var EditPlacesForm = function (_React$Component) {
             ' OTHER PLACES LIVED '
           )
         ),
-        _react2.default.createElement(UnitFormArrayImg, { profileInfo: profileInfoPlaces,
+        _react2.default.createElement(_unit_form_array_img2.default, { profileInfo: profileInfoPlaces,
           currentUserProfile: this.props.currentUserProfile,
           updateProp: this.props.updateProp })
+      );
+    }
+  }]);
+
+  return EditPlacesForm;
+}(_react2.default.Component);
+
+exports.default = EditPlacesForm;
+
+/***/ }),
+/* 1054 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _overview = __webpack_require__(1055);
+
+var _overview2 = _interopRequireDefault(_overview);
+
+var _reactRedux = __webpack_require__(15);
+
+var _profiles_actions = __webpack_require__(38);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserProfile: state.currentUserProfile
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateProp: function updateProp(prop, userId) {
+      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_overview2.default);
+
+/***/ }),
+/* 1055 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fa = __webpack_require__(14);
+
+var _reactRouterDom = __webpack_require__(22);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EditPlacesForm = function (_React$Component) {
+  _inherits(EditPlacesForm, _React$Component);
+
+  function EditPlacesForm() {
+    _classCallCheck(this, EditPlacesForm);
+
+    return _possibleConstructorReturn(this, (EditPlacesForm.__proto__ || Object.getPrototypeOf(EditPlacesForm)).apply(this, arguments));
+  }
+
+  _createClass(EditPlacesForm, [{
+    key: 'render',
+    value: function render() {
+      var overviews = [['Add a workplace', "work", "work", "Worked at"], ['Add a school', "education", "education", "Attended"], ['Add a your current city', "places", "currentCity", "Lives in"], ['Add your hometown', "places", "hometown", "From"]];
+      var currentProfile = this.props.currentUserProfile;
+      return _react2.default.createElement(
+        'div',
+        { className: 'propertyForm' },
+        _react2.default.createElement(
+          'ul',
+          { id: 'overviewItems' },
+          overviews.map(function (overviewitem, idx) {
+            return _react2.default.createElement(
+              'li',
+              { key: "overviewitem" + idx, className: 'overviewItem' },
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/profile/edit/' + overviewitem[1] },
+                currentProfile[overviewitem[2]] ? _react2.default.createElement(
+                  'div',
+                  { className: 'imgPropContent addContent overview' },
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'overviewTitle value' },
+                    ' ',
+                    overviewitem[3] + ' ' + currentProfile[overviewitem[2]],
+                    ' '
+                  )
+                ) : _react2.default.createElement(
+                  'div',
+                  { className: 'imgPropContent addContent overview' },
+                  _react2.default.createElement(_fa.FaPlus, null),
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'overviewTitle' },
+                    ' ',
+                    overviewitem[0],
+                    ' '
+                  )
+                )
+              )
+            );
+          })
+        )
       );
     }
   }]);

@@ -111,7 +111,7 @@ showInstruction(instruction, lastidx) {
 
 editComponent(inputLabel, value, propName, idx1){
   return (
-  <form className="propForm">
+  <form key={propName + idx1} className="propForm">
     <ul className="entryTextContainer">
       <div className="entry">
         <h3> {inputLabel} </h3>

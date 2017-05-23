@@ -15,7 +15,7 @@ class ProfileDetails extends React.Component {
 
   handleChange(e){
     e.preventDefault();
-    this.setState({intro: e.currentTarget.value});
+    this.setState({intro: e.currentTarget.value, introCount: e.currentTarget.value.length});
   }
 
   handleSubmit(e){

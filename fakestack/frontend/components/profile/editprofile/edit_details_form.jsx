@@ -5,7 +5,6 @@ import UnitFormArray from './unit_form_array';
 
 class EditDetailsForm extends React.Component {
 
-
     render (){
     const biographyInfo = {updateProp: this.props.updateProp,
                              instruction: "Write some details about yourself",

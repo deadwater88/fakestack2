@@ -41,7 +41,6 @@ autocomplete(){
 
 handleSubmit(propName){
   return (e)=> {
-    const {propName} = this.props.profileInfo;
     const userId = this.state.currentUserId;
     const value = this.state[propName];
     this.state.editMode = false;
@@ -60,20 +59,20 @@ autoresults(){
     {this.state.autocompleteOptions.map((option, idx)=>(
       <li key={idx + "autocomplete"} onClick={this.selectAutoresult}> {option.description} </li>
     ))}
-  </ul>) : ""
+  </ul>) : "";
 }
 
 deleteProp(e){
   e.stopPropagation();
-  const {propName} = this.props.profileInfo
-  const userId = this.state.currentUserId
-  this.state.editMode = false
-  this.props.updateProp({[propName]: ""}, this.state.currentUserId)
+  const {propName} = this.props.profileInfo;
+  const userId = this.state.currentUserId;
+  this.state.editMode = false;
+  this.props.updateProp({[propName]: ""}, this.state.currentUserId);
 }
 
 selectAutoresult(e) {
-  const {propName} = this.props.profileInfo
-  this.setState({[propName]: e.currentTarget.innerText, showauto: false })
+  const {propName} = this.props.profileInfo;
+  this.setState({[propName]: e.currentTarget.innerText, showauto: false });
 }
 
 showComponent(value, instruction, inputLabel){

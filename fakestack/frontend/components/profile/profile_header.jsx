@@ -10,7 +10,7 @@ class ProfileHeader extends React.Component {
     super(props);
     this.uploadCoverPic = this. uploadCoverPic.bind(this);
     this.profileNavs = [["timeline", "Timeline"],
-                        ["edit", "About"],
+                        ["edit/overview", "About"],
                         ["friends", "Friends"],
                         ["photos", "Photos"]];
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import UnitFormText from './unit_form_text';
-import UnitFormArray from './unit_form_array';
+import UnitFormArrayImg from './unit_form_array_img';
+import UnitForm from './unit_form';
 
 
 class EditPlacesForm extends React.Component {
