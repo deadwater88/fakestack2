@@ -12,7 +12,6 @@ class Profile extends React.Component{
   }
 
   componentWillReceiveProps(newprops){
-    console.log(newprops);
   }
 
   render(){

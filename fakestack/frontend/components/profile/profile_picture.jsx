@@ -12,7 +12,6 @@ class ProfilePicture extends React.Component {
   uploadProfilePic(e){
     const upLoadProfilePic = this.props.uploadProfilePic;
     const userId = this.props.currentUserProfile.id;
-    console.log("clicked");
     window.cloudinary.openUploadWidget(window.cloudinary_options,
     (error, images)=>{
       if (error === null) {

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { updateProp } from '../../../actions/profiles_actions';
 
 
-console.log(EditPlacesForm);
 const mapStateToProps = (state) =>({
   currentUserProfile: state.currentUserProfile
 });

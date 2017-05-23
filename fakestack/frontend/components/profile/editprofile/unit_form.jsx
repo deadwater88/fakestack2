@@ -31,7 +31,7 @@ autocomplete(){
   if (input.length > 2){
     $.ajax({
       url:`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&type=(cities)&key=${window.places_key}`
-    }).then(res=>{console.log(res);
+    }).then(res=>{
       this.setState({autocompleteOptions: res.predictions},()=>{
         this.setState({showauto: true});
       });
