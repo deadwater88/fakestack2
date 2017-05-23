@@ -4,7 +4,6 @@ import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
 class UnitFormText extends React.Component {
   constructor(props){
     super(props);
-    this.autocomplete = this.autocomplete.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
@@ -24,19 +23,6 @@ handleChange(e){
   e.preventDefault();
   const {propName} = this.props.profileInfo;
   this.setState({[propName]: e.currentTarget.value});
-}
-
-autocomplete(){
-  let input = this.state[this.props.profileInfo.propName];
-  if (input.length > 2){
-    $.ajax({
-      url:`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&type=(cities)&key=${window.places_key}`
-    }).then(
-      this.setState({autocompleteOptions: res.predictions},()=>{
-        this.setState({showauto: true});
-      });
-    });
-  }
 }
 
 handleSubmit(propName){
