@@ -7,18 +7,21 @@ import NewsFeed from './newsfeed/newsfeed';
 import ProfileContainer from './profile/profile_container';
 
 
-const App = () => (
+const App = (props) =>  {
+  return (
   <div id="AppElement">
     <header>
       <ProtectedRoute path="/" component={HeaderContainer} > LoggedIn </ProtectedRoute>
     </header>
     <Switch>
       <ProtectedRoute path="/home" component={NewsFeed} > LoggedIn </ProtectedRoute>
-      <ProtectedRoute path="/profile" component={ProfileContainer} >  </ProtectedRoute>
+      <ProtectedRoute path={`/profile/:userId`} component={ProfileContainer} >  </ProtectedRoute>
       <AuthRoute path="/" component={AuthFormContainer}></AuthRoute>
     </Switch>
   </div>
 );
+
+};
 
 
 

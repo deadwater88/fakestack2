@@ -24,7 +24,7 @@ class EditProfile extends React.Component {
     return (<ul id= "editProfileTabs">
       {this.profileDetails.map((detail, idx)=>(
           <NavLink className="navLink" key={idx + "profilenav"}
-            to={`/profile/edit/${detail[1]}`}
+            to={`/profile/about/${detail[1]}`}
             activeClassName="activeLink"
             activeStyle={{ fontWeight: 'bold', color: 'black' }}>
             {detail[0]}
@@ -42,9 +42,9 @@ class EditProfile extends React.Component {
         </h1>
         <div id="editProfileContent"  className="primaryContent">
           {this.navLinks()}
-          <Route path='/profile/edit/overview' component={OverviewContainer} />
-          <Route path='/profile/edit/places'   component={EditPlacesContainer}/>
-          <Route path='/profile/edit/details' component={EditDetailsContainer} />
+          <Route path='/profile/about/overview' component={OverviewContainer} />
+          <Route path='/profile/about/places'   component={EditPlacesContainer}/>
+          <Route path='/profile/about/details' component={EditDetailsContainer} />
 
         </div>
       </div>

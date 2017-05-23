@@ -208,6 +208,7 @@ a.profilePicLink svg {
   padding: 0 10px 0 10px;
   border: 1px solid black;
   border-radius: 1px;
+  z-index: 5;
 }
 
 #headerButton:hover {

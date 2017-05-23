@@ -10,7 +10,7 @@ class ProfileHeader extends React.Component {
     super(props);
     this.uploadCoverPic = this. uploadCoverPic.bind(this);
     this.profileNavs = [["timeline", "Timeline"],
-                        ["edit/overview", "About"],
+                        ["about/overview", "About"],
                         ["friends", "Friends"],
                         ["photos", "Photos"]];
   }
@@ -57,7 +57,7 @@ class ProfileHeader extends React.Component {
               <FaChevronDown/>
             </Link>
           </div>
-            <Link to="/profile/edit">
+            <Link to="/profile/about/overview">
               <button id="headerButton">
                 <FaPencil/>
                 Edit Profile

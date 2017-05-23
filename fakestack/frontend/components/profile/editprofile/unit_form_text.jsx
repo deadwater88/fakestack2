@@ -71,9 +71,9 @@ showComponent(value, instruction, inputLabel){
   (<div className="imgPropContent showContent">
     <div className= "infoDisplay">
       <div className="valueDisplay">
-        <h1 className="valueDisplay text">
+        <h4 className="valueDisplay text">
           {value}
-        </h1>
+        </h4>
       </div>
       <div onClick={this.toggleEditMode} className="editDisplay">
         <a>
@@ -86,17 +86,16 @@ showComponent(value, instruction, inputLabel){
       </div>
 
     </div>
-  </div>)
+  </div>);
 }
 
-editComponent(inputLabel, value, propName){
+editComponent(inputLabel, value, propName, instruction){
   return (
   <form className="propForm">
     <div className="entry text">
       <h3> {inputLabel} </h3>
       <div>
-        <textarea onChange={this.handleChange} type="text" placeholder= {value} value={this.state[propName]} />
-        {this.autoresults()}
+        <textarea onChange={this.handleChange} type="text" placeholder= {instruction} value={this.state[propName]} />
       </div>
     </div>
     <div className="formButtons">
@@ -104,7 +103,7 @@ editComponent(inputLabel, value, propName){
       <button onClick={this.toggleEditMode} className="cancelForm"> Cancel </button>
     </div>
   </form>
-  )
+);
 }
 
 
@@ -113,10 +112,10 @@ editComponent(inputLabel, value, propName){
     return (
       <div className="imgPropUnit">
         {this.state.editMode ?
-          this.editComponent(inputLabel, value, propName) :
+          this.editComponent(inputLabel, value, propName, instruction) :
           this.showComponent(value, instruction, inputLabel)
         }
-      </div>)
+      </div>);
 
   }
 }

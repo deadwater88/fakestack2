@@ -118,7 +118,7 @@
     }
   }
 
-  viewedUser: {
+  viewedUserProfile: {
     id: 4,
     firstName: "Kate"
     lastName: "Winslet"

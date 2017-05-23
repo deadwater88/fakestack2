@@ -4,13 +4,21 @@ class ProfileDetails extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { introEditMode: false,
+    this.state = { profileId: this.props.match.params.userId,
+                   introEditMode: false,
                    introCount: props.currentUserProfile.intro.length,
                    intro: props.currentUserProfile.intro
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount(){
+    const {viewedUserProfile} = this.props;
+    if ( !viewedUserProfile || viewedUserProfile.id !== parseInt(this.props.match.params.userId)) {
+      this.props.fetchViewedProfile(this.props.match.params.userId);
+    }
   }
 
   handleChange(e){
@@ -47,7 +55,8 @@ class ProfileDetails extends React.Component {
   }
 
   showProp(){
-    return (<div id="introContainer">
+    return (
+    <div id="introContainer">
       <h5>{this.state.intro}</h5>
       <FaPencil onClick={this.toggleEditMode} className="editPencil"/>
     </div>);

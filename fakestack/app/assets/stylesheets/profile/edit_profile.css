@@ -1,7 +1,10 @@
 #editProfileContent {
   display: flex;
   flex-direction: row;
+}
 
+div.primaryContainer{
+  margin-bottom: 40px;
 }
 
 #editProfileContent .activeLink {
@@ -191,6 +194,16 @@ h1.valueDisplay {
   color: #365899;
   background-color: white;
   padding-bottom: 5px;
+}
+
+h4.valueDisplay {
+  color: #4b4f56;
+  max-width:  550px;
+  word-break: break-all;
+  white-space: pre-line;
+  text-align: left;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 div.valueDisplay {

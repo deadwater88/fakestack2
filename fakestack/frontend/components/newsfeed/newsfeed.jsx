@@ -1,6 +1,7 @@
 import React from 'react';
 import HeaderContainer from '../header_nav/header_container';
-
+import WestBar from './westbar';
+import EastBar from './eastbar';
 
 class NewsFeed extends React.Component{
   constructor(props){
@@ -15,15 +16,11 @@ class NewsFeed extends React.Component{
     return (
     <div id="newsfeedpage">
       <div id="mainNewsFeed">
-        <div>
-          SideBar
-        </div>
+        <WestBar/>
         <div>
           Main Content
         </div>
-        <div>
-          Right bar
-        </div>
+        <EastBar/>
       </div>
     </div>);
   }

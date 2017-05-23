@@ -11,7 +11,11 @@ class Profile extends React.Component{
       super(props);
   }
 
-  componentWillReceiveProps(newprops){
+  componentWillMount(){
+    const {viewedUserProfile} = this.props;
+    if ( !viewedUserProfile || viewedUserProfile.id !== parseInt(this.props.match.params.userId)) {
+      this.props.fetchViewedProfile(this.props.match.params.userId);
+    }
   }
 
   render(){
@@ -19,8 +23,8 @@ class Profile extends React.Component{
     return (
       <div id="profilePage">
         <ProfileHeader uploadPic={uploadPic} currentUserProfile={currentUserProfile}/>
-        <Route path="/profile/timeline" component={Timeline}></Route>
-        <Route path="/profile/edit" component={EditProfileContainer}></Route>
+        <Route path="/profile/:userId/timeline" component={Timeline}></Route>
+        <Route path="/profile/:userId/about" component={EditProfileContainer}></Route>
       </div>
     );
   }

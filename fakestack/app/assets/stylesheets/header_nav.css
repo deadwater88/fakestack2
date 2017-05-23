@@ -137,7 +137,7 @@ div#headerNavMenu svg {
   margin-right: 15px;
 }
 
-div#headerNavMenu svg:hover {
+div#menu2 svg:hover, div#menu3 svg:hover {
   fill: white;
 }
 
