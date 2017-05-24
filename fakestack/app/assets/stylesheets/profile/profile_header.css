@@ -33,6 +33,15 @@
   z-index: 3;
 }
 
+#coverImgHolder > h1 {
+  color: white;
+  z-index: 100;
+  position: absolute;
+  bottom: 20px;
+  left: 220px;
+  font-size: 26px;
+}
+
 #profilePictureContainer {
   display: flex;
   flex-direction: column;
@@ -200,14 +209,14 @@ a.profilePicLink svg {
   bottom: 65px;
   background-color: #F6F7F9;
   width: auto;
-  height: 26px;
+  height: 30px;
   align-items: center;
   font-size: 12px;
   font-weight: bold;
   color: #4B4F56;
   padding: 0 10px 0 10px;
   border: 1px solid black;
-  border-radius: 1px;
+  border-radius: 3px;
   z-index: 5;
 }
 

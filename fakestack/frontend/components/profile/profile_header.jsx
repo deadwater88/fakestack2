@@ -36,7 +36,7 @@ class ProfileHeader extends React.Component {
     return (
         <div id="profileHeader">
           <div id="profilePictureContainer">
-            <ProfilePictureContainer uploadProfilePic={uploadProfilePic} className="profileImg"/>
+            <ProfilePictureContainer imgUrl={viewedUserProfile.profileImgUrl} className="profileImg"/>
           </div>
           <div id="coverImgHolder">
             <FaCamera id="editCoverCamera" style={editCheck}/>
@@ -44,6 +44,7 @@ class ProfileHeader extends React.Component {
               Add Cover Photo
             </div>
             { coverImgUrl === "" ? <div id="coverImg"></div> : <img src={viewedUserProfile.coverImgUrl} id="coverImg"/>}
+            <h1> {`${viewedUserProfile.firstName} ${viewedUserProfile.lastName}`} </h1>
           </div>
           <div id="profileNav">
             {this.profileNavs.map((nav, idx)=>(
@@ -54,11 +55,10 @@ class ProfileHeader extends React.Component {
                 {nav[1]}
               </NavLink>
             ))}
-            <Link className="NavLink"
-              to="/profile/more">
+            <a className="NavLink">
               More
               <FaChevronDown/>
-            </Link>
+            </a>
           </div>
             <Link to={`/profile/${currentUserProfile.id}/about/overview`}>
               <button id="headerButton" style={editCheck} >

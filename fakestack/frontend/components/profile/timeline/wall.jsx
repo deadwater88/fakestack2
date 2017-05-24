@@ -7,8 +7,12 @@ class Wall extends React.Component {
     super(props);
   }
 
+  componentWillMount(){
+    debugger
+    this.props.fetchPosts(this.props.location_id)
+  }
+
   render(){
-    const {comments} = this.props.comments;
     return (
     <div className="right Panel">
       <PostFormContainer/>

@@ -6,8 +6,8 @@ class ProfileDetails extends React.Component {
     super(props);
     this.state = { profileId: this.props.match.params.userId,
                    introEditMode: false,
-                   introCount: props.currentUserProfile.intro.length,
-                   intro: props.currentUserProfile.intro
+                   introCount: props.viewedUserProfile.intro.length,
+                   intro: props.viewedUserProfile.intro
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
@@ -38,8 +38,9 @@ class ProfileDetails extends React.Component {
 
   editProp(){
     return (<div id="introForm">
-      <textarea onChange={this.handleChange}
+      <textarea id="introTextInput" onChange={this.handleChange}
          placeholder="Describe who you are"
+         autoFocus
           value={this.state.intro}></textarea>
       <div id="introFormButtonContainer">
         <div id="introCount"> {101 - this.state.introCount} </div>
@@ -56,10 +57,12 @@ class ProfileDetails extends React.Component {
 
   showProp(){
     return (
-    <div id="introContainer">
-      <h5>{this.state.intro}</h5>
-      <FaPencil onClick={this.toggleEditMode} className="editPencil"/>
-    </div>);
+      <label htmlFor="introTextInput">
+        <div id="introContainer">
+          <h5>{this.state.intro}</h5>
+          <FaPencil onClick={this.toggleEditMode} className="editPencil"/>
+        </div>
+      </label>);
   }
 
   render(){

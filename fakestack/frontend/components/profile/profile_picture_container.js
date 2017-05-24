@@ -3,9 +3,10 @@ import { uploadPic } from '../../actions/profiles_actions';
 import ProfilePicture from './profile_picture';
 
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state, ownProps) =>({
   currentUserProfile: state.currentUserProfile,
-  viewedUserProfile: state.viewedUserProfile
+  viewedUserProfile: state.viewedUserProfile,
+  imgUrl: ownProps.imgUrl
 });
 
 const mapDispatchToProps = (dispatch) => ({

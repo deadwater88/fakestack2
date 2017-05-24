@@ -16,11 +16,11 @@ class EditPlacesForm extends React.Component {
       <div className="propertyForm">
         <ul id="overviewItems">
             {overviews.map((overviewitem, idx)=>(
-               currentUserProfile[overviewitem[2]] ?
+               viewedUserProfile[overviewitem[2]] ?
               (<li key={"overviewitem" + idx} className="overviewItem">
                 <Link to={`/profile/${this.props.match.params.userId}/edit/${overviewitem[1]}`}>
                   <div className="imgPropContent addContent overview" >
-                    <p className= "overviewTitle value"> {`${overviewitem[3]} ${currentUserProfile[overviewitem[2]]}`} </p>
+                    <p className= "overviewTitle value"> {`${overviewitem[3]} ${viewedUserProfile[overviewitem[2]]}`} </p>
                   </div>
                 </Link>
               </li>)

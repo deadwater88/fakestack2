@@ -2,11 +2,19 @@ class Api::PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.author_id = current_user.id
-    if @comment.save
+    if @post.save
       render :show
     else
-      render json: @comment.errors.full_messages, status: 400
+      render json: @post.errors.full_messages, status: 400
     end
+  end
+
+  def index
+    debugger
+    @user = User.find_by(id: params[:user_id])
+    @posts = @user.authored_posts + @user.wall_posts + @user.friends.(:authored_posts) + @user.friends.(:wall_posts)
+    debugger
+    
   end
 
   def destroy
@@ -44,6 +52,6 @@ class Api::PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:content, :author_id,)
+    params.require(:post).permit(:content, :location_id, :author_id,)
   end
 end

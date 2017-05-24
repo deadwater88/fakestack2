@@ -16,13 +16,14 @@ class HeaderNav extends React.Component {
     this.props.logout();
   }
 
-  componentDidMount(){
+  componentWillMount(){
     this.props.fetchCurrentUser(this.props.currentUser.id);
+    this.props.fetchRelevantUsers(this.props.currentUser.id)
   }
 
   showDropdown(e) {
     e.preventDefault;
-    document.getElementsByClassName("dropDown-content")[0].classList.toggle("show");
+    document.getElementsByClassName("dropDown-content logOut")[0].classList.toggle("show");
   }
 
   render(){
@@ -34,12 +35,12 @@ class HeaderNav extends React.Component {
           <div id="searchContainer">
             <Link to='/home'> <FaFacebookOfficial className="white"/>
             </Link>
-            <NavSearchBar/>
+            <NavSearchBar relevantUsers={this.props.relevantUsers}/>
           </div>
             <div id="headerNavMenu">
             <div id="menu1">
               <Link to={`/profile/${this.props.currentUser.id}/timeline`} id={"profilelink"}>
-                <ProfilePicture className="profileIcon"/>
+                <ProfilePicture imgUrl={this.props.currentUserProfile.profileImgUrl} className="profileIcon"/>
                 <h3 className="firstName">{firstName}</h3>
               </Link>
                 <Link to='/home'>Home</Link>
@@ -53,7 +54,7 @@ class HeaderNav extends React.Component {
               <FaQuestionCircle  className="icon"/>
               <div className="dropDown">
                 <FaChevronDown onClick={this.showDropdown} className="icon"/>
-                <ul className="dropDown-content">
+                <ul className="dropDown-content logOut">
                   <a onClick={this.handleLogOut}>Log Out</a>
                 </ul>
               </div>

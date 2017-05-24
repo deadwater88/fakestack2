@@ -8,8 +8,7 @@ const Timeline = (props) => {
         <div className="left Panel">
           <ProfileDetailsContainer/>
         </div>
-        <WallContainer >
-        </WallContainer>
+        <WallContainer location_id={props.match.params.userId}/>
       </div>
     );
 

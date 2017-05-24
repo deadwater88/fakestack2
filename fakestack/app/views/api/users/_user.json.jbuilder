@@ -13,3 +13,9 @@ json.extract!(user,
               :cover_img_url,
               :biography,
               :friends)
+
+json.friends do
+  user.friends.map do |friend|
+    friend.id
+  end
+end

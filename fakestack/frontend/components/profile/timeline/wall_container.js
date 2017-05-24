@@ -1,15 +1,16 @@
 import { connect } from 'react-redux';
 import Wall from './wall';
-import {selectCurrentUserComments} from '../../../utils/selectors';
+import {selectCurrentUserComments, selectWallPosts} from '../../../utils/selectors';
+import {fetchPosts} from '../../../actions/post_actions'
 
-
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state,ownProps) =>({
   currentUser: state.currentUser,
-  comments: selectCurrentUserComments(state)
+  comments: state.comments,
+  posts: selectWallPosts(state, ownProps.location_id)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logout: null,
+  fetchPosts: (id)=> dispatch(fetchPosts(id))
 });
 
 export default connect(mapStateToProps,

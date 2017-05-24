@@ -1,11 +1,5 @@
 import values from 'lodash/values'
 
-
-export const selectCurrentUserComments = (state)=> {
-  return "comments";
-
-};
-
 export const selectAllRelevantUsers = (state) => {
   return Object.values(state.relevantUsers)
 }

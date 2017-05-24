@@ -51,6 +51,8 @@ group :development do
   gem 'rack-livereload'
   gem 'pry-rails'
 
+  gem 'seed_dump', '~> 3.2', '>= 3.2.4'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

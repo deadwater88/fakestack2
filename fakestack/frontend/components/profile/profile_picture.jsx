@@ -22,17 +22,17 @@ class ProfilePicture extends React.Component {
   }
 
   render () {
-    const {viewedUserProfile, className} = this.props;
-    let editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {}: {display: "none"};
+    const { targetUser, className } = this.props;
+    let editable = this.props.currentUserProfile.id === this.props.viewedUserProfile.id
+    let editCheck = editable ? {}: {display: "none"};
     let img;
-    if (viewedUserProfile && viewedUserProfile.profileImgUrl !== "") {
-      img = (<img src={viewedUserProfile.profileImgUrl}/>);
+    if (this.props.imgUrl !== "") {
+      img = (<img src={this.props.imgUrl}/>);
     } else {
       img = (<FaUser/>);
     }
-
     return (
-      <div className={className}>
+      <div className={className} onClick={editable ? this.uploadProfilePic : ()=>{}}>
         {img}
         {className === 'profileImg' ? (<a onClick={this.uploadProfilePic} className="profilePicLink" style={editCheck}>
           <FaCamera/>

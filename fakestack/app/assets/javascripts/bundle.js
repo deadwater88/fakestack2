@@ -4825,11 +4825,15 @@ module.exports = ReactCurrentOwner;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.receiveViewedProfile = exports.receiveProfileErrors = exports.receiveCurrentUserProfile = exports.fetchViewedProfile = exports.fetchCurrentUser = exports.updateProp = exports.uploadPic = exports.RECEIVE_PROFILE_ERRORS = exports.RECEIVE_VIEWED_PROFILE = exports.RECEIVE_CURRENT_USER_PROFILE = undefined;
+exports.receiveViewedProfile = exports.receiveProfileErrors = exports.receiveCurrentUserProfile = exports.receiveRelevantUsers = exports.fetchRelevantUsers = exports.fetchViewedProfile = exports.fetchCurrentUser = exports.updateProp = exports.uploadPic = exports.RECEIVE_RELEVANT_USERS = exports.RECEIVE_PROFILE_ERRORS = exports.RECEIVE_VIEWED_PROFILE = exports.RECEIVE_CURRENT_USER_PROFILE = undefined;
 
 var _profile_api_util = __webpack_require__(194);
 
 var ProfileAPIUtil = _interopRequireWildcard(_profile_api_util);
+
+var _user_api_util = __webpack_require__(198);
+
+var UserApiUtil = _interopRequireWildcard(_user_api_util);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -4838,6 +4842,8 @@ var RECEIVE_CURRENT_USER_PROFILE = exports.RECEIVE_CURRENT_USER_PROFILE = 'RECEI
 var RECEIVE_VIEWED_PROFILE = exports.RECEIVE_VIEWED_PROFILE = 'RECEIVE_VIEWED_PROFILE';
 
 var RECEIVE_PROFILE_ERRORS = exports.RECEIVE_PROFILE_ERRORS = 'RECEIVE_PROFILE_ERRORS';
+
+var RECEIVE_RELEVANT_USERS = exports.RECEIVE_RELEVANT_USERS = 'RECEIVE_RELEVANT_USERS';
 
 var uploadPic = exports.uploadPic = function uploadPic(prop, userId) {
   return function (dispatch) {
@@ -4863,10 +4869,17 @@ var updateProp = exports.updateProp = function updateProp(prop, userId) {
 
 var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser(id) {
   return function (dispatch) {
-    return ProfileAPIUtil.fetchUser(id).then(function (res) {
-      return dispatch(receiveCurrentUserProfile(res));
+    ProfileAPIUtil.fetchUser(id).then(function (res) {
+      dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveViewedProfile(res));
     }, function (err) {
       return dispatch(receiveProfileErrors(err.responseJSON));
+    }).then(function () {
+      UserApiUtil.fetchRelevantUsers(id).then(function (res) {
+        return dispatch(receiveRelevantUsers(res));
+      }, function (err) {
+        return dispatch(receiveProfileErrors(err.responseJSON));
+      });
     });
   };
 };
@@ -4877,6 +4890,23 @@ var fetchViewedProfile = exports.fetchViewedProfile = function fetchViewedProfil
     }, function (err) {
       return dispatch(receiveProfileErrors(err.responseJSON));
     });
+  };
+};
+
+var fetchRelevantUsers = exports.fetchRelevantUsers = function fetchRelevantUsers(id) {
+  return function (dispatch) {
+    return UserApiUtil.fetchRelevantUsers(id).then(function (res) {
+      return dispatch(receiveRelevantUsers(res));
+    }, function (err) {
+      return dispatch(receiveProfileErrors(err.responseJSON));
+    });
+  };
+};
+
+var receiveRelevantUsers = exports.receiveRelevantUsers = function receiveRelevantUsers(relevant_users) {
+  return {
+    type: RECEIVE_RELEVANT_USERS,
+    relevant_users: relevant_users
   };
 };
 
@@ -8708,6 +8738,8 @@ var _session_actions = __webpack_require__(39);
 
 var _profiles_actions = __webpack_require__(18);
 
+var _selectors = __webpack_require__(1060);
+
 var _header_nav = __webpack_require__(164);
 
 var _header_nav2 = _interopRequireDefault(_header_nav);
@@ -8716,7 +8748,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUser: state.session.currentUser
+    currentUser: state.session.currentUser,
+    currentUserProfile: state.currentUserProfile,
+    relevantUsers: (0, _selectors.selectAllRelevantUsers)(state)
   };
 };
 
@@ -8727,6 +8761,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchCurrentUser: function fetchCurrentUser(id) {
       dispatch((0, _profiles_actions.fetchCurrentUser)(id));
+    },
+    fetchRelevantUsers: function fetchRelevantUsers(id) {
+      dispatch((0, _profiles_actions.fetchRelevantUsers)(id));
     }
   };
 };
@@ -8754,10 +8791,11 @@ var _profile_picture2 = _interopRequireDefault(_profile_picture);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     currentUserProfile: state.currentUserProfile,
-    viewedUserProfile: state.viewedUserProfile
+    viewedUserProfile: state.viewedUserProfile,
+    imgUrl: ownProps.imgUrl
   };
 };
 
@@ -18855,15 +18893,16 @@ var HeaderNav = function (_React$Component) {
       this.props.logout();
     }
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
       this.props.fetchCurrentUser(this.props.currentUser.id);
+      this.props.fetchRelevantUsers(this.props.currentUser.id);
     }
   }, {
     key: 'showDropdown',
     value: function showDropdown(e) {
       e.preventDefault;
-      document.getElementsByClassName("dropDown-content")[0].classList.toggle("show");
+      document.getElementsByClassName("dropDown-content logOut")[0].classList.toggle("show");
     }
   }, {
     key: 'render',
@@ -18888,7 +18927,7 @@ var HeaderNav = function (_React$Component) {
               ' ',
               _react2.default.createElement(_fa.FaFacebookOfficial, { className: 'white' })
             ),
-            _react2.default.createElement(_nav_search_bar2.default, null)
+            _react2.default.createElement(_nav_search_bar2.default, { relevantUsers: this.props.relevantUsers })
           ),
           _react2.default.createElement(
             'div',
@@ -18899,7 +18938,7 @@ var HeaderNav = function (_React$Component) {
               _react2.default.createElement(
                 _reactRouterDom.Link,
                 { to: '/profile/' + this.props.currentUser.id + '/timeline', id: "profilelink" },
-                _react2.default.createElement(_profile_picture_container2.default, { className: 'profileIcon' }),
+                _react2.default.createElement(_profile_picture_container2.default, { imgUrl: this.props.currentUserProfile.profileImgUrl, className: 'profileIcon' }),
                 _react2.default.createElement(
                   'h3',
                   { className: 'firstName' },
@@ -18929,7 +18968,7 @@ var HeaderNav = function (_React$Component) {
                 _react2.default.createElement(_fa.FaChevronDown, { onClick: this.showDropdown, className: 'icon' }),
                 _react2.default.createElement(
                   'ul',
-                  { className: 'dropDown-content' },
+                  { className: 'dropDown-content logOut' },
                   _react2.default.createElement(
                     'a',
                     { onClick: this.handleLogOut },
@@ -18960,6 +18999,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
@@ -18967,6 +19008,12 @@ var _react = __webpack_require__(0);
 var _react2 = _interopRequireDefault(_react);
 
 var _fa = __webpack_require__(11);
+
+var _profile_icon = __webpack_require__(1067);
+
+var _profile_icon2 = _interopRequireDefault(_profile_icon);
+
+var _reactRouterDom = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18982,17 +19029,56 @@ var NavSearchBar = function (_React$Component) {
   function NavSearchBar(props) {
     _classCallCheck(this, NavSearchBar);
 
-    return _possibleConstructorReturn(this, (NavSearchBar.__proto__ || Object.getPrototypeOf(NavSearchBar)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (NavSearchBar.__proto__ || Object.getPrototypeOf(NavSearchBar)).call(this, props));
+
+    _this.state = { filteredUsers: _this.props.relevantUsers };
+    _this.filterUsers = _this.filterUsers.bind(_this);
+    return _this;
   }
 
   _createClass(NavSearchBar, [{
+    key: 'filterUsers',
+    value: function filterUsers(e) {
+      e.preventDefault;
+      var input = e.currentTarget.value.toLowerCase();
+      var filteredUsers = this.props.relevantUsers.filter(function (user) {
+        var _map = [user.firstName, user.lastName].map(function (word) {
+          return word.toLowerCase();
+        }),
+            _map2 = _slicedToArray(_map, 2),
+            firstName = _map2[0],
+            lastName = _map2[1];
+
+        return firstName.match(input) || lastName.match(input);
+      });
+      this.setState({ filteredUsers: filteredUsers });
+    }
+  }, {
     key: 'render',
     value: function render() {
-
+      var filteredUsers = this.state.filteredUsers;
       return _react2.default.createElement(
         'div',
-        { id: 'NavSearchBar' },
-        _react2.default.createElement('input', { type: 'text', placeholder: 'Search FakeStack' }),
+        { id: 'NavSearchBar', className: 'dropDown' },
+        _react2.default.createElement('input', { onChange: this.filterUsers, type: 'text', className: 'searchFriends', placeholder: 'Find Friends' }),
+        _react2.default.createElement(
+          'ul',
+          { id: 'searchFriends', className: 'dropDown-content' },
+          filteredUsers.map(function (user, idx) {
+            return _react2.default.createElement(
+              _reactRouterDom.Link,
+              { className: 'friendSearch', key: "friendsearch" + idx, to: '/profile/' + user.id + '/timeline' },
+              _react2.default.createElement(_profile_icon2.default, { className: 'searchIcon', imgUrl: user.profileImgUrl }),
+              _react2.default.createElement(
+                'h5',
+                { className: 'searchFriends' },
+                ' ',
+                user.firstName + ' ' + user.lastName,
+                '  '
+              )
+            );
+          })
+        ),
         _react2.default.createElement(
           'button',
           { id: 'searchButton' },
@@ -19221,17 +19307,34 @@ var PostForm = function (_React$Component) {
   function PostForm(props) {
     _classCallCheck(this, PostForm);
 
-    return _possibleConstructorReturn(this, (PostForm.__proto__ || Object.getPrototypeOf(PostForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (PostForm.__proto__ || Object.getPrototypeOf(PostForm)).call(this, props));
+
+    _this.handleSubmitPost = _this.handleSubmitPost.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.state = { content: "", location_id: _this.props.match.params.userId };
+    return _this;
   }
 
   _createClass(PostForm, [{
+    key: 'handleSubmitPost',
+    value: function handleSubmitPost(e) {
+      e.preventDefault;
+      this.props.publishPost({ post: this.state });
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      e.preventDefault;
+      this.setState({ content: e.currentTarget.value });
+    }
+  }, {
     key: 'componentWillReceiveNewProps',
     value: function componentWillReceiveNewProps(newProps) {}
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'div',
+        'form',
         { id: 'PostForm' },
         _react2.default.createElement(
           'div',
@@ -19258,8 +19361,8 @@ var PostForm = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { id: 'postFormInput' },
-          _react2.default.createElement(_profile_picture_container2.default, { className: 'profileThumb' }),
-          _react2.default.createElement('input', { placeholder: 'What\'s on your mind?' })
+          _react2.default.createElement(_profile_picture_container2.default, { imgUrl: this.props.currentUserProfile.profileImgUrl, className: 'profileThumb' }),
+          _react2.default.createElement('input', { onChange: this.handleChange, placeholder: 'What\'s on your mind?' })
         ),
         _react2.default.createElement(
           'div',
@@ -19272,7 +19375,7 @@ var PostForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { className: 'submitPost' },
+            { onClick: this.handleSubmitPost, className: 'submitPost' },
             'Post'
           )
         )
@@ -19302,19 +19405,28 @@ var _post_form = __webpack_require__(169);
 
 var _post_form2 = _interopRequireDefault(_post_form);
 
+var _post_actions = __webpack_require__(1068);
+
+var _reactRouterDom = __webpack_require__(21);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    publishPost: function publishPost(post) {
+      return dispatch((0, _post_actions.publishPost)(post));
+    }
+  };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_post_form2.default);
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_post_form2.default));
 
 /***/ }),
 /* 171 */
@@ -19823,7 +19935,7 @@ var EditPlacesForm = function (_React$Component) {
           'ul',
           { id: 'overviewItems' },
           overviews.map(function (overviewitem, idx) {
-            return currentUserProfile[overviewitem[2]] ? _react2.default.createElement(
+            return viewedUserProfile[overviewitem[2]] ? _react2.default.createElement(
               'li',
               { key: "overviewitem" + idx, className: 'overviewItem' },
               _react2.default.createElement(
@@ -19836,7 +19948,7 @@ var EditPlacesForm = function (_React$Component) {
                     'p',
                     { className: 'overviewTitle value' },
                     ' ',
-                    overviewitem[3] + ' ' + currentUserProfile[overviewitem[2]],
+                    overviewitem[3] + ' ' + viewedUserProfile[overviewitem[2]],
                     ' '
                   )
                 )
@@ -20398,7 +20510,7 @@ var ProfileHeader = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { id: 'profilePictureContainer' },
-          _react2.default.createElement(_profile_picture_container2.default, { uploadProfilePic: uploadProfilePic, className: 'profileImg' })
+          _react2.default.createElement(_profile_picture_container2.default, { imgUrl: viewedUserProfile.profileImgUrl, className: 'profileImg' })
         ),
         _react2.default.createElement(
           'div',
@@ -20409,7 +20521,14 @@ var ProfileHeader = function (_React$Component) {
             { onClick: this.uploadCoverPic, id: 'editCoverButton', style: editCheck },
             'Add Cover Photo'
           ),
-          coverImgUrl === "" ? _react2.default.createElement('div', { id: 'coverImg' }) : _react2.default.createElement('img', { src: viewedUserProfile.coverImgUrl, id: 'coverImg' })
+          coverImgUrl === "" ? _react2.default.createElement('div', { id: 'coverImg' }) : _react2.default.createElement('img', { src: viewedUserProfile.coverImgUrl, id: 'coverImg' }),
+          _react2.default.createElement(
+            'h1',
+            null,
+            ' ',
+            viewedUserProfile.firstName + ' ' + viewedUserProfile.lastName,
+            ' '
+          )
         ),
         _react2.default.createElement(
           'div',
@@ -20425,9 +20544,8 @@ var ProfileHeader = function (_React$Component) {
             );
           }),
           _react2.default.createElement(
-            _reactRouterDom.Link,
-            { className: 'NavLink',
-              to: '/profile/more' },
+            'a',
+            { className: 'NavLink' },
             'More',
             _react2.default.createElement(_fa.FaChevronDown, null)
           )
@@ -20505,20 +20623,20 @@ var ProfilePicture = function (_React$Component) {
     key: "render",
     value: function render() {
       var _props = this.props,
-          viewedUserProfile = _props.viewedUserProfile,
+          targetUser = _props.targetUser,
           className = _props.className;
 
-      var editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {} : { display: "none" };
+      var editable = this.props.currentUserProfile.id === this.props.viewedUserProfile.id;
+      var editCheck = editable ? {} : { display: "none" };
       var img = void 0;
-      if (viewedUserProfile && viewedUserProfile.profileImgUrl !== "") {
-        img = _react2.default.createElement("img", { src: viewedUserProfile.profileImgUrl });
+      if (this.props.imgUrl !== "") {
+        img = _react2.default.createElement("img", { src: this.props.imgUrl });
       } else {
         img = _react2.default.createElement(_fa.FaUser, null);
       }
-
       return _react2.default.createElement(
         "div",
-        { className: className },
+        { className: className, onClick: editable ? this.uploadProfilePic : function () {} },
         img,
         className === 'profileImg' ? _react2.default.createElement(
           "a",
@@ -20578,8 +20696,8 @@ var ProfileDetails = function (_React$Component) {
 
     _this.state = { profileId: _this.props.match.params.userId,
       introEditMode: false,
-      introCount: props.currentUserProfile.intro.length,
-      intro: props.currentUserProfile.intro
+      introCount: props.viewedUserProfile.intro.length,
+      intro: props.viewedUserProfile.intro
     };
     _this.handleChange = _this.handleChange.bind(_this);
     _this.toggleEditMode = _this.toggleEditMode.bind(_this);
@@ -20620,8 +20738,9 @@ var ProfileDetails = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'introForm' },
-        _react2.default.createElement('textarea', { onChange: this.handleChange,
+        _react2.default.createElement('textarea', { id: 'introTextInput', onChange: this.handleChange,
           placeholder: 'Describe who you are',
+          autoFocus: true,
           value: this.state.intro }),
         _react2.default.createElement(
           'div',
@@ -20656,14 +20775,18 @@ var ProfileDetails = function (_React$Component) {
     key: 'showProp',
     value: function showProp() {
       return _react2.default.createElement(
-        'div',
-        { id: 'introContainer' },
+        'label',
+        { htmlFor: 'introTextInput' },
         _react2.default.createElement(
-          'h5',
-          null,
-          this.state.intro
-        ),
-        _react2.default.createElement(_fa.FaPencil, { onClick: this.toggleEditMode, className: 'editPencil' })
+          'div',
+          { id: 'introContainer' },
+          _react2.default.createElement(
+            'h5',
+            null,
+            this.state.intro
+          ),
+          _react2.default.createElement(_fa.FaPencil, { onClick: this.toggleEditMode, className: 'editPencil' })
+        )
       );
     }
   }, {
@@ -20734,7 +20857,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUserProfile: state.currentUserProfile,
-    viewedUserProfile: state.veiwedUserProfile
+    viewedUserProfile: state.viewedUserProfile
   };
 };
 
@@ -20785,7 +20908,7 @@ var Timeline = function Timeline(props) {
       { className: 'left Panel' },
       _react2.default.createElement(_profile_details_container2.default, null)
     ),
-    _react2.default.createElement(_wall_container2.default, null)
+    _react2.default.createElement(_wall_container2.default, { location_id: props.match.params.userId })
   );
 };
 
@@ -20830,10 +20953,14 @@ var Wall = function (_React$Component) {
   }
 
   _createClass(Wall, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      debugger;
+      this.props.fetchPosts(this.props.location_id);
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var comments = this.props.comments.comments;
-
       return _react2.default.createElement(
         'div',
         { className: 'right Panel' },
@@ -20866,18 +20993,23 @@ var _wall2 = _interopRequireDefault(_wall);
 
 var _selectors = __webpack_require__(196);
 
+var _post_actions = __webpack_require__(1068);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     currentUser: state.currentUser,
-    comments: (0, _selectors.selectCurrentUserComments)(state)
+    comments: state.comments,
+    posts: (0, _selectors.selectWallPosts)(state, ownProps.location_id)
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    logout: null
+    fetchPosts: function fetchPosts(id) {
+      return dispatch((0, _post_actions.fetchPosts)(id));
+    }
   };
 };
 
@@ -20994,12 +21126,22 @@ var _viewed_user_profile_reducer = __webpack_require__(193);
 
 var _viewed_user_profile_reducer2 = _interopRequireDefault(_viewed_user_profile_reducer);
 
+var _relevant_users_reducer = __webpack_require__(1059);
+
+var _relevant_users_reducer2 = _interopRequireDefault(_relevant_users_reducer);
+
+var _posts_reducer = __webpack_require__(1071);
+
+var _posts_reducer2 = _interopRequireDefault(_posts_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
   session: _session_reducer2.default,
   currentUserProfile: _current_user_profile_reducer2.default,
-  viewedUserProfile: _viewed_user_profile_reducer2.default
+  viewedUserProfile: _viewed_user_profile_reducer2.default,
+  relevantUsers: _relevant_users_reducer2.default,
+  posts: _posts_reducer2.default
 });
 
 exports.default = rootReducer;
@@ -21187,8 +21329,26 @@ var ProtectedRoute = exports.ProtectedRoute = (0, _reactRouterDom.withRouter)((0
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.selectWallPosts = exports.selectAllRelevantUsers = exports.selectCurrentUserComments = undefined;
+
+var _values = __webpack_require__(1066);
+
+var _values2 = _interopRequireDefault(_values);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var selectCurrentUserComments = exports.selectCurrentUserComments = function selectCurrentUserComments(state) {
   return "comments";
+};
+
+var selectAllRelevantUsers = exports.selectAllRelevantUsers = function selectAllRelevantUsers(state) {
+  return Object.values(state.relevantUsers);
+};
+
+var selectWallPosts = exports.selectWallPosts = function selectWallPosts(state, location_id) {
+  return Object.values(state.posts).filter(function (post) {
+    return post.id === parseInt(location_id);
+  });
 };
 
 /***/ }),
@@ -21231,6 +21391,16 @@ var logout = exports.logout = function logout() {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchRelevantUsers = exports.fetchRelevantUsers = function fetchRelevantUsers(userId) {
+  return $.ajax({
+    method: "GET",
+    url: "api/users/" + userId + "/relevant_users"
+  });
+};
 
 /***/ }),
 /* 199 */
@@ -65512,6 +65682,422 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 1059 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _profiles_actions = __webpack_require__(18);
+
+var _merge = __webpack_require__(66);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RelevantUsersReducer = function RelevantUsersReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  Object.freeze(state);
+  var newState = (0, _merge2.default)({}, state);
+  switch (action.type) {
+    case _profiles_actions.RECEIVE_RELEVANT_USERS:
+      return action.relevant_users;
+    case _profiles_actions.CLEAR_ERRORS:
+      newState.errors = [];
+      return newState;
+    default:
+      return state;
+  }
+};
+
+exports.default = RelevantUsersReducer;
+
+/***/ }),
+/* 1060 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.selectWallPosts = exports.selectAllRelevantUsers = undefined;
+
+var _values = __webpack_require__(1066);
+
+var _values2 = _interopRequireDefault(_values);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var selectAllRelevantUsers = exports.selectAllRelevantUsers = function selectAllRelevantUsers(state) {
+  return Object.values(state.relevantUsers);
+};
+
+var selectWallPosts = exports.selectWallPosts = function selectWallPosts(state, location_id) {
+  return Object.values(state.posts).filter(function (post) {
+    return post.id === parseInt(location_id);
+  });
+};
+
+/***/ }),
+/* 1061 */
+/***/ (function(module, exports) {
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+module.exports = arrayMap;
+
+
+/***/ }),
+/* 1062 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isPrototype = __webpack_require__(108),
+    nativeKeys = __webpack_require__(1064);
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeys;
+
+
+/***/ }),
+/* 1063 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayMap = __webpack_require__(1061);
+
+/**
+ * The base implementation of `_.values` and `_.valuesIn` which creates an
+ * array of `object` property values corresponding to the property names
+ * of `props`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} props The property names to get values for.
+ * @returns {Object} Returns the array of property values.
+ */
+function baseValues(object, props) {
+  return arrayMap(props, function(key) {
+    return object[key];
+  });
+}
+
+module.exports = baseValues;
+
+
+/***/ }),
+/* 1064 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var overArg = __webpack_require__(280);
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeKeys = overArg(Object.keys, Object);
+
+module.exports = nativeKeys;
+
+
+/***/ }),
+/* 1065 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeKeys = __webpack_require__(234),
+    baseKeys = __webpack_require__(1062),
+    isArrayLike = __webpack_require__(64);
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+module.exports = keys;
+
+
+/***/ }),
+/* 1066 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseValues = __webpack_require__(1063),
+    keys = __webpack_require__(1065);
+
+/**
+ * Creates an array of the own enumerable string keyed property values of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property values.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.values(new Foo);
+ * // => [1, 2] (iteration order is not guaranteed)
+ *
+ * _.values('hi');
+ * // => ['h', 'i']
+ */
+function values(object) {
+  return object == null ? [] : baseValues(object, keys(object));
+}
+
+module.exports = values;
+
+
+/***/ }),
+/* 1067 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fa = __webpack_require__(11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ProfileIcon = function ProfileIcon(props) {
+  var imgUrl = props.imgUrl;
+
+  return imgUrl !== "" ? _react2.default.createElement('img', { className: 'profileIcon', src: imgUrl }) : _react2.default.createElement(_fa.FaUser, { className: 'profileIcon' });
+};
+
+exports.default = ProfileIcon;
+
+/***/ }),
+/* 1068 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.publishPost = exports.fetchPosts = exports.RECEIVE_POSTS = exports.RECEIVE_POST = undefined;
+
+var _post_api_util = __webpack_require__(1070);
+
+var PostAPIUtil = _interopRequireWildcard(_post_api_util);
+
+var _notification_actions = __webpack_require__(1069);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_POST = exports.RECEIVE_POST = 'RECEIVE_POST';
+
+var RECEIVE_POSTS = exports.RECEIVE_POSTS = "RECEIVE_POSTS";
+
+var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
+  return function (dispatch) {
+    return PostAPIUtil.fetchPosts(userId).then(function (res) {
+      dispatch(receivePosts(res));
+    }, function (err) {
+      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
+    });
+  };
+};
+
+var publishPost = exports.publishPost = function publishPost(post) {
+  return function (dispatch) {
+    return PostAPIUtil.publishPost(post).then(function (res) {
+      dispatch(receivePost(res));
+    }, function (err) {
+      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
+    });
+  };
+};
+
+var receivePosts = function receivePosts(posts) {
+  return {
+    type: RECEIVE_POSTS,
+    posts: posts
+  };
+};
+
+var receivePost = function receivePost(post) {
+  return {
+    type: RECEIVE_POST,
+    post: post
+  };
+};
+
+/***/ }),
+/* 1069 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var RECEIVE_NOTICE = exports.RECEIVE_NOTICE = 'RECEIVE_NOTICE';
+
+var receiveNotice = exports.receiveNotice = function receiveNotice(notice) {
+  return {
+    type: RECEIVE_NOTICE,
+    notice: notice
+  };
+};
+
+/***/ }),
+/* 1070 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
+  return $.ajax({
+    method: "GET",
+    url: "api/posts?user_id=" + userId
+  });
+};
+
+var publishPost = exports.publishPost = function publishPost(post) {
+  return $.ajax({
+    method: "POST",
+    url: "api/posts",
+    data: post
+  });
+};
+
+/***/ }),
+/* 1071 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _post_actions = __webpack_require__(1068);
+
+var _merge = __webpack_require__(66);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PostsReducer = function PostsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  Object.freeze(state);
+  var newState = (0, _merge2.default)({}, state);
+  switch (action.type) {
+    case _post_actions.RECEIVE_POSTS:
+      return action.posts;
+    case _post_actions.RECEIVE_POST:
+      newState[action.post.id] = action.post;
+      return newState;
+    default:
+      return state;
+  }
+};
+
+exports.default = PostsReducer;
 
 /***/ })
 /******/ ]);

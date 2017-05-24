@@ -7,7 +7,7 @@ import {fetchViewedProfile} from '../../../actions/profiles_actions';
 
 const mapStateToProps = (state) =>({
   currentUserProfile: state.currentUserProfile,
-  viewedUserProfile: state.veiwedUserProfile
+  viewedUserProfile: state.viewedUserProfile
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -6,6 +6,8 @@ class User < ApplicationRecord
             :last_name,
             presence: true
   validates :password, length: { minimum: 8, allow_nil: true }
+  validates :email, :session_token, :password_digest, uniqueness: true
+
 
   after_initialize :ensure_token
   attr_reader :password
@@ -31,12 +33,23 @@ class User < ApplicationRecord
   has_many :authored_posts,
     foreign_key: :author_id,
     class_name: :Post
+    
   has_many :wall_posts,
     foreign_key: :location_id,
     class_name: :Post
 
   def friends
-    
+    friends1 = self.requesters.where(friendings: {approved: true})
+    friends2 = self.recipients.where(friendings: {approved: true})
+    friends1 + friends2
+  end
+
+  def pending_friend_requests
+    self.requesters.where(friendings: {approved: false})
+  end
+
+  def pending_friend_invites
+    self.recipients.where(friendings: {approved: false})
   end
 
   def reset_token
