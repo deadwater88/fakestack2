@@ -4842,7 +4842,8 @@ var RECEIVE_PROFILE_ERRORS = exports.RECEIVE_PROFILE_ERRORS = 'RECEIVE_PROFILE_E
 var uploadPic = exports.uploadPic = function uploadPic(prop, userId) {
   return function (dispatch) {
     return ProfileAPIUtil.uploadPic(prop, userId).then(function (res) {
-      return dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveViewedProfile(res));
     }, function (err) {
       return dispatch(receiveProfileErrors(err.responseJSON));
     });
@@ -4852,7 +4853,8 @@ var uploadPic = exports.uploadPic = function uploadPic(prop, userId) {
 var updateProp = exports.updateProp = function updateProp(prop, userId) {
   return function (dispatch) {
     return ProfileAPIUtil.updateProp(prop, userId).then(function (res) {
-      return dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveViewedProfile(res));
     }, function (err) {
       return dispatch(receiveProfileErrors(err.responseJSON));
     });
@@ -8754,7 +8756,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUserProfile: state.currentUserProfile
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile
   };
 };
 
@@ -11850,7 +11853,7 @@ var UnitFormArrayImg = function (_React$Component) {
       var _this4 = this;
 
       return function (e) {
-        var userId = _this4.state.currentUserId;
+        var userId = _this4.state.viewedUserId;
         var value = _this4.state[propName].concat([]);
         value.pop();
         value[idx1] = _this4.state[propName][idx1];
@@ -11879,12 +11882,12 @@ var UnitFormArrayImg = function (_React$Component) {
         e.stopPropagation();
         var propName = _this6.props.profileInfo.propName;
 
-        var userId = _this6.state.currentUserId;
+        var userId = _this6.state.viewedUserId;
         _this6.state.editMode[idx1] = false;
         var oldState = _this6.state[propName];
         var newState = oldState.slice(0, idx1).concat(oldState.slice(idx1 + 1));
         _this6.state[propName] = newState;
-        _this6.props.updateProp(_defineProperty({}, propName, newState), _this6.state.currentUserId);
+        _this6.props.updateProp(_defineProperty({}, propName, newState), _this6.state.viewedUserId);
       };
     }
   }, {
@@ -11901,7 +11904,7 @@ var UnitFormArrayImg = function (_React$Component) {
     value: function showValues(value, idx1) {
       return _react2.default.createElement(
         'div',
-        { key: "value" + idx1, className: 'imgPropContent showContent' },
+        { key: "value" + idx1, className: 'imgPropContent showContent', style: this.state.editCheck },
         _react2.default.createElement(
           'div',
           { className: 'infoDisplay' },
@@ -11916,7 +11919,7 @@ var UnitFormArrayImg = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { onClick: this.toggleEditMode(idx1), className: 'editDisplay' },
+            { onClick: this.toggleEditMode(idx1), className: 'editDisplay', style: this.state.editCheck },
             _react2.default.createElement(
               'a',
               null,
@@ -11937,7 +11940,7 @@ var UnitFormArrayImg = function (_React$Component) {
     value: function showInstruction(instruction, lastidx) {
       return _react2.default.createElement(
         'div',
-        { onClick: this.toggleEditMode(lastidx), className: 'imgPropContent addContent' },
+        { onClick: this.toggleEditMode(lastidx), className: 'imgPropContent addContent', style: this.state.editCheck },
         _react2.default.createElement(_fa.FaPlus, null),
         _react2.default.createElement(
           'a',
@@ -11951,9 +11954,10 @@ var UnitFormArrayImg = function (_React$Component) {
   }, {
     key: 'editComponent',
     value: function editComponent(inputLabel, value, propName, idx1) {
+
       return _react2.default.createElement(
         'form',
-        { key: propName + idx1, className: 'propForm' },
+        { key: propName + idx1, className: 'propForm', style: this.state.editCheck },
         _react2.default.createElement(
           'ul',
           { className: 'entryTextContainer' },
@@ -12064,8 +12068,7 @@ var UnitFormText = function (_React$Component) {
     _this.showComponent = _this.showComponent.bind(_this);
     _this.editComponent = _this.editComponent.bind(_this);
     _this.deleteProp = _this.deleteProp.bind(_this);
-    _this.selectAutoresult = _this.selectAutoresult.bind(_this);
-    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.value), _defineProperty(_this$state, 'currentUserId', props.currentUserProfile.id), _defineProperty(_this$state, 'editMode', false), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
+    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.value), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', false), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
 
     return _this;
   }
@@ -12084,7 +12087,7 @@ var UnitFormText = function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        var userId = _this2.state.currentUserId;
+        var userId = _this2.state.viewedUserId;
         var value = _this2.state[propName];
         _this2.state.editMode = false;
         _this2.props.updateProp(_defineProperty({}, propName, _this2.state[propName]), userId);
@@ -12122,10 +12125,9 @@ var UnitFormText = function (_React$Component) {
       e.stopPropagation();
       var propName = this.props.profileInfo.propName;
 
-      var userId = this.state.currentUserId;
       this.state.editMode = false;
       this.state[propName] = "";
-      this.props.updateProp(_defineProperty({}, propName, ""), this.state.currentUserId);
+      this.props.updateProp(_defineProperty({}, propName, ""), this.state.viewedUserId);
     }
   }, {
     key: 'selectAutoresult',
@@ -18880,7 +18882,12 @@ var HeaderNav = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { id: 'searchContainer' },
-            _react2.default.createElement(_fa.FaFacebookOfficial, { className: 'white' }),
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/home' },
+              ' ',
+              _react2.default.createElement(_fa.FaFacebookOfficial, { className: 'white' })
+            ),
             _react2.default.createElement(_nav_search_bar2.default, null)
           ),
           _react2.default.createElement(
@@ -19320,7 +19327,163 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _edit_details_form = __webpack_require__(172);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fa = __webpack_require__(11);
+
+var _reactRouterDom = __webpack_require__(21);
+
+var _unit_form = __webpack_require__(90);
+
+var _unit_form2 = _interopRequireDefault(_unit_form);
+
+var _edit_details_container = __webpack_require__(173);
+
+var _edit_details_container2 = _interopRequireDefault(_edit_details_container);
+
+var _edit_places_container = __webpack_require__(175);
+
+var _edit_places_container2 = _interopRequireDefault(_edit_places_container);
+
+var _unit_form_array_img = __webpack_require__(91);
+
+var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
+
+var _overview_container = __webpack_require__(178);
+
+var _overview_container2 = _interopRequireDefault(_overview_container);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AboutProfile = function (_React$Component) {
+  _inherits(AboutProfile, _React$Component);
+
+  function AboutProfile(props) {
+    _classCallCheck(this, AboutProfile);
+
+    var _this = _possibleConstructorReturn(this, (AboutProfile.__proto__ || Object.getPrototypeOf(AboutProfile)).call(this, props));
+
+    _this.profileDetails = [["Overview", "overview"], ["Places You've Lived", "places"], ["Details About You", "details"]];
+    _this.navLinks = _this.navLinks.bind(_this);
+    return _this;
+  }
+
+  _createClass(AboutProfile, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(newProps) {}
+  }, {
+    key: 'navLinks',
+    value: function navLinks() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'ul',
+        { id: 'editProfileTabs' },
+        this.profileDetails.map(function (detail, idx) {
+          return _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { className: 'navLink', key: idx + "profilenav",
+              to: '/profile/' + _this2.props.match.params.userId + '/about/' + detail[1],
+              activeClassName: 'activeLink',
+              activeStyle: { fontWeight: 'bold', color: 'black' } },
+            detail[0]
+          );
+        })
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'editProfile', className: 'primaryContainer' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          _react2.default.createElement(_fa.FaUser, null),
+          _react2.default.createElement(
+            'a',
+            null,
+            'About'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'editProfileContent', className: 'primaryContent' },
+          this.navLinks(),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/overview', component: _overview_container2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/places', component: _edit_places_container2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/details', component: _edit_details_container2.default })
+        )
+      );
+    }
+  }]);
+
+  return AboutProfile;
+}(_react2.default.Component);
+
+exports.default = AboutProfile;
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _about_profile = __webpack_require__(171);
+
+var _about_profile2 = _interopRequireDefault(_about_profile);
+
+var _reactRedux = __webpack_require__(12);
+
+var _profiles_actions = __webpack_require__(18);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateProp: function updateProp(prop, userId) {
+      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_about_profile2.default);
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _edit_details_form = __webpack_require__(174);
 
 var _edit_details_form2 = _interopRequireDefault(_edit_details_form);
 
@@ -19348,7 +19511,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_edit_details_form2.default);
 
 /***/ }),
-/* 172 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19392,24 +19555,25 @@ var EditDetailsForm = function (_React$Component) {
   _createClass(EditDetailsForm, [{
     key: 'render',
     value: function render() {
+      var editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {} : { display: "none" };
       var biographyInfo = { updateProp: this.props.updateProp,
         instruction: "Write some details about yourself",
         inputLabel: "About You",
         propName: "biography",
-        value: this.props.currentUserProfile.biography };
+        value: this.props.viewedUserProfile.biography };
       var otherNamesInfo = { updateProp: this.props.updateProp,
         instruction: "Add a nickname or alternate name...",
         inputLabel: "Name",
         propName: "other_names",
-        values: this.props.currentUserProfile.otherNames };
+        values: this.props.viewedUserProfile.otherNames };
       var favoriteQuotesInfo = { updateProp: this.props.updateProp,
         instruction: "Add your favorite quotations",
         inputLabel: "Favorite Quotes",
         propName: "favorite_quotes",
-        value: this.props.currentUserProfile.favoriteQuotes };
+        value: this.props.viewedUserProfile.favoriteQuotes };
       var _props = this.props,
           updateProp = _props.updateProp,
-          currentUserProfile = _props.currentUserProfile;
+          viewedUserProfile = _props.viewedUserProfile;
 
 
       return _react2.default.createElement(
@@ -19424,7 +19588,7 @@ var EditDetailsForm = function (_React$Component) {
             ' ABOUT YOU '
           ),
           _react2.default.createElement(_unit_form_text2.default, { profileInfo: biographyInfo,
-            currentUserProfile: currentUserProfile,
+            viewedUserProfile: viewedUserProfile,
             updateProp: updateProp })
         ),
         _react2.default.createElement(
@@ -19436,7 +19600,7 @@ var EditDetailsForm = function (_React$Component) {
             ' OTHER NAMES '
           ),
           _react2.default.createElement(_unit_form_array2.default, { profileInfo: otherNamesInfo,
-            currentUserProfile: currentUserProfile,
+            viewedUserProfile: viewedUserProfile,
             updateProp: updateProp })
         ),
         _react2.default.createElement(
@@ -19448,7 +19612,7 @@ var EditDetailsForm = function (_React$Component) {
             ' FAVORITE QUOTES '
           ),
           _react2.default.createElement(_unit_form_text2.default, { profileInfo: favoriteQuotesInfo,
-            currentUserProfile: currentUserProfile,
+            viewedUserProfile: viewedUserProfile,
             updateProp: updateProp })
         )
       );
@@ -19461,7 +19625,7 @@ var EditDetailsForm = function (_React$Component) {
 exports.default = EditDetailsForm;
 
 /***/ }),
-/* 173 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19471,7 +19635,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _edit_places_form = __webpack_require__(174);
+var _edit_places_form = __webpack_require__(176);
 
 var _edit_places_form2 = _interopRequireDefault(_edit_places_form);
 
@@ -19499,7 +19663,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_edit_places_form2.default);
 
 /***/ }),
-/* 174 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19601,162 +19765,6 @@ var EditPlacesForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = EditPlacesForm;
-
-/***/ }),
-/* 175 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _fa = __webpack_require__(11);
-
-var _reactRouterDom = __webpack_require__(21);
-
-var _unit_form = __webpack_require__(90);
-
-var _unit_form2 = _interopRequireDefault(_unit_form);
-
-var _edit_details_container = __webpack_require__(171);
-
-var _edit_details_container2 = _interopRequireDefault(_edit_details_container);
-
-var _edit_places_container = __webpack_require__(173);
-
-var _edit_places_container2 = _interopRequireDefault(_edit_places_container);
-
-var _unit_form_array_img = __webpack_require__(91);
-
-var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
-
-var _overview_container = __webpack_require__(178);
-
-var _overview_container2 = _interopRequireDefault(_overview_container);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var EditProfile = function (_React$Component) {
-  _inherits(EditProfile, _React$Component);
-
-  function EditProfile(props) {
-    _classCallCheck(this, EditProfile);
-
-    var _this = _possibleConstructorReturn(this, (EditProfile.__proto__ || Object.getPrototypeOf(EditProfile)).call(this, props));
-
-    _this.profileDetails = [["Overview", "overview"], ["Places You've Lived", "places"], ["Details About You", "details"]];
-    _this.navLinks = _this.navLinks.bind(_this);
-    return _this;
-  }
-
-  _createClass(EditProfile, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(newProps) {}
-  }, {
-    key: 'navLinks',
-    value: function navLinks() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'ul',
-        { id: 'editProfileTabs' },
-        this.profileDetails.map(function (detail, idx) {
-          return _react2.default.createElement(
-            _reactRouterDom.NavLink,
-            { className: 'navLink', key: idx + "profilenav",
-              to: '/profile/' + _this2.props.match.params.userId + '/about/' + detail[1],
-              activeClassName: 'activeLink',
-              activeStyle: { fontWeight: 'bold', color: 'black' } },
-            detail[0]
-          );
-        })
-      );
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { id: 'editProfile', className: 'primaryContainer' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          _react2.default.createElement(_fa.FaUser, null),
-          _react2.default.createElement(
-            'a',
-            null,
-            'About'
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { id: 'editProfileContent', className: 'primaryContent' },
-          this.navLinks(),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/overview', component: _overview_container2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/places', component: _edit_places_container2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/details', component: _edit_details_container2.default })
-        )
-      );
-    }
-  }]);
-
-  return EditProfile;
-}(_react2.default.Component);
-
-exports.default = EditProfile;
-
-/***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _edit_profile = __webpack_require__(175);
-
-var _edit_profile2 = _interopRequireDefault(_edit_profile);
-
-var _reactRedux = __webpack_require__(12);
-
-var _profiles_actions = __webpack_require__(18);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    currentUserProfile: state.currentUserProfile,
-    viewedUserProfile: state.viewedUserProfile
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    updateProp: function updateProp(prop, userId) {
-      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_edit_profile2.default);
 
 /***/ }),
 /* 177 */
@@ -19949,7 +19957,7 @@ var UnitFormArray = function (_React$Component) {
     _this.toggleEditMode = _this.toggleEditMode.bind(_this);
     _this.deleteProp = _this.deleteProp.bind(_this);
     _this.selectAutoresult = _this.selectAutoresult.bind(_this);
-    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.values), _defineProperty(_this$state, 'currentUserId', props.currentUserProfile.id), _defineProperty(_this$state, 'editMode', Array(props.profileInfo.values.length).fill(false)), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
+    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.values), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', Array(props.profileInfo.values.length).fill(false)), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
 
     return _this;
   }
@@ -19991,7 +19999,7 @@ var UnitFormArray = function (_React$Component) {
       var _this4 = this;
 
       return function (e) {
-        var userId = _this4.state.currentUserId;
+        var userId = _this4.state.viewedUserId;
         var value = _this4.state[propName].concat([]);
         value.pop();
         value[idx1] = _this4.state[propName][idx1];
@@ -20039,12 +20047,11 @@ var UnitFormArray = function (_React$Component) {
         e.stopPropagation();
         var propName = _this7.props.profileInfo.propName;
 
-        var userId = _this7.state.currentUserId;
         _this7.state.editMode[idx1] = false;
         var oldState = _this7.state[propName];
         var newState = oldState.slice(0, idx1).concat(oldState.slice(idx1 + 1));
         _this7.state[propName] = newState;
-        _this7.props.updateProp(_defineProperty({}, propName, newState), _this7.state.currentUserId);
+        _this7.props.updateProp(_defineProperty({}, propName, newState), _this7.state.viewedUserId);
       };
     }
   }, {
@@ -20210,9 +20217,9 @@ var _timeline = __webpack_require__(186);
 
 var _timeline2 = _interopRequireDefault(_timeline);
 
-var _edit_profile_container = __webpack_require__(176);
+var _about_profile_container = __webpack_require__(172);
 
-var _edit_profile_container2 = _interopRequireDefault(_edit_profile_container);
+var _about_profile_container2 = _interopRequireDefault(_about_profile_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20262,7 +20269,7 @@ var Profile = function (_React$Component) {
         { id: 'profilePage' },
         _react2.default.createElement(_profile_header2.default, { uploadPic: uploadPic, currentUserProfile: currentUserProfile, viewedUserProfile: viewedUserProfile, match: match }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/timeline', component: _timeline2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about', component: _edit_profile_container2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about', component: _about_profile_container2.default })
       );
     }
   }]);
@@ -20427,7 +20434,7 @@ var ProfileHeader = function (_React$Component) {
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/profile/about/overview' },
+          { to: '/profile/' + currentUserProfile.id + '/about/overview' },
           _react2.default.createElement(
             'button',
             { id: 'headerButton', style: editCheck },
@@ -20498,12 +20505,13 @@ var ProfilePicture = function (_React$Component) {
     key: "render",
     value: function render() {
       var _props = this.props,
-          currentUserProfile = _props.currentUserProfile,
+          viewedUserProfile = _props.viewedUserProfile,
           className = _props.className;
 
+      var editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {} : { display: "none" };
       var img = void 0;
-      if (currentUserProfile && currentUserProfile.profileImgUrl !== "") {
-        img = _react2.default.createElement("img", { src: currentUserProfile.profileImgUrl });
+      if (viewedUserProfile && viewedUserProfile.profileImgUrl !== "") {
+        img = _react2.default.createElement("img", { src: viewedUserProfile.profileImgUrl });
       } else {
         img = _react2.default.createElement(_fa.FaUser, null);
       }
@@ -20514,7 +20522,7 @@ var ProfilePicture = function (_React$Component) {
         img,
         className === 'profileImg' ? _react2.default.createElement(
           "a",
-          { onClick: this.uploadProfilePic, className: "profilePicLink" },
+          { onClick: this.uploadProfilePic, className: "profilePicLink", style: editCheck },
           _react2.default.createElement(_fa.FaCamera, null),
           _react2.default.createElement(
             "p",

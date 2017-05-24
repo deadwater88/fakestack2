@@ -11,7 +11,7 @@ class UnitFormArray extends React.Component {
     this.deleteProp = this.deleteProp.bind(this);
     this.selectAutoresult = this.selectAutoresult.bind(this);
     this.state = {[props.profileInfo.propName]: props.profileInfo.values,
-                  currentUserId: props.currentUserProfile.id,
+                  viewedUserId: props.viewedUserProfile.id,
                   editMode: Array(props.profileInfo.values.length).fill(false),
                   autocompleteOptions: [],
                   showauto: false};
@@ -43,7 +43,7 @@ autocomplete(){
 
 handleSubmit(propName, idx1){
   return (e)=> {
-    const userId = this.state.currentUserId;
+    const userId = this.state.viewedUserId;
     let value = this.state[propName].concat([]);
     value.pop();
     value[idx1] = this.state[propName][idx1];
@@ -73,12 +73,11 @@ deleteProp(idx1){
   return (e)=> {
   e.stopPropagation();
   const {propName} = this.props.profileInfo;
-  const userId = this.state.currentUserId;
   this.state.editMode[idx1] = false;
   let oldState = this.state[propName];
   const newState = oldState.slice(0,idx1).concat(oldState.slice(idx1 + 1));
   this.state[propName] = newState;
-  this.props.updateProp({[propName]: newState}, this.state.currentUserId);
+  this.props.updateProp({[propName]: newState}, this.state.viewedUserId);
 };
 }
 

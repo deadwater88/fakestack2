@@ -11,4 +11,5 @@ json.extract!(user,
               :places,
               :profile_img_url,
               :cover_img_url,
-              :biography)
+              :biography,
+              :friends)

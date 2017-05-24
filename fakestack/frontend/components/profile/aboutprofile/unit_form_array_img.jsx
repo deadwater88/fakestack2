@@ -44,7 +44,7 @@ autocomplete(){
 
 handleSubmit(propName, idx1){
   return (e)=> {
-    const userId = this.state.currentUserId;
+    const userId = this.state.viewedUserId;
     let value = this.state[propName].concat([]);
     value.pop();
     value[idx1] = this.state[propName][idx1];
@@ -65,12 +65,12 @@ deleteProp(idx1){
   return (e)=> {
   e.stopPropagation();
   const {propName} = this.props.profileInfo;
-  const userId = this.state.currentUserId;
+  const userId = this.state.viewedUserId;
   this.state.editMode[idx1] = false;
   let oldState = this.state[propName];
   const newState = oldState.slice(0,idx1).concat(oldState.slice(idx1 + 1));
   this.state[propName] = newState;
-  this.props.updateProp({[propName]: newState}, this.state.currentUserId);
+  this.props.updateProp({[propName]: newState}, this.state.viewedUserId);
 };
 }
 
@@ -81,14 +81,14 @@ selectAutoresult(e) {
 
 showValues(value, idx1){
   return (
-  <div key={"value" + idx1} className="imgPropContent showContent">
+  <div key={"value" + idx1} className="imgPropContent showContent" style={this.state.editCheck}>
     <div className= "infoDisplay">
       <div className="valueDisplay">
         <h1 className="valueDisplay text">
           {value}
         </h1>
       </div>
-      <div onClick={this.toggleEditMode(idx1)} className="editDisplay">
+      <div onClick={this.toggleEditMode(idx1)} className="editDisplay" style={this.state.editCheck}>
         <a>
           <FaPencil/>
           Edit
@@ -103,7 +103,7 @@ showValues(value, idx1){
 }
 
 showInstruction(instruction, lastidx) {
-  return (<div onClick={this.toggleEditMode(lastidx)} className="imgPropContent addContent">
+  return (<div onClick={this.toggleEditMode(lastidx)} className="imgPropContent addContent" style={this.state.editCheck}>
     <FaPlus/>
     <a> {instruction} </a>
   </div>);
@@ -111,8 +111,9 @@ showInstruction(instruction, lastidx) {
 
 
 editComponent(inputLabel, value, propName, idx1){
+
   return (
-  <form key={propName + idx1} className="propForm">
+  <form key={propName + idx1} className="propForm" style={this.state.editCheck}>
     <ul className="entryTextContainer">
       <div className="entry">
         <h3> {inputLabel} </h3>

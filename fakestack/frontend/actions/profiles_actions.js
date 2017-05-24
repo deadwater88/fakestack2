@@ -9,14 +9,20 @@ export const RECEIVE_PROFILE_ERRORS = 'RECEIVE_PROFILE_ERRORS';
 
 export const uploadPic = (prop, userId)=> dispatch => {
   return ProfileAPIUtil.uploadPic(prop, userId).then(
-    res => dispatch(receiveCurrentUserProfile(res)),
+    (res => {
+      dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveViewedProfile(res));
+    }),
     err => dispatch(receiveProfileErrors(err.responseJSON))
   );
 };
 
 export const updateProp = (prop, userId) => dispatch => {
   return ProfileAPIUtil.updateProp(prop, userId).then(
-    res => dispatch(receiveCurrentUserProfile(res)),
+    (res => {
+      dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveViewedProfile(res));
+    }),
     err => dispatch(receiveProfileErrors(err.responseJSON))
   );
 };

@@ -22,10 +22,11 @@ class ProfilePicture extends React.Component {
   }
 
   render () {
-    const {currentUserProfile, className} = this.props;
+    const {viewedUserProfile, className} = this.props;
+    let editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {}: {display: "none"};
     let img;
-    if (currentUserProfile && currentUserProfile.profileImgUrl !== "") {
-      img = (<img src={currentUserProfile.profileImgUrl}/>);
+    if (viewedUserProfile && viewedUserProfile.profileImgUrl !== "") {
+      img = (<img src={viewedUserProfile.profileImgUrl}/>);
     } else {
       img = (<FaUser/>);
     }
@@ -33,7 +34,7 @@ class ProfilePicture extends React.Component {
     return (
       <div className={className}>
         {img}
-        {className === 'profileImg' ? (<a onClick={this.uploadProfilePic} className="profilePicLink">
+        {className === 'profileImg' ? (<a onClick={this.uploadProfilePic} className="profilePicLink" style={editCheck}>
           <FaCamera/>
           <p> Update Profile <br/> Picture</p>
         </a>) : ""}

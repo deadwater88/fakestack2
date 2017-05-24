@@ -32,7 +32,8 @@ class HeaderNav extends React.Component {
         <div id="headerNavContent"></div>
         <div id="headerNav">
           <div id="searchContainer">
-            <FaFacebookOfficial className="white"/>
+            <Link to='/home'> <FaFacebookOfficial className="white"/>
+            </Link>
             <NavSearchBar/>
           </div>
             <div id="headerNavMenu">

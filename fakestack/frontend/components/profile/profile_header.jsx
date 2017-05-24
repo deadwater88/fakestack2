@@ -15,6 +15,7 @@ class ProfileHeader extends React.Component {
                         ["photos", "Photos"]];
   }
 
+
   uploadCoverPic(e){
     const uploadPic = this.props.uploadPic;
     const userId = this.props.currentUserProfile.id;
@@ -59,7 +60,7 @@ class ProfileHeader extends React.Component {
               <FaChevronDown/>
             </Link>
           </div>
-            <Link to="/profile/about/overview">
+            <Link to={`/profile/${currentUserProfile.id}/about/overview`}>
               <button id="headerButton" style={editCheck} >
                 <FaPencil/>
                 Edit Profile

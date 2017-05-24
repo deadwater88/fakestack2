@@ -2,12 +2,12 @@ import React from 'react';
 import {FaUser, FaPlus} from 'react-icons/lib/fa/';
 import {Route, NavLink} from 'react-router-dom';
 import UnitForm from './unit_form';
-import EditDetailsContainer from './edit_details_container';
-import EditPlacesContainer from './edit_places_container';
+import AboutDetailsContainer from './edit_details_container';
+import AboutPlacesContainer from './edit_places_container';
 import UnitFormArrayImg from './unit_form_array_img';
 import OverviewContainer from './overview_container';
 
-class EditProfile extends React.Component {
+class AboutProfile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -43,8 +43,8 @@ class EditProfile extends React.Component {
         <div id="editProfileContent"  className="primaryContent">
           {this.navLinks()}
           <Route path='/profile/:userId/about/overview' component={OverviewContainer} />
-          <Route path='/profile/:userId/about/places'   component={EditPlacesContainer}/>
-          <Route path='/profile/:userId/about/details' component={EditDetailsContainer} />
+          <Route path='/profile/:userId/about/places'   component={AboutPlacesContainer}/>
+          <Route path='/profile/:userId/about/details' component={AboutDetailsContainer} />
 
         </div>
       </div>
@@ -54,4 +54,4 @@ class EditProfile extends React.Component {
 
 }
 
-export default EditProfile;
+export default AboutProfile;

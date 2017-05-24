@@ -41,7 +41,7 @@ class Api::UsersController < ApplicationController
 
      :biography,
      :cover_img_url,
-     favorite_quotes: [],
+     :favorite_quotes,
      other_names: [],
      places: [])
   end

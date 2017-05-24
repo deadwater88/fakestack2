@@ -1,9 +1,10 @@
 import React from 'react';
 import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
 
-class UnitFormText extends React.Component {
+class UnitForm extends React.Component {
   constructor(props){
     super(props);
+    this.autocomplete = this.autocomplete.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
@@ -12,10 +13,11 @@ class UnitFormText extends React.Component {
     this.deleteProp = this.deleteProp.bind(this);
     this.selectAutoresult = this.selectAutoresult.bind(this);
     this.state = {[props.profileInfo.propName]: props.profileInfo.value,
-                  currentUserId: props.currentUserProfile.id,
+                  viewedUserId: props.viewedUserProfile.id,
                   editMode: false,
                   autocompleteOptions: [],
-                  showauto: false};
+                  showauto: false,
+                  editCheck: this.props.editCheck};
 
   }
 
@@ -25,9 +27,22 @@ handleChange(e){
   this.setState({[propName]: e.currentTarget.value});
 }
 
+autocomplete(){
+  let input = this.state[this.props.profileInfo.propName];
+  if (input.length > 2){
+    $.ajax({
+      url:`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&type=(cities)&key=${window.places_key}`
+    }).then(res=>{
+      this.setState({autocompleteOptions: res.predictions},()=>{
+        this.setState({showauto: true});
+      });
+    });
+  }
+}
+
 handleSubmit(propName){
   return (e)=> {
-    const userId = this.state.currentUserId;
+    const userId = this.state.viewedUserId;
     const value = this.state[propName];
     this.state.editMode = false;
     this.props.updateProp({[propName]: this.state[propName]}, userId);
@@ -45,7 +60,7 @@ autoresults(){
     {this.state.autocompleteOptions.map((option, idx)=>(
       <li key={idx + "autocomplete"} onClick={this.selectAutoresult}> {option.description} </li>
     ))}
-  </ul>) : ""
+  </ul>) : "";
 }
 
 deleteProp(e){
@@ -53,7 +68,6 @@ deleteProp(e){
   const {propName} = this.props.profileInfo;
   const userId = this.state.currentUserId;
   this.state.editMode = false;
-  this.state[propName] = "";
   this.props.updateProp({[propName]: ""}, this.state.currentUserId);
 }
 
@@ -64,18 +78,22 @@ selectAutoresult(e) {
 
 showComponent(value, instruction, inputLabel){
   return value === "" ?
-  (<div onClick={this.toggleEditMode} className="imgPropContent addtext">
+  (<div onClick={this.toggleEditMode} className="imgPropContent addContent" style={this.state.editCheck}>
     <FaPlus/>
     <a> {instruction} </a>
   </div>) :
   (<div className="imgPropContent showContent">
+    <FaPlus/>
     <div className= "infoDisplay">
       <div className="valueDisplay">
-        <h4 className="valueDisplay text">
+        <h1 className="valueDisplay">
           {value}
+        </h1>
+        <h4>
+          {inputLabel}
         </h4>
       </div>
-      <div onClick={this.toggleEditMode} className="editDisplay">
+      <div onClick={this.toggleEditMode} className="editDisplay" style={this.state.editCheck}>
         <a>
           <FaPencil/>
           Edit
@@ -89,13 +107,14 @@ showComponent(value, instruction, inputLabel){
   </div>);
 }
 
-editComponent(inputLabel, value, propName, instruction){
+editComponent(inputLabel, value, propName){
   return (
-  <form className="propForm">
-    <div className="entry text">
+  <form className="propForm" style={this.state.editCheck}>
+    <div className="entry">
       <h3> {inputLabel} </h3>
       <div>
-        <textarea onChange={this.handleChange} type="text" placeholder= {instruction} value={this.state[propName]} />
+        <input onChange={this.handleChange} type="text" placeholder= {value} value={this.state[propName]} />
+        {this.autoresults()}
       </div>
     </div>
     <div className="formButtons">
@@ -112,7 +131,7 @@ editComponent(inputLabel, value, propName, instruction){
     return (
       <div className="imgPropUnit">
         {this.state.editMode ?
-          this.editComponent(inputLabel, value, propName, instruction) :
+          this.editComponent(inputLabel, value, propName) :
           this.showComponent(value, instruction, inputLabel)
         }
       </div>);
@@ -120,4 +139,4 @@ editComponent(inputLabel, value, propName, instruction){
   }
 }
 
-export default UnitFormText;
+export default UnitForm;

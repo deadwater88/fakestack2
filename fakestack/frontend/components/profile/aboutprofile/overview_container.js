@@ -1,4 +1,4 @@
-import EditProfile from "./edit_profile";
+import Overview from "./overview";
 import { connect } from 'react-redux';
 import { updateProp } from '../../../actions/profiles_actions';
 
@@ -12,4 +12,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps,
-               mapDispatchToProps)(EditProfile);
+               mapDispatchToProps)(Overview);

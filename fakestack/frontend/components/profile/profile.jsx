@@ -3,7 +3,7 @@ import ProfileHeader from './profile_header';
 import HeaderContainer from '../header_nav/header_container';
 import {Route} from 'react-router-dom';
 import Timeline from './timeline/timeline';
-import EditProfileContainer from './editprofile/edit_profile_container';
+import AboutProfileContainer from './aboutprofile/about_profile_container';
 
 
 class Profile extends React.Component{
@@ -31,7 +31,7 @@ class Profile extends React.Component{
       <div id="profilePage">
         <ProfileHeader uploadPic={uploadPic} currentUserProfile={currentUserProfile} viewedUserProfile={viewedUserProfile} match={match}/>
         <Route path="/profile/:userId/timeline" component={Timeline}></Route>
-        <Route path="/profile/:userId/about" component={EditProfileContainer}></Route>
+        <Route path="/profile/:userId/about" component={AboutProfileContainer}></Route>
       </div>
     );
   }
