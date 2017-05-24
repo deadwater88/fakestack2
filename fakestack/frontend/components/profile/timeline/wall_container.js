@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Wall from './wall';
 import {selectCurrentUserComments, selectWallPosts} from '../../../utils/selectors';
-import {fetchPosts} from '../../../actions/post_actions'
+import {fetchPosts} from '../../../actions/post_actions';
 
 const mapStateToProps = (state,ownProps) =>({
   currentUser: state.currentUser,
@@ -10,7 +10,7 @@ const mapStateToProps = (state,ownProps) =>({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPosts: (id)=> dispatch(fetchPosts(id))
+  fetchPosts: (id) => dispatch(fetchPosts(id))
 });
 
 export default connect(mapStateToProps,

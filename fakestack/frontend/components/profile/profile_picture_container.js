@@ -6,7 +6,8 @@ import ProfilePicture from './profile_picture';
 const mapStateToProps = (state, ownProps) =>({
   currentUserProfile: state.currentUserProfile,
   viewedUserProfile: state.viewedUserProfile,
-  imgUrl: ownProps.imgUrl
+  imgUrl: ownProps.imgUrl,
+  className: ownProps.className
 });
 
 const mapDispatchToProps = (dispatch) => ({

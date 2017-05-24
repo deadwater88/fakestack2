@@ -1,4 +1,4 @@
-import EditPlacesForm from "./edit_places_form";
+import AboutPlacesForm from "./about_places_form";
 import { connect } from 'react-redux';
 import { updateProp } from '../../../actions/profiles_actions';
 
@@ -13,4 +13,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps,
-               mapDispatchToProps)(EditPlacesForm);
+               mapDispatchToProps)(AboutPlacesForm);

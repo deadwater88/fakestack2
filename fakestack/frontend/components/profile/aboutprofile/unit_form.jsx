@@ -17,7 +17,7 @@ class UnitForm extends React.Component {
                   editMode: false,
                   autocompleteOptions: [],
                   showauto: false,
-                  editCheck: this.props.editCheck};
+                  editCheck: this.props.profileInfo.editCheck};
 
   }
 
@@ -42,6 +42,7 @@ autocomplete(){
 
 handleSubmit(propName){
   return (e)=> {
+    e.preventDefault();
     const userId = this.state.viewedUserId;
     const value = this.state[propName];
     this.state.editMode = false;
@@ -66,9 +67,8 @@ autoresults(){
 deleteProp(e){
   e.stopPropagation();
   const {propName} = this.props.profileInfo;
-  const userId = this.state.currentUserId;
   this.state.editMode = false;
-  this.props.updateProp({[propName]: ""}, this.state.currentUserId);
+  this.props.updateProp({[propName]: ""}, this.state.viewedUserId);
 }
 
 selectAutoresult(e) {

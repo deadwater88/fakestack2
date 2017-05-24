@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import PostItem from './post_item';
 import {withRouter} from 'react-router-dom';
+import {publishPost} from '../../actions/post_actions';
+
 
 const mapStateToProps = (state, ownProps) =>({
   currentUserProfile: state.currentUserProfile,

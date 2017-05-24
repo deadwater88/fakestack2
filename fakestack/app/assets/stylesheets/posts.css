@@ -1,0 +1,22 @@
+#PostForm img {
+  height: 40px;
+  width: 40px;
+  margin: 10px;
+}
+
+.postIcon img {
+  height: 40px;
+  width: 40px;
+  margin: 10px;
+  margin-right: 0px;
+}
+
+.post.InputContainer {
+  border: 0px none;
+  font-size: 16px;
+}
+
+.post.InputContainer[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  color: #90949C;
+}

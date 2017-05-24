@@ -1,13 +1,12 @@
 
 #PostForm {
   border: inherit;
-  border-top: none;
-  border-right: none;
-  border-left: none;
+  border: 1px solid #D3D6DB;
 }
 
 #PostForm > div {
   border-bottom: 1px solid #D3D6DB;
+
 }
 
 #PostForm:last-child {
@@ -45,14 +44,28 @@ div#formNav {
 
 #postFormInput {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  background-color: white;
 }
 
-#postFormInput input {
+.expandableInput[contenteditable] {
+    border: 1px solid black;
+
+    overflow-y: inherit;
+    overflow: auto;
+}
+
+
+#postFormInput .expandableInput {
   border: none;
   font-size: 24px;
   padding: 15px 10px 30px 10px;
+  background-color: white ;
+  max-height: 200px;
+  flex-grow;
+
 }
+
 
 .profileThumb {
   height: 40px;
@@ -61,6 +74,8 @@ div#formNav {
   margin-top: 10px;
   margin-left: 10px;
 }
+
+
 
 .profileThumb * {
   width: 100%;
@@ -71,6 +86,7 @@ div#pfButtonContainer {
   display: flex;
   justify-content: space-between;
   border-bottom-width: 0px;
+  background-color: white;
 }
 
 .submitPost {
@@ -107,4 +123,42 @@ div#pfButtonContainer {
 }
 #postOptions svg:hover{
   cursor: pointer;
+}
+
+div.PostItemContainer {
+  margin-top: 20px;
+  border: 1px solid #D3D6D8;
+}
+
+div.postHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+div.postMetaData {
+  padding-top: 12px;
+  padding-left: 10px;
+}
+
+div.postMetaData a {
+  font-size: 14px;
+  text-decoration: none;
+  color: #365899;
+  font-weight: bold;
+  padding-bottom: 7px;
+}
+
+div.postMetaData a:hover {
+  text-decoration: underline;
+
+}
+
+div.PostItemContainer p {
+    margin-left: 10px;
+    font-size: 14px;
+    padding-bottom: 15px;
+}
+
+h5.timeStamp {
+  color: #90949c;
 }

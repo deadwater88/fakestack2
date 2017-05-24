@@ -8,16 +8,17 @@ class Wall extends React.Component {
   }
 
   componentWillMount(){
-    this.props.fetchPosts(this.props.location_id)
+    console.log(this.props.fetchPosts(this.props.location_id));
   }
 
   render(){
-    const {posts} = this.props
+    let {posts} = this.props;
+    posts = posts.sort((post1,post2)=> new Date(post2.createdAt) - new Date(post1.createdAt));
     return (
-    <div className="right Panel">
+    <div id="wallContainer" className="right Panel">
       <PostFormContainer/>
       {posts.map((post,idx)=> {
-        return <PostItemContainer key={idx + "PIC"}  post={post} idx={idx}/>
+        return <PostItemContainer key={idx + "PIC"}  post={post} idx={idx}/>;
       })}
     </div>);
   }

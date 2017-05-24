@@ -10,6 +10,11 @@ class Api::CommentsController < ApplicationController
     end
   end
 
+  def index
+    @user = User.find_by(id: params[:user_id])
+    @comments = @user.authored_posts.joins(:comments) + @user.wall_posts.joins(:comments)
+  end
+
   def destroy
     @comment = Comment.find_by(id: params[:id])
     if @comment.author_id == current_user.id

@@ -13,6 +13,11 @@
   font-size: 12px;
 }
 
+#profile {
+  background-color: white;
+  border: 1px solid #D3D6DB;
+}
+
 #panelContainer {
   display: flex;
   width: 850px;
@@ -23,7 +28,7 @@
 }
 
 #panelContainer > div {
-  background-color: #FFFFFF;
+  background-color: none;
 }
 
 .left {
@@ -33,14 +38,12 @@
 
 .right {
   flex-grow: 2;
+  width: 250px;
 }
 
-div.Panel {
-  background-color: none;
-}
 
 div#panelContainer > div {
-  border: 1px solid #D3D6DB;
+
 }
 
 section.intro {

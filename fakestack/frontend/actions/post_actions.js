@@ -1,6 +1,7 @@
 import * as PostAPIUtil from "../utils/post_api_util";
 
-import {receiveNotice, RECEIVE_NOTICE} from './notification_actions'
+import {fetchComments, fetchUserRelevantComments} from './comment_actions';
+import {receiveNotice, RECEIVE_NOTICE} from './notification_actions';
 
 export const RECEIVE_POST = 'RECEIVE_POST';
 
@@ -11,6 +12,7 @@ export const fetchPosts = (userId) => dispatch => {
   return PostAPIUtil.fetchPosts(userId).then(
     (res => {
       dispatch(receivePosts(res));
+      dispatch(fetchUserRelevantComments(userId));
     }),
     err => dispatch(receiveNotice(err.responseJSON))
   );
@@ -19,7 +21,7 @@ export const fetchPosts = (userId) => dispatch => {
 export const publishPost = (post) => dispatch => {
   return PostAPIUtil.publishPost(post).then(
     (res => {
-      dispatch(receivePost(res));
+      return dispatch(receivePost(res));
     }),
     err => dispatch(receiveNotice(err.responseJSON))
   );

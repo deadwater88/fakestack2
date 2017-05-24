@@ -1,5 +1,7 @@
 class Post < ApplicationRecord
 
+  validates :content, :author, :location, presence: true;
+
   belongs_to :author,
     class_name: :User
 

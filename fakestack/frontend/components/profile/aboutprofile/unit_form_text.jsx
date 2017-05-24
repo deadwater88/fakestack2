@@ -14,7 +14,8 @@ class UnitFormText extends React.Component {
                   viewedUserId: props.viewedUserProfile.id,
                   editMode: false,
                   autocompleteOptions: [],
-                  showauto: false};
+                  showauto: false,
+                  editCheck: this.props.profileInfo.editCheck};
 
   }
 
@@ -62,7 +63,7 @@ selectAutoresult(e) {
 
 showComponent(value, instruction, inputLabel){
   return value === "" ?
-  (<div onClick={this.toggleEditMode} className="imgPropContent addtext">
+  (<div onClick={this.toggleEditMode} className="imgPropContent addtext" style={this.state.editCheck}>
     <FaPlus/>
     <a> {instruction} </a>
   </div>) :

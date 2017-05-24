@@ -4,7 +4,7 @@ import UnitFormArrayImg from './unit_form_array_img';
 import UnitForm from './unit_form';
 
 
-class EditPlacesForm extends React.Component {
+class AboutPlacesForm extends React.Component {
 
     render (){
       let editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {}: {display: "none"};
@@ -46,4 +46,4 @@ class EditPlacesForm extends React.Component {
 }
 
 
-export default EditPlacesForm;
+export default AboutPlacesForm;

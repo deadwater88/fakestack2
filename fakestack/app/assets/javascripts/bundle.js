@@ -8738,7 +8738,7 @@ var _session_actions = __webpack_require__(39);
 
 var _profiles_actions = __webpack_require__(18);
 
-var _selectors = __webpack_require__(1060);
+var _selectors = __webpack_require__(1067);
 
 var _header_nav = __webpack_require__(164);
 
@@ -8795,7 +8795,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     currentUserProfile: state.currentUserProfile,
     viewedUserProfile: state.viewedUserProfile,
-    imgUrl: ownProps.imgUrl
+    imgUrl: ownProps.imgUrl,
+    className: ownProps.className
   };
 };
 
@@ -11603,7 +11604,7 @@ var UnitForm = function (_React$Component) {
     _this.editComponent = _this.editComponent.bind(_this);
     _this.deleteProp = _this.deleteProp.bind(_this);
     _this.selectAutoresult = _this.selectAutoresult.bind(_this);
-    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.value), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', false), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _defineProperty(_this$state, 'editCheck', _this.props.editCheck), _this$state);
+    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.value), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', false), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _defineProperty(_this$state, 'editCheck', _this.props.profileInfo.editCheck), _this$state);
 
     return _this;
   }
@@ -11638,6 +11639,7 @@ var UnitForm = function (_React$Component) {
       var _this3 = this;
 
       return function (e) {
+        e.preventDefault();
         var userId = _this3.state.viewedUserId;
         var value = _this3.state[propName];
         _this3.state.editMode = false;
@@ -11676,9 +11678,8 @@ var UnitForm = function (_React$Component) {
       e.stopPropagation();
       var propName = this.props.profileInfo.propName;
 
-      var userId = this.state.currentUserId;
       this.state.editMode = false;
-      this.props.updateProp(_defineProperty({}, propName, ""), this.state.currentUserId);
+      this.props.updateProp(_defineProperty({}, propName, ""), this.state.viewedUserId);
     }
   }, {
     key: 'selectAutoresult',
@@ -12106,7 +12107,7 @@ var UnitFormText = function (_React$Component) {
     _this.showComponent = _this.showComponent.bind(_this);
     _this.editComponent = _this.editComponent.bind(_this);
     _this.deleteProp = _this.deleteProp.bind(_this);
-    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.value), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', false), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
+    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.value), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', false), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _defineProperty(_this$state, 'editCheck', _this.props.profileInfo.editCheck), _this$state);
 
     return _this;
   }
@@ -12181,7 +12182,7 @@ var UnitFormText = function (_React$Component) {
     value: function showComponent(value, instruction, inputLabel) {
       return value === "" ? _react2.default.createElement(
         'div',
-        { onClick: this.toggleEditMode, className: 'imgPropContent addtext' },
+        { onClick: this.toggleEditMode, className: 'imgPropContent addtext', style: this.state.editCheck },
         _react2.default.createElement(_fa.FaPlus, null),
         _react2.default.createElement(
           'a',
@@ -19009,7 +19010,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _fa = __webpack_require__(11);
 
-var _profile_icon = __webpack_require__(1067);
+var _profile_icon = __webpack_require__(1064);
 
 var _profile_icon2 = _interopRequireDefault(_profile_icon);
 
@@ -19311,21 +19312,22 @@ var PostForm = function (_React$Component) {
 
     _this.handleSubmitPost = _this.handleSubmitPost.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
-    _this.state = { content: "", location_id: _this.props.match.params.userId };
+    _this.state = { content: "" };
     return _this;
   }
 
   _createClass(PostForm, [{
     key: 'handleSubmitPost',
     value: function handleSubmitPost(e) {
-      e.preventDefault;
-      this.props.publishPost({ post: this.state });
+      e.preventDefault();
+      this.props.publishPost({ post: { content: this.state.content, location_id: this.props.match.params.userId } });
+      this.setState({ content: "" });
+      document.getElementsByClassName("post InputContainer")[0].innerHTML = "";
     }
   }, {
     key: 'handleChange',
     value: function handleChange(e) {
-      e.preventDefault;
-      this.setState({ content: e.currentTarget.value });
+      this.setState({ content: e.currentTarget.innerHTML });
     }
   }, {
     key: 'componentWillReceiveNewProps',
@@ -19361,8 +19363,11 @@ var PostForm = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { id: 'postFormInput' },
-          _react2.default.createElement(_profile_picture_container2.default, { imgUrl: this.props.currentUserProfile.profileImgUrl, className: 'profileThumb' }),
-          _react2.default.createElement('input', { onChange: this.handleChange, placeholder: 'What\'s on your mind?' })
+          _react2.default.createElement(_profile_picture_container2.default, { imgUrl: this.props.currentUserProfile.profileImgUrl, className: '' }),
+          _react2.default.createElement('div', { contentEditable: true,
+            className: 'post InputContainer',
+            placeholder: 'What\'s on your mind?',
+            onKeyPress: this.handleChange })
         ),
         _react2.default.createElement(
           'div',
@@ -19405,7 +19410,7 @@ var _post_form = __webpack_require__(169);
 
 var _post_form2 = _interopRequireDefault(_post_form);
 
-var _post_actions = __webpack_require__(1068);
+var _post_actions = __webpack_require__(1059);
 
 var _reactRouterDom = __webpack_require__(21);
 
@@ -19453,13 +19458,13 @@ var _unit_form = __webpack_require__(90);
 
 var _unit_form2 = _interopRequireDefault(_unit_form);
 
-var _edit_details_container = __webpack_require__(173);
+var _about_details_container = __webpack_require__(1075);
 
-var _edit_details_container2 = _interopRequireDefault(_edit_details_container);
+var _about_details_container2 = _interopRequireDefault(_about_details_container);
 
-var _edit_places_container = __webpack_require__(175);
+var _about_places_container = __webpack_require__(1076);
 
-var _edit_places_container2 = _interopRequireDefault(_edit_places_container);
+var _about_places_container2 = _interopRequireDefault(_about_places_container);
 
 var _unit_form_array_img = __webpack_require__(91);
 
@@ -19534,8 +19539,8 @@ var AboutProfile = function (_React$Component) {
           { id: 'editProfileContent', className: 'primaryContent' },
           this.navLinks(),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/overview', component: _overview_container2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/places', component: _edit_places_container2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/details', component: _edit_details_container2.default })
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/places', component: _about_places_container2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about/details', component: _about_details_container2.default })
         )
       );
     }
@@ -19585,300 +19590,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_about_profile2.default);
 
 /***/ }),
-/* 173 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _edit_details_form = __webpack_require__(174);
-
-var _edit_details_form2 = _interopRequireDefault(_edit_details_form);
-
-var _reactRedux = __webpack_require__(12);
-
-var _profiles_actions = __webpack_require__(18);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    currentUserProfile: state.currentUserProfile,
-    viewedUserProfile: state.viewedUserProfile
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    updateProp: function updateProp(prop, userId) {
-      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_edit_details_form2.default);
-
-/***/ }),
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _unit_form_text = __webpack_require__(92);
-
-var _unit_form_text2 = _interopRequireDefault(_unit_form_text);
-
-var _unit_form_array = __webpack_require__(179);
-
-var _unit_form_array2 = _interopRequireDefault(_unit_form_array);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var EditDetailsForm = function (_React$Component) {
-  _inherits(EditDetailsForm, _React$Component);
-
-  function EditDetailsForm() {
-    _classCallCheck(this, EditDetailsForm);
-
-    return _possibleConstructorReturn(this, (EditDetailsForm.__proto__ || Object.getPrototypeOf(EditDetailsForm)).apply(this, arguments));
-  }
-
-  _createClass(EditDetailsForm, [{
-    key: 'render',
-    value: function render() {
-      var editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {} : { display: "none" };
-      var biographyInfo = { updateProp: this.props.updateProp,
-        instruction: "Write some details about yourself",
-        inputLabel: "About You",
-        propName: "biography",
-        value: this.props.viewedUserProfile.biography };
-      var otherNamesInfo = { updateProp: this.props.updateProp,
-        instruction: "Add a nickname or alternate name...",
-        inputLabel: "Name",
-        propName: "other_names",
-        values: this.props.viewedUserProfile.otherNames };
-      var favoriteQuotesInfo = { updateProp: this.props.updateProp,
-        instruction: "Add your favorite quotations",
-        inputLabel: "Favorite Quotes",
-        propName: "favorite_quotes",
-        value: this.props.viewedUserProfile.favoriteQuotes };
-      var _props = this.props,
-          updateProp = _props.updateProp,
-          viewedUserProfile = _props.viewedUserProfile;
-
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'propertyForm' },
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' ABOUT YOU '
-          ),
-          _react2.default.createElement(_unit_form_text2.default, { profileInfo: biographyInfo,
-            viewedUserProfile: viewedUserProfile,
-            updateProp: updateProp })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' OTHER NAMES '
-          ),
-          _react2.default.createElement(_unit_form_array2.default, { profileInfo: otherNamesInfo,
-            viewedUserProfile: viewedUserProfile,
-            updateProp: updateProp })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' FAVORITE QUOTES '
-          ),
-          _react2.default.createElement(_unit_form_text2.default, { profileInfo: favoriteQuotesInfo,
-            viewedUserProfile: viewedUserProfile,
-            updateProp: updateProp })
-        )
-      );
-    }
-  }]);
-
-  return EditDetailsForm;
-}(_react2.default.Component);
-
-exports.default = EditDetailsForm;
-
-/***/ }),
-/* 175 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _edit_places_form = __webpack_require__(176);
-
-var _edit_places_form2 = _interopRequireDefault(_edit_places_form);
-
-var _reactRedux = __webpack_require__(12);
-
-var _profiles_actions = __webpack_require__(18);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    currentUserProfile: state.currentUserProfile,
-    viewedUserProfile: state.viewedUserProfile
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    updateProp: function updateProp(prop, userId) {
-      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_edit_places_form2.default);
-
-/***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _unit_form_text = __webpack_require__(92);
-
-var _unit_form_text2 = _interopRequireDefault(_unit_form_text);
-
-var _unit_form_array_img = __webpack_require__(91);
-
-var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
-
-var _unit_form = __webpack_require__(90);
-
-var _unit_form2 = _interopRequireDefault(_unit_form);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var EditPlacesForm = function (_React$Component) {
-  _inherits(EditPlacesForm, _React$Component);
-
-  function EditPlacesForm() {
-    _classCallCheck(this, EditPlacesForm);
-
-    return _possibleConstructorReturn(this, (EditPlacesForm.__proto__ || Object.getPrototypeOf(EditPlacesForm)).apply(this, arguments));
-  }
-
-  _createClass(EditPlacesForm, [{
-    key: 'render',
-    value: function render() {
-      var editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {} : { display: "none" };
-      var profileInfoCurrentCity = { editCheck: editCheck,
-        instruction: "Add your current city",
-        inputLabel: "Current City",
-        propName: "current_city",
-        value: this.props.viewedUserProfile.currentCity };
-      var profileInfoHometown = { editCheck: editCheck,
-        instruction: "Add your hometown",
-        inputLabel: "Hometown",
-        propName: "hometown",
-        value: this.props.viewedUserProfile.hometown };
-      var profileInfoPlaces = { editCheck: editCheck,
-        instruction: "Add a Place",
-        inputLabel: "Place",
-        propName: "places",
-        values: this.props.viewedUserProfile.places };
-      return _react2.default.createElement(
-        'div',
-        { className: 'propertyForm' },
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' CURRENT CITY AND HOMETOWN '
-          ),
-          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoCurrentCity,
-            viewedUserProfile: this.props.viewedUserProfile,
-            updateProp: this.props.updateProp }),
-          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoHometown,
-            viewedUserProfile: this.props.viewedUserProfile,
-            updateProp: this.props.updateProp })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' OTHER PLACES LIVED '
-          )
-        ),
-        _react2.default.createElement(_unit_form_array_img2.default, { profileInfo: profileInfoPlaces,
-          viewedUserProfile: this.props.viewedUserProfile,
-          updateProp: this.props.updateProp })
-      );
-    }
-  }]);
-
-  return EditPlacesForm;
-}(_react2.default.Component);
-
-exports.default = EditPlacesForm;
-
-/***/ }),
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
 /* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20069,8 +19784,7 @@ var UnitFormArray = function (_React$Component) {
     _this.toggleEditMode = _this.toggleEditMode.bind(_this);
     _this.deleteProp = _this.deleteProp.bind(_this);
     _this.selectAutoresult = _this.selectAutoresult.bind(_this);
-    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.values), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', Array(props.profileInfo.values.length).fill(false)), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _this$state);
-
+    _this.state = (_this$state = {}, _defineProperty(_this$state, props.profileInfo.propName, props.profileInfo.values), _defineProperty(_this$state, 'viewedUserId', props.viewedUserProfile.id), _defineProperty(_this$state, 'editMode', Array(props.profileInfo.values.length).fill(false)), _defineProperty(_this$state, 'autocompleteOptions', []), _defineProperty(_this$state, 'showauto', false), _defineProperty(_this$state, 'editCheck', _this.props.profileInfo.editCheck), _this$state);
     return _this;
   }
 
@@ -20195,7 +19909,7 @@ var UnitFormArray = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { onClick: this.toggleEditMode(idx1), className: 'editDisplay' },
+            { onClick: this.toggleEditMode(idx1), className: 'editDisplay', style: this.state.editCheck },
             _react2.default.createElement(
               'a',
               null,
@@ -20216,7 +19930,7 @@ var UnitFormArray = function (_React$Component) {
     value: function showInstruction(instruction, lastidx) {
       return _react2.default.createElement(
         'div',
-        { onClick: this.toggleEditMode(lastidx), className: 'imgPropContent addtext' },
+        { onClick: this.toggleEditMode(lastidx), className: 'imgPropContent addtext', style: this.state.editCheck },
         _react2.default.createElement(_fa.FaPlus, null),
         _react2.default.createElement(
           'a',
@@ -20622,17 +20336,15 @@ var ProfilePicture = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _props = this.props,
-          targetUser = _props.targetUser,
-          className = _props.className;
+      var className = this.props.className;
 
       var editable = this.props.currentUserProfile.id === this.props.viewedUserProfile.id;
       var editCheck = editable ? {} : { display: "none" };
       var img = void 0;
       if (this.props.imgUrl !== "") {
-        img = _react2.default.createElement("img", { src: this.props.imgUrl });
+        img = _react2.default.createElement("img", { src: this.props.imgUrl, className: className });
       } else {
-        img = _react2.default.createElement(_fa.FaUser, null);
+        img = _react2.default.createElement(_fa.FaUser, { className: className });
       }
       return _react2.default.createElement(
         "div",
@@ -20935,7 +20647,7 @@ var _post_form_container = __webpack_require__(170);
 
 var _post_form_container2 = _interopRequireDefault(_post_form_container);
 
-var _post_item_container = __webpack_require__(1073);
+var _post_item_container = __webpack_require__(1063);
 
 var _post_item_container2 = _interopRequireDefault(_post_item_container);
 
@@ -20959,16 +20671,19 @@ var Wall = function (_React$Component) {
   _createClass(Wall, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.props.fetchPosts(this.props.location_id);
+      console.log(this.props.fetchPosts(this.props.location_id));
     }
   }, {
     key: 'render',
     value: function render() {
       var posts = this.props.posts;
 
+      posts = posts.sort(function (post1, post2) {
+        return new Date(post2.createdAt) - new Date(post1.createdAt);
+      });
       return _react2.default.createElement(
         'div',
-        { className: 'right Panel' },
+        { id: 'wallContainer', className: 'right Panel' },
         _react2.default.createElement(_post_form_container2.default, null),
         posts.map(function (post, idx) {
           return _react2.default.createElement(_post_item_container2.default, { key: idx + "PIC", post: post, idx: idx });
@@ -21001,7 +20716,7 @@ var _wall2 = _interopRequireDefault(_wall);
 
 var _selectors = __webpack_require__(196);
 
-var _post_actions = __webpack_require__(1068);
+var _post_actions = __webpack_require__(1059);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21134,13 +20849,17 @@ var _viewed_user_profile_reducer = __webpack_require__(193);
 
 var _viewed_user_profile_reducer2 = _interopRequireDefault(_viewed_user_profile_reducer);
 
-var _relevant_users_reducer = __webpack_require__(1059);
+var _relevant_users_reducer = __webpack_require__(1066);
 
 var _relevant_users_reducer2 = _interopRequireDefault(_relevant_users_reducer);
 
-var _posts_reducer = __webpack_require__(1071);
+var _posts_reducer = __webpack_require__(1065);
 
 var _posts_reducer2 = _interopRequireDefault(_posts_reducer);
+
+var _comments_reducer = __webpack_require__(1083);
+
+var _comments_reducer2 = _interopRequireDefault(_comments_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21149,7 +20868,8 @@ var rootReducer = (0, _redux.combineReducers)({
   currentUserProfile: _current_user_profile_reducer2.default,
   viewedUserProfile: _viewed_user_profile_reducer2.default,
   relevantUsers: _relevant_users_reducer2.default,
-  posts: _posts_reducer2.default
+  posts: _posts_reducer2.default,
+  comments: _comments_reducer2.default
 });
 
 exports.default = rootReducer;
@@ -21339,7 +21059,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.selectWallPosts = exports.selectAllRelevantUsers = exports.selectCurrentUserComments = undefined;
 
-var _values = __webpack_require__(1066);
+var _values = __webpack_require__(1060);
 
 var _values2 = _interopRequireDefault(_values);
 
@@ -65701,6 +65421,344 @@ exports.default = valueEqual;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.publishPost = exports.fetchPosts = exports.RECEIVE_POSTS = exports.RECEIVE_POST = undefined;
+
+var _post_api_util = __webpack_require__(1068);
+
+var PostAPIUtil = _interopRequireWildcard(_post_api_util);
+
+var _comment_actions = __webpack_require__(1081);
+
+var _notification_actions = __webpack_require__(1061);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_POST = exports.RECEIVE_POST = 'RECEIVE_POST';
+
+var RECEIVE_POSTS = exports.RECEIVE_POSTS = "RECEIVE_POSTS";
+
+var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
+  return function (dispatch) {
+    return PostAPIUtil.fetchPosts(userId).then(function (res) {
+      dispatch(receivePosts(res));
+      dispatch((0, _comment_actions.fetchUserRelevantComments)(userId));
+    }, function (err) {
+      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
+    });
+  };
+};
+
+var publishPost = exports.publishPost = function publishPost(post) {
+  return function (dispatch) {
+    return PostAPIUtil.publishPost(post).then(function (res) {
+      return dispatch(receivePost(res));
+    }, function (err) {
+      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
+    });
+  };
+};
+
+var receivePosts = function receivePosts(posts) {
+  return {
+    type: RECEIVE_POSTS,
+    posts: posts
+  };
+};
+
+var receivePost = function receivePost(post) {
+  return {
+    type: RECEIVE_POST,
+    post: post
+  };
+};
+
+/***/ }),
+/* 1060 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseValues = __webpack_require__(1071),
+    keys = __webpack_require__(1073);
+
+/**
+ * Creates an array of the own enumerable string keyed property values of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property values.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.values(new Foo);
+ * // => [1, 2] (iteration order is not guaranteed)
+ *
+ * _.values('hi');
+ * // => ['h', 'i']
+ */
+function values(object) {
+  return object == null ? [] : baseValues(object, keys(object));
+}
+
+module.exports = values;
+
+
+/***/ }),
+/* 1061 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var RECEIVE_NOTICE = exports.RECEIVE_NOTICE = 'RECEIVE_NOTICE';
+
+var receiveNotice = exports.receiveNotice = function receiveNotice(notice) {
+  return {
+    type: RECEIVE_NOTICE,
+    notice: notice
+  };
+};
+
+/***/ }),
+/* 1062 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fa = __webpack_require__(11);
+
+var _profile_picture_container = __webpack_require__(57);
+
+var _profile_picture_container2 = _interopRequireDefault(_profile_picture_container);
+
+var _reactRouterDom = __webpack_require__(21);
+
+var _date_format = __webpack_require__(1074);
+
+var _comment_form_container = __webpack_require__(1079);
+
+var _comment_form_container2 = _interopRequireDefault(_comment_form_container);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PostItem = function (_React$Component) {
+  _inherits(PostItem, _React$Component);
+
+  function PostItem(props) {
+    _classCallCheck(this, PostItem);
+
+    return _possibleConstructorReturn(this, (PostItem.__proto__ || Object.getPrototypeOf(PostItem)).call(this, props));
+  }
+
+  _createClass(PostItem, [{
+    key: 'componentWillReceiveNewProps',
+    value: function componentWillReceiveNewProps(newProps) {}
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props$post = this.props.post,
+          authorId = _props$post.authorId,
+          createdAt = _props$post.createdAt,
+          id = _props$post.id,
+          content = _props$post.content;
+
+      var author = this.props.relevantUsers[authorId];
+      var timestamp = (0, _date_format.format1)(createdAt);
+      return _react2.default.createElement(
+        'div',
+        { className: 'PostItemContainer', key: "postItemContainer" + this.props.idx },
+        _react2.default.createElement(
+          'div',
+          { className: 'postHeader' },
+          _react2.default.createElement(_profile_picture_container2.default, { imgUrl: author.profileImgUrl,
+            className: 'postIcon' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'postMetaData' },
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/profile/' + authorId + '/timeline' },
+              author.firstName + ' ' + author.lastName
+            ),
+            _react2.default.createElement(
+              'h5',
+              { className: 'timeStamp' },
+              ' ',
+              timestamp,
+              ' '
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'p',
+          { className: 'postContent' },
+          content
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'commentsRest' },
+          _react2.default.createElement(
+            'div',
+            null,
+            'Comments'
+          ),
+          _react2.default.createElement(_comment_form_container2.default, { parent: { parent_id: id, parent_type: "Post" } })
+        )
+      );
+    }
+  }]);
+
+  return PostItem;
+}(_react2.default.Component);
+
+exports.default = PostItem;
+
+/***/ }),
+/* 1063 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(12);
+
+var _post_item = __webpack_require__(1062);
+
+var _post_item2 = _interopRequireDefault(_post_item);
+
+var _reactRouterDom = __webpack_require__(21);
+
+var _post_actions = __webpack_require__(1059);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile,
+    post: ownProps.post,
+    relevantUsers: state.relevantUsers
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    publishPost: function publishPost(post) {
+      return dispatch((0, _post_actions.publishPost)(post));
+    }
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_post_item2.default));
+
+/***/ }),
+/* 1064 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fa = __webpack_require__(11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ProfileIcon = function ProfileIcon(props) {
+  var imgUrl = props.imgUrl;
+
+  return imgUrl !== "" ? _react2.default.createElement('img', { className: 'profileIcon', src: imgUrl }) : _react2.default.createElement(_fa.FaUser, { className: 'profileIcon' });
+};
+
+exports.default = ProfileIcon;
+
+/***/ }),
+/* 1065 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _post_actions = __webpack_require__(1059);
+
+var _merge = __webpack_require__(66);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PostsReducer = function PostsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  Object.freeze(state);
+  var newState = (0, _merge2.default)({}, state);
+  switch (action.type) {
+    case _post_actions.RECEIVE_POSTS:
+      return action.posts;
+    case _post_actions.RECEIVE_POST:
+      newState[action.post.id] = action.post;
+      return newState;
+    default:
+      return state;
+  }
+};
+
+exports.default = PostsReducer;
+
+/***/ }),
+/* 1066 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _profiles_actions = __webpack_require__(18);
 
@@ -65730,7 +65788,7 @@ var RelevantUsersReducer = function RelevantUsersReducer() {
 exports.default = RelevantUsersReducer;
 
 /***/ }),
-/* 1060 */
+/* 1067 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65741,7 +65799,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.selectWallPosts = exports.selectAllRelevantUsers = undefined;
 
-var _values = __webpack_require__(1066);
+var _values = __webpack_require__(1060);
 
 var _values2 = _interopRequireDefault(_values);
 
@@ -65758,7 +65816,32 @@ var selectWallPosts = exports.selectWallPosts = function selectWallPosts(state, 
 };
 
 /***/ }),
-/* 1061 */
+/* 1068 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
+  return $.ajax({
+    method: "GET",
+    url: "api/posts?user_id=" + userId
+  });
+};
+
+var publishPost = exports.publishPost = function publishPost(post) {
+  return $.ajax({
+    method: "POST",
+    url: "api/posts",
+    data: post
+  });
+};
+
+/***/ }),
+/* 1069 */
 /***/ (function(module, exports) {
 
 /**
@@ -65785,11 +65868,11 @@ module.exports = arrayMap;
 
 
 /***/ }),
-/* 1062 */
+/* 1070 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isPrototype = __webpack_require__(108),
-    nativeKeys = __webpack_require__(1064);
+    nativeKeys = __webpack_require__(1072);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -65821,10 +65904,10 @@ module.exports = baseKeys;
 
 
 /***/ }),
-/* 1063 */
+/* 1071 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(1061);
+var arrayMap = __webpack_require__(1069);
 
 /**
  * The base implementation of `_.values` and `_.valuesIn` which creates an
@@ -65846,7 +65929,7 @@ module.exports = baseValues;
 
 
 /***/ }),
-/* 1064 */
+/* 1072 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var overArg = __webpack_require__(280);
@@ -65858,11 +65941,11 @@ module.exports = nativeKeys;
 
 
 /***/ }),
-/* 1065 */
+/* 1073 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeKeys = __webpack_require__(234),
-    baseKeys = __webpack_require__(1062),
+    baseKeys = __webpack_require__(1070),
     isArrayLike = __webpack_require__(64);
 
 /**
@@ -65901,47 +65984,43 @@ module.exports = keys;
 
 
 /***/ }),
-/* 1066 */
+/* 1074 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseValues = __webpack_require__(1063),
-    keys = __webpack_require__(1065);
+"use strict";
 
-/**
- * Creates an array of the own enumerable string keyed property values of `object`.
- *
- * **Note:** Non-object values are coerced to objects.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property values.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.values(new Foo);
- * // => [1, 2] (iteration order is not guaranteed)
- *
- * _.values('hi');
- * // => ['h', 'i']
- */
-function values(object) {
-  return object == null ? [] : baseValues(object, keys(object));
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var format1 = exports.format1 = function format1(time) {
+  var date = new Date(time);
+  var locale = "en-us";
+  var month = date.toLocaleString(locale, { month: "long" });
+  var day = date.getDate();
+  var str = date.toLocaleTimeString();
+  var timeregex = /\d+:\d+/;
+  var ampm = /[A-Z]+/;
+  var timeParse = str.match(timeregex)[0] + str.match(ampm)[0];
+  var output = month + " " + day + " at " + timeParse;
+  return output;
+};
+// Month day at timepm.
+
+
+function convertUTCDateToLocalDate(date) {
+  var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+  var offset = date.getTimezoneOffset() / 60;
+  var hours = date.getHours();
+
+  newDate.setHours(hours - offset);
+
+  return newDate;
 }
 
-module.exports = values;
-
-
 /***/ }),
-/* 1067 */
+/* 1075 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65951,215 +66030,73 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(0);
+var _about_details_form = __webpack_require__(1077);
 
-var _react2 = _interopRequireDefault(_react);
-
-var _fa = __webpack_require__(11);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ProfileIcon = function ProfileIcon(props) {
-  var imgUrl = props.imgUrl;
-
-  return imgUrl !== "" ? _react2.default.createElement('img', { className: 'profileIcon', src: imgUrl }) : _react2.default.createElement(_fa.FaUser, { className: 'profileIcon' });
-};
-
-exports.default = ProfileIcon;
-
-/***/ }),
-/* 1068 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.publishPost = exports.fetchPosts = exports.RECEIVE_POSTS = exports.RECEIVE_POST = undefined;
-
-var _post_api_util = __webpack_require__(1070);
-
-var PostAPIUtil = _interopRequireWildcard(_post_api_util);
-
-var _notification_actions = __webpack_require__(1069);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var RECEIVE_POST = exports.RECEIVE_POST = 'RECEIVE_POST';
-
-var RECEIVE_POSTS = exports.RECEIVE_POSTS = "RECEIVE_POSTS";
-
-var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
-  return function (dispatch) {
-    return PostAPIUtil.fetchPosts(userId).then(function (res) {
-      dispatch(receivePosts(res));
-    }, function (err) {
-      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
-    });
-  };
-};
-
-var publishPost = exports.publishPost = function publishPost(post) {
-  return function (dispatch) {
-    return PostAPIUtil.publishPost(post).then(function (res) {
-      dispatch(receivePost(res));
-    }, function (err) {
-      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
-    });
-  };
-};
-
-var receivePosts = function receivePosts(posts) {
-  return {
-    type: RECEIVE_POSTS,
-    posts: posts
-  };
-};
-
-var receivePost = function receivePost(post) {
-  return {
-    type: RECEIVE_POST,
-    post: post
-  };
-};
-
-/***/ }),
-/* 1069 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var RECEIVE_NOTICE = exports.RECEIVE_NOTICE = 'RECEIVE_NOTICE';
-
-var receiveNotice = exports.receiveNotice = function receiveNotice(notice) {
-  return {
-    type: RECEIVE_NOTICE,
-    notice: notice
-  };
-};
-
-/***/ }),
-/* 1070 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
-  return $.ajax({
-    method: "GET",
-    url: "api/posts?user_id=" + userId
-  });
-};
-
-var publishPost = exports.publishPost = function publishPost(post) {
-  return $.ajax({
-    method: "POST",
-    url: "api/posts",
-    data: post
-  });
-};
-
-/***/ }),
-/* 1071 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _post_actions = __webpack_require__(1068);
-
-var _merge = __webpack_require__(66);
-
-var _merge2 = _interopRequireDefault(_merge);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PostsReducer = function PostsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments[1];
-
-  Object.freeze(state);
-  var newState = (0, _merge2.default)({}, state);
-  switch (action.type) {
-    case _post_actions.RECEIVE_POSTS:
-      return action.posts;
-    case _post_actions.RECEIVE_POST:
-      newState[action.post.id] = action.post;
-      return newState;
-    default:
-      return state;
-  }
-};
-
-exports.default = PostsReducer;
-
-/***/ }),
-/* 1072 */,
-/* 1073 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _about_details_form2 = _interopRequireDefault(_about_details_form);
 
 var _reactRedux = __webpack_require__(12);
 
-var _post_item = __webpack_require__(1074);
-
-var _post_item2 = _interopRequireDefault(_post_item);
-
-var _reactRouterDom = __webpack_require__(21);
+var _profiles_actions = __webpack_require__(18);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUserProfile: state.currentUserProfile,
-    viewedUserProfile: state.viewedUserProfile,
-    post: ownProps.post,
-    relevantUsers: state.relevantUsers
+    viewedUserProfile: state.viewedUserProfile
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    publishPost: function (_publishPost) {
-      function publishPost(_x) {
-        return _publishPost.apply(this, arguments);
-      }
-
-      publishPost.toString = function () {
-        return _publishPost.toString();
-      };
-
-      return publishPost;
-    }(function (post) {
-      return dispatch(publishPost(post));
-    })
+    updateProp: function updateProp(prop, userId) {
+      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
+    }
   };
 };
 
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_post_item2.default));
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_about_details_form2.default);
 
 /***/ }),
-/* 1074 */
+/* 1076 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _about_places_form = __webpack_require__(1078);
+
+var _about_places_form2 = _interopRequireDefault(_about_places_form);
+
+var _reactRedux = __webpack_require__(12);
+
+var _profiles_actions = __webpack_require__(18);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateProp: function updateProp(prop, userId) {
+      return dispatch((0, _profiles_actions.updateProp)(prop, userId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_about_places_form2.default);
+
+/***/ }),
+/* 1077 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66175,13 +66112,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _fa = __webpack_require__(11);
+var _unit_form_text = __webpack_require__(92);
 
-var _profile_picture_container = __webpack_require__(57);
+var _unit_form_text2 = _interopRequireDefault(_unit_form_text);
 
-var _profile_picture_container2 = _interopRequireDefault(_profile_picture_container);
+var _unit_form_array = __webpack_require__(179);
 
-var _reactRouterDom = __webpack_require__(21);
+var _unit_form_array2 = _interopRequireDefault(_unit_form_array);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66191,66 +66128,460 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PostItem = function (_React$Component) {
-  _inherits(PostItem, _React$Component);
+var EditDetailsForm = function (_React$Component) {
+  _inherits(EditDetailsForm, _React$Component);
 
-  function PostItem(props) {
-    _classCallCheck(this, PostItem);
+  function EditDetailsForm() {
+    _classCallCheck(this, EditDetailsForm);
 
-    return _possibleConstructorReturn(this, (PostItem.__proto__ || Object.getPrototypeOf(PostItem)).call(this, props));
+    return _possibleConstructorReturn(this, (EditDetailsForm.__proto__ || Object.getPrototypeOf(EditDetailsForm)).apply(this, arguments));
   }
 
-  _createClass(PostItem, [{
-    key: 'componentWillReceiveNewProps',
-    value: function componentWillReceiveNewProps(newProps) {}
-  }, {
+  _createClass(EditDetailsForm, [{
     key: 'render',
     value: function render() {
-      var _props$post = this.props.post,
-          authorId = _props$post.authorId,
-          createdAt = _props$post.createdAt,
-          id = _props$post.id,
-          content = _props$post.content;
+      var editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {} : { display: "none" };
+      var biographyInfo = { updateProp: this.props.updateProp,
+        instruction: "Write some details about yourself",
+        inputLabel: "About You",
+        propName: "biography",
+        value: this.props.viewedUserProfile.biography,
+        editCheck: editCheck };
+      var otherNamesInfo = { updateProp: this.props.updateProp,
+        instruction: "Add a nickname or alternate name...",
+        inputLabel: "Name",
+        propName: "other_names",
+        values: this.props.viewedUserProfile.otherNames,
+        editCheck: editCheck };
+      var favoriteQuotesInfo = { updateProp: this.props.updateProp,
+        instruction: "Add your favorite quotations",
+        inputLabel: "Favorite Quotes",
+        propName: "favorite_quotes",
+        value: this.props.viewedUserProfile.favoriteQuotes,
+        editCheck: editCheck };
+      var _props = this.props,
+          updateProp = _props.updateProp,
+          viewedUserProfile = _props.viewedUserProfile;
 
-      var author = this.props.relevantUsers[authorId];
+
       return _react2.default.createElement(
         'div',
-        { className: 'PostItemContainer', key: "postItemContainer" + this.props.idx },
+        { className: 'propertyForm' },
         _react2.default.createElement(
           'div',
-          { className: 'postHeader' },
-          _react2.default.createElement(_profile_picture_container2.default, { imgUrl: author.profileImgUrl,
-            className: 'profileThumb' }),
+          { className: 'propertyContainer' },
           _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.Link,
-              { to: '/profile/' + authorId + '/timeline' },
-              author.firstName + ' ' + author.lastName
-            ),
-            _react2.default.createElement(
-              'h5',
-              null,
-              ' ',
-              createdAt,
-              ' '
-            )
-          )
+            'h3',
+            { className: 'contentHeader' },
+            ' ABOUT YOU '
+          ),
+          _react2.default.createElement(_unit_form_text2.default, { profileInfo: biographyInfo,
+            viewedUserProfile: viewedUserProfile,
+            updateProp: updateProp })
         ),
         _react2.default.createElement(
-          'p',
-          { className: 'postContent' },
-          content
+          'div',
+          { className: 'propertyContainer' },
+          _react2.default.createElement(
+            'h3',
+            { className: 'contentHeader' },
+            ' OTHER NAMES '
+          ),
+          _react2.default.createElement(_unit_form_array2.default, { profileInfo: otherNamesInfo,
+            viewedUserProfile: viewedUserProfile,
+            updateProp: updateProp })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'propertyContainer' },
+          _react2.default.createElement(
+            'h3',
+            { className: 'contentHeader' },
+            ' FAVORITE QUOTES '
+          ),
+          _react2.default.createElement(_unit_form_text2.default, { profileInfo: favoriteQuotesInfo,
+            viewedUserProfile: viewedUserProfile,
+            updateProp: updateProp })
         )
       );
     }
   }]);
 
-  return PostItem;
+  return EditDetailsForm;
 }(_react2.default.Component);
 
-exports.default = PostItem;
+exports.default = EditDetailsForm;
+
+/***/ }),
+/* 1078 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _unit_form_text = __webpack_require__(92);
+
+var _unit_form_text2 = _interopRequireDefault(_unit_form_text);
+
+var _unit_form_array_img = __webpack_require__(91);
+
+var _unit_form_array_img2 = _interopRequireDefault(_unit_form_array_img);
+
+var _unit_form = __webpack_require__(90);
+
+var _unit_form2 = _interopRequireDefault(_unit_form);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AboutPlacesForm = function (_React$Component) {
+  _inherits(AboutPlacesForm, _React$Component);
+
+  function AboutPlacesForm() {
+    _classCallCheck(this, AboutPlacesForm);
+
+    return _possibleConstructorReturn(this, (AboutPlacesForm.__proto__ || Object.getPrototypeOf(AboutPlacesForm)).apply(this, arguments));
+  }
+
+  _createClass(AboutPlacesForm, [{
+    key: 'render',
+    value: function render() {
+      var editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {} : { display: "none" };
+      var profileInfoCurrentCity = { editCheck: editCheck,
+        instruction: "Add your current city",
+        inputLabel: "Current City",
+        propName: "current_city",
+        value: this.props.viewedUserProfile.currentCity };
+      var profileInfoHometown = { editCheck: editCheck,
+        instruction: "Add your hometown",
+        inputLabel: "Hometown",
+        propName: "hometown",
+        value: this.props.viewedUserProfile.hometown };
+      var profileInfoPlaces = { editCheck: editCheck,
+        instruction: "Add a Place",
+        inputLabel: "Place",
+        propName: "places",
+        values: this.props.viewedUserProfile.places };
+      return _react2.default.createElement(
+        'div',
+        { className: 'propertyForm' },
+        _react2.default.createElement(
+          'div',
+          { className: 'propertyContainer' },
+          _react2.default.createElement(
+            'h3',
+            { className: 'contentHeader' },
+            ' CURRENT CITY AND HOMETOWN '
+          ),
+          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoCurrentCity,
+            viewedUserProfile: this.props.viewedUserProfile,
+            updateProp: this.props.updateProp }),
+          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoHometown,
+            viewedUserProfile: this.props.viewedUserProfile,
+            updateProp: this.props.updateProp })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'propertyContainer' },
+          _react2.default.createElement(
+            'h3',
+            { className: 'contentHeader' },
+            ' OTHER PLACES LIVED '
+          )
+        ),
+        _react2.default.createElement(_unit_form_array_img2.default, { profileInfo: profileInfoPlaces,
+          viewedUserProfile: this.props.viewedUserProfile,
+          updateProp: this.props.updateProp })
+      );
+    }
+  }]);
+
+  return AboutPlacesForm;
+}(_react2.default.Component);
+
+exports.default = AboutPlacesForm;
+
+/***/ }),
+/* 1079 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(12);
+
+var _comment_form = __webpack_require__(1080);
+
+var _comment_form2 = _interopRequireDefault(_comment_form);
+
+var _comment_actions = __webpack_require__(1081);
+
+var _reactRouterDom = __webpack_require__(21);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile,
+    parent: ownProps.parent
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    publishComment: function publishComment(comment) {
+      return dispatch((0, _comment_actions.publishComment)(comment));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_comment_form2.default);
+
+/***/ }),
+/* 1080 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _profile_picture_container = __webpack_require__(57);
+
+var _profile_picture_container2 = _interopRequireDefault(_profile_picture_container);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CommentForm = function (_React$Component) {
+  _inherits(CommentForm, _React$Component);
+
+  function CommentForm(props) {
+    _classCallCheck(this, CommentForm);
+
+    var _this = _possibleConstructorReturn(this, (CommentForm.__proto__ || Object.getPrototypeOf(CommentForm)).call(this, props));
+
+    _this.handleSubmitComment = _this.handleSubmitComment.bind(_this);
+    _this.state = { content: "" };
+    return _this;
+  }
+
+  _createClass(CommentForm, [{
+    key: 'handleSubmitComment',
+    value: function handleSubmitComment(e) {
+      if (e.charCode === 13) {
+        e.preventDefault();
+        var target = e.currentTarget;
+        var _props$parent = this.props.parent,
+            parent_type = _props$parent.parent_type,
+            parent_id = _props$parent.parent_id;
+
+        var comment = { parent_type: parent_type, parent_id: parent_id, content: e.currentTarget.innerHTML };
+        this.props.publishComment(comment);
+        this.setState({ content: "" });
+        e.currentTarget.innerHTML = "";
+      } else {
+        this.setState({ content: e.currentTarget.innerHTML });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        'form',
+        { className: 'commentForm' },
+        _react2.default.createElement(_profile_picture_container2.default, { imgUrl: this.props.currentUserProfile.profileImgUrl, className: 'commentIcon' }),
+        _react2.default.createElement('div', { onKeyPress: this.handleSubmitComment,
+          contentEditable: true,
+          className: 'comment InputContainer',
+          placeholder: 'Write a comment' })
+      );
+    }
+  }]);
+
+  return CommentForm;
+}(_react2.default.Component);
+
+exports.default = CommentForm;
+
+/***/ }),
+/* 1081 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.publishComment = exports.fetchUserRelevantComments = exports.fetchComments = exports.RECEIVE_RELEVANT_COMMENTS = exports.RECEIVE_COMMENTS = exports.RECEIVE_COMMENT = undefined;
+
+var _comment_api_util = __webpack_require__(1082);
+
+var CommentAPIUtil = _interopRequireWildcard(_comment_api_util);
+
+var _notification_actions = __webpack_require__(1061);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_COMMENT = exports.RECEIVE_COMMENT = 'RECEIVE_COMMENT';
+
+var RECEIVE_COMMENTS = exports.RECEIVE_COMMENTS = "RECEIVE_POSTS";
+
+var RECEIVE_RELEVANT_COMMENTS = exports.RECEIVE_RELEVANT_COMMENTS = "RECEIVE_RELEVANT_COMMENTS";
+
+var fetchComments = exports.fetchComments = function fetchComments(parent_id, parent_type) {
+  return function (dispatch) {
+    return CommentAPIUtil.fetchComments(parent_id, parent_type).then(function (res) {
+      dispatch(receiveComments(res));
+    }, function (err) {
+      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
+    });
+  };
+};
+
+var fetchUserRelevantComments = exports.fetchUserRelevantComments = function fetchUserRelevantComments(userId) {
+  return function (dispatch) {
+    return CommentAPIUtil.fetchUserRelevantComments(userId).then(function (res) {
+      dispatch(receiveRelevantComments(res));
+    });
+  };
+};
+
+var publishComment = exports.publishComment = function publishComment(comment) {
+  return function (dispatch) {
+    return CommentAPIUtil.publishComment(comment).then(function (res) {
+      dispatch(receiveComment(res));
+    }, function (err) {
+      return dispatch((0, _notification_actions.receiveNotice)(err.responseJSON));
+    });
+  };
+};
+
+var receiveRelevantComments = function receiveRelevantComments(comments) {
+  return {
+    type: RECEIVE_RELEVANT_COMMENTS,
+    comments: comments
+  };
+};
+
+var receiveComments = function receiveComments(comments) {
+  return {
+    type: RECEIVE_COMMENTS,
+    comments: comments
+  };
+};
+
+var receiveComment = function receiveComment(comment) {
+  return {
+    type: RECEIVE_COMMENT,
+    comment: comment
+  };
+};
+
+/***/ }),
+/* 1082 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchComments = exports.fetchComments = function fetchComments(parent_id, parent_type) {
+  return $.ajax({
+    method: "GET",
+    url: "api/comments?parent_id=" + parent_id + "&parent_type=" + parent_type
+  });
+};
+
+var fetchUserRelevantComments = exports.fetchUserRelevantComments = function fetchUserRelevantComments(userId) {
+  return $.ajax({
+    method: "GET",
+    url: "api/comments?user_id=" + userId
+  });
+};
+
+var publishComment = exports.publishComment = function publishComment(comment) {
+  return $.ajax({
+    method: "POST",
+    url: "api/comments",
+    data: { comment: comment }
+  });
+};
+
+/***/ }),
+/* 1083 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _comment_actions = __webpack_require__(1081);
+
+var _merge = __webpack_require__(66);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CommentsReducer = function CommentsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  Object.freeze(state);
+  var newState = (0, _merge2.default)({}, state);
+  switch (action.type) {
+    case _comment_actions.RECEIVE_RELEVANT_COMMENTS:
+      return action.comments;
+    case _comment_actions.RECEIVE_COMMENT:
+      newState[action.comment.id] = action.comment;
+      return newState;
+    default:
+      return state;
+  }
+};
+
+exports.default = CommentsReducer;
 
 /***/ })
 /******/ ]);

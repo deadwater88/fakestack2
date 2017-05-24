@@ -14,8 +14,8 @@ class UnitFormArray extends React.Component {
                   viewedUserId: props.viewedUserProfile.id,
                   editMode: Array(props.profileInfo.values.length).fill(false),
                   autocompleteOptions: [],
-                  showauto: false};
-
+                  showauto: false,
+                  editCheck: this.props.profileInfo.editCheck};
   }
 
 handleChange(idx1){
@@ -95,7 +95,7 @@ showValues(value, idx1){
           {value}
         </h1>
       </div>
-      <div onClick={this.toggleEditMode(idx1)} className="editDisplay">
+      <div onClick={this.toggleEditMode(idx1)} className="editDisplay" style={this.state.editCheck}>
         <a>
           <FaPencil/>
           Edit
@@ -110,7 +110,7 @@ showValues(value, idx1){
 }
 
 showInstruction(instruction, lastidx) {
-  return (<div onClick={this.toggleEditMode(lastidx)} className="imgPropContent addtext">
+  return (<div onClick={this.toggleEditMode(lastidx)} className="imgPropContent addtext" style={this.state.editCheck}>
     <FaPlus/>
     <a> {instruction} </a>
   </div>);

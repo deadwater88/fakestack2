@@ -2,8 +2,8 @@ import React from 'react';
 import {FaUser, FaPlus} from 'react-icons/lib/fa/';
 import {Route, NavLink} from 'react-router-dom';
 import UnitForm from './unit_form';
-import AboutDetailsContainer from './edit_details_container';
-import AboutPlacesContainer from './edit_places_container';
+import AboutDetailsContainer from './about_details_container';
+import AboutPlacesContainer from './about_places_container';
 import UnitFormArrayImg from './unit_form_array_img';
 import OverviewContainer from './overview_container';
 

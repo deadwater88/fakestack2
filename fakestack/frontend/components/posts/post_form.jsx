@@ -8,17 +8,20 @@ class PostForm extends React.Component{
     super(props);
     this.handleSubmitPost = this.handleSubmitPost.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {content: "", location_id: this.props.match.params.userId}
+    this.state = {content: ""};
   }
 
   handleSubmitPost(e){
-    e.preventDefault;
-    this.props.publishPost({post: this.state})
+    e.preventDefault();
+    this.props.publishPost({post: {content: this.state.content, location_id: this.props.match.params.userId} });
+    this.setState({content:""});
+    document.getElementsByClassName("post InputContainer")[0].innerHTML = "";
   }
 
+
+
   handleChange(e){
-    e.preventDefault;
-    this.setState({content: e.currentTarget.value})
+    this.setState({content: e.currentTarget.innerHTML});
   }
 
   componentWillReceiveNewProps(newProps){
@@ -42,8 +45,13 @@ class PostForm extends React.Component{
         </a>
       </div>
       <div id="postFormInput">
-        <ProfilePictureContainer imgUrl={this.props.currentUserProfile.profileImgUrl} className="profileThumb"/>
-        <input onChange={this.handleChange} placeholder="What's on your mind?"/>
+        <ProfilePictureContainer imgUrl={this.props.currentUserProfile.profileImgUrl} className=""/>
+          <div contentEditable={true}
+            className="post InputContainer"
+            placeholder="What's on your mind?"
+            onKeyPress={this.handleChange}>
+
+          </div>
       </div>
       <div id="pfButtonContainer">
         <div id="postOptions">

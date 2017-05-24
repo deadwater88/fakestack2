@@ -50,7 +50,7 @@
         lastName: "Wong"
         imageUrl: "example.com/image123"
       }
-      tagged_users: [2, 4, 5]
+      comments: [2, 4, 5]
       content: "This requires a lot of planning"
     }
     2:{
@@ -61,7 +61,7 @@
         lastName: "Sanchez"
         imageUrl: "example.com/image413"
       }
-      tagged_users: [1, 3, 6]
+      comments: [7, 10, 13]
       content: "This wasn't too hard"
     }
   }

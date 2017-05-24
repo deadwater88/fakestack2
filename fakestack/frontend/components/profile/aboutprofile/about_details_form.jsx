@@ -11,17 +11,20 @@ class EditDetailsForm extends React.Component {
                              instruction: "Write some details about yourself",
                              inputLabel: "About You",
                              propName: "biography",
-                             value: this.props.viewedUserProfile.biography};
+                             value: this.props.viewedUserProfile.biography,
+                             editCheck: editCheck};
     const otherNamesInfo = {updateProp: this.props.updateProp,
                              instruction: "Add a nickname or alternate name...",
                              inputLabel: "Name",
                              propName: "other_names",
-                             values: this.props.viewedUserProfile.otherNames};
+                             values: this.props.viewedUserProfile.otherNames,
+                             editCheck: editCheck};
     const favoriteQuotesInfo = {updateProp: this.props.updateProp,
                              instruction: "Add your favorite quotations",
                              inputLabel: "Favorite Quotes",
                              propName: "favorite_quotes",
-                             value: this.props.viewedUserProfile.favoriteQuotes};
+                             value: this.props.viewedUserProfile.favoriteQuotes,
+                             editCheck: editCheck};
     const {updateProp, viewedUserProfile} = this.props;
 
       return (

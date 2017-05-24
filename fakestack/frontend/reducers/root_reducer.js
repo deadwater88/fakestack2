@@ -4,12 +4,16 @@ import CurrentUserProfileReducer from './current_user_profile_reducer';
 import viewedUserProfileReducer from './viewed_user_profile_reducer';
 import RelevantUsersReducer from './relevant_users_reducer';
 import PostsReducer from './posts_reducer';
+import CommentsReducer from './comments_reducer';
+
+
 const rootReducer = combineReducers({
   session: SessionReducer,
   currentUserProfile: CurrentUserProfileReducer,
   viewedUserProfile: viewedUserProfileReducer,
   relevantUsers: RelevantUsersReducer,
-  posts: PostsReducer 
+  posts: PostsReducer ,
+  comments: CommentsReducer
 });
 
 export default rootReducer;
