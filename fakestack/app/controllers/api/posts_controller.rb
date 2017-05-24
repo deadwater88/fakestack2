@@ -10,11 +10,8 @@ class Api::PostsController < ApplicationController
   end
 
   def index
-    debugger
     @user = User.find_by(id: params[:user_id])
-    @posts = @user.authored_posts + @user.wall_posts + @user.friends.(:authored_posts) + @user.friends.(:wall_posts)
-    debugger
-    
+    @posts = @user.authored_posts + @user.wall_posts
   end
 
   def destroy

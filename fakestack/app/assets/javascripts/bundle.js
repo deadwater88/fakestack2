@@ -20935,6 +20935,10 @@ var _post_form_container = __webpack_require__(170);
 
 var _post_form_container2 = _interopRequireDefault(_post_form_container);
 
+var _post_item_container = __webpack_require__(1073);
+
+var _post_item_container2 = _interopRequireDefault(_post_item_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20955,16 +20959,20 @@ var Wall = function (_React$Component) {
   _createClass(Wall, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      debugger;
       this.props.fetchPosts(this.props.location_id);
     }
   }, {
     key: 'render',
     value: function render() {
+      var posts = this.props.posts;
+
       return _react2.default.createElement(
         'div',
         { className: 'right Panel' },
-        _react2.default.createElement(_post_form_container2.default, null)
+        _react2.default.createElement(_post_form_container2.default, null),
+        posts.map(function (post, idx) {
+          return _react2.default.createElement(_post_item_container2.default, { key: idx + "PIC", post: post, idx: idx });
+        })
       );
     }
   }]);
@@ -21347,7 +21355,7 @@ var selectAllRelevantUsers = exports.selectAllRelevantUsers = function selectAll
 
 var selectWallPosts = exports.selectWallPosts = function selectWallPosts(state, location_id) {
   return Object.values(state.posts).filter(function (post) {
-    return post.id === parseInt(location_id);
+    return post.locationId === parseInt(location_id);
   });
 };
 
@@ -66098,6 +66106,151 @@ var PostsReducer = function PostsReducer() {
 };
 
 exports.default = PostsReducer;
+
+/***/ }),
+/* 1072 */,
+/* 1073 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(12);
+
+var _post_item = __webpack_require__(1074);
+
+var _post_item2 = _interopRequireDefault(_post_item);
+
+var _reactRouterDom = __webpack_require__(21);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile,
+    post: ownProps.post,
+    relevantUsers: state.relevantUsers
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    publishPost: function (_publishPost) {
+      function publishPost(_x) {
+        return _publishPost.apply(this, arguments);
+      }
+
+      publishPost.toString = function () {
+        return _publishPost.toString();
+      };
+
+      return publishPost;
+    }(function (post) {
+      return dispatch(publishPost(post));
+    })
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_post_item2.default));
+
+/***/ }),
+/* 1074 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _fa = __webpack_require__(11);
+
+var _profile_picture_container = __webpack_require__(57);
+
+var _profile_picture_container2 = _interopRequireDefault(_profile_picture_container);
+
+var _reactRouterDom = __webpack_require__(21);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PostItem = function (_React$Component) {
+  _inherits(PostItem, _React$Component);
+
+  function PostItem(props) {
+    _classCallCheck(this, PostItem);
+
+    return _possibleConstructorReturn(this, (PostItem.__proto__ || Object.getPrototypeOf(PostItem)).call(this, props));
+  }
+
+  _createClass(PostItem, [{
+    key: 'componentWillReceiveNewProps',
+    value: function componentWillReceiveNewProps(newProps) {}
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props$post = this.props.post,
+          authorId = _props$post.authorId,
+          createdAt = _props$post.createdAt,
+          id = _props$post.id,
+          content = _props$post.content;
+
+      var author = this.props.relevantUsers[authorId];
+      return _react2.default.createElement(
+        'div',
+        { className: 'PostItemContainer', key: "postItemContainer" + this.props.idx },
+        _react2.default.createElement(
+          'div',
+          { className: 'postHeader' },
+          _react2.default.createElement(_profile_picture_container2.default, { imgUrl: author.profileImgUrl,
+            className: 'profileThumb' }),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/profile/' + authorId + '/timeline' },
+              author.firstName + ' ' + author.lastName
+            ),
+            _react2.default.createElement(
+              'h5',
+              null,
+              ' ',
+              createdAt,
+              ' '
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'p',
+          { className: 'postContent' },
+          content
+        )
+      );
+    }
+  }]);
+
+  return PostItem;
+}(_react2.default.Component);
+
+exports.default = PostItem;
 
 /***/ })
 /******/ ]);

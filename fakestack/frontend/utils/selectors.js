@@ -11,5 +11,5 @@ export const selectAllRelevantUsers = (state) => {
 }
 
 export const selectWallPosts = (state, location_id) => {
-  return Object.values(state.posts).filter(post => post.id === parseInt(location_id))
+  return Object.values(state.posts).filter(post => post.locationId === parseInt(location_id))
 }
