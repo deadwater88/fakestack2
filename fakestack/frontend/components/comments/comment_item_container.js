@@ -1,21 +1,20 @@
 import { connect } from 'react-redux';
-import PostItem from './post_item';
+import CommentItem from './comment_item';
 import {withRouter} from 'react-router-dom';
-import {publishPost, deletePost} from '../../actions/post_actions';
+import {publishComment} from '../../actions/comment_actions';
 
 
 const mapStateToProps = (state, ownProps) =>({
   currentUserProfile: state.currentUserProfile,
   viewedUserProfile: state.viewedUserProfile,
-  post: ownProps.post,
+  comment: ownProps.comment,
   relevantUsers: state.relevantUsers,
-  comments: state.comments
+  idx: ownProps.idx
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  publishPost: (post)=> dispatch(publishPost(post)),
-  deletePost: (post)=> dispatch(deletePost(post))
+  publishComment: (post)=> dispatch(publishComment(post))
 });
 
 export default withRouter(connect(mapStateToProps,
-               mapDispatchToProps)(PostItem));
+               mapDispatchToProps)(CommentItem));

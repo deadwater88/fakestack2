@@ -133,11 +133,13 @@ div.PostItemContainer {
 div.postHeader {
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 div.postMetaData {
   padding-top: 12px;
   padding-left: 10px;
+
 }
 
 div.postMetaData a {
@@ -153,12 +155,27 @@ div.postMetaData a:hover {
 
 }
 
-div.PostItemContainer p {
+p.postContent {
     margin-left: 10px;
-    font-size: 14px;
+    font-size: 18px;
     padding-bottom: 15px;
 }
 
 h5.timeStamp {
   color: #90949c;
+}
+
+div.dropDown.post {
+  display: absolute;
+  top: 10px;
+  left: 450px;
+  height: 8px;
+  width: 8px;
+  color: #D6D9DD;
+}
+
+div.dropDown.post:hover{
+  color: #B3B7BE;
+  cursor: pointer;
+
 }

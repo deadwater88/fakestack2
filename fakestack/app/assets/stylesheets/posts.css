@@ -20,3 +20,7 @@
   content: attr(placeholder);
   color: #90949C;
 }
+
+.postProper {
+  border-bottom: 1px solid #E1E2E3;
+}

@@ -22,7 +22,7 @@ class CommentForm extends React.Component {
     }
   }
   render(){
-
+    const className = this.props.className;
     return (
       <form className="commentForm">
         <ProfilePictureContainer imgUrl={this.props.currentUserProfile.profileImgUrl} className="commentIcon"/>

@@ -7,6 +7,7 @@ export const RECEIVE_POST = 'RECEIVE_POST';
 
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
 
+export const REMOVE_POST = 'REMOVE_POST';
 
 export const fetchPosts = (userId) => dispatch => {
   return PostAPIUtil.fetchPosts(userId).then(
@@ -27,6 +28,15 @@ export const publishPost = (post) => dispatch => {
   );
 };
 
+export const deletePost = (postId) => dispatch => {
+  return PostAPIUtil.deletePost(postId).then(
+    (res => {
+      return dispatch(deletePost(res));
+    }),
+    err => dispatch(receiveNotice(err.responseJSON))
+  );
+};
+
 
 
 const receivePosts = (posts) => ({
@@ -36,5 +46,9 @@ const receivePosts = (posts) => ({
 
 const receivePost = (post) => ({
   type: RECEIVE_POST,
+  post
+});
+const removePost = (post) => ({
+  type: REMOVE_POST,
   post
 });

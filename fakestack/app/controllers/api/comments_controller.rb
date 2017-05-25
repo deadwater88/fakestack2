@@ -11,8 +11,8 @@ class Api::CommentsController < ApplicationController
   end
 
   def index
-    @user = User.find_by(id: params[:user_id])
-    @comments = @user.authored_posts.joins(:comments) + @user.wall_posts.joins(:comments)
+    @posts = Post.where(location_id: params[:user_id]).includes(:comments)
+    render :index
   end
 
   def destroy

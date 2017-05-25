@@ -11,7 +11,7 @@ class Api::PostsController < ApplicationController
 
   def index
     @user = User.find_by(id: params[:user_id])
-    @posts = @user.authored_posts + @user.wall_posts
+    @posts = @user.authored_posts.includes(:comments) + @user.wall_posts.includes(:comments)
   end
 
   def destroy

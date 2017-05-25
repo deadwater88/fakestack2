@@ -23,6 +23,13 @@
   align-items: flex-start;
 }
 
+.commentHeader  img.commentIcon {
+  height: 32px;
+  width: 32px;
+  margin: 10px 10px 0px 10px;
+
+}
+
 .commentsRest {
   background-color: #F6F7F9;
 }
@@ -43,4 +50,60 @@
 .comment.InputContainer[contenteditable=true]:empty:before {
   content: attr(placeholder);
   color: #90949C;
+}
+
+.commentMetaContent {
+  display: flex;
+  flex-direction: row;
+  width:425px;
+}
+
+.commentMetaContent > p   {
+  color: black;
+  text-decoration: none;
+  padding: 0px;
+  margin-top: 10px;
+  margin-left:0px;
+  display: inline;
+  word-wrap: break-word;
+  font-size: 14px;
+}
+
+.commentMetaContent a  {
+  color: #365899;
+  text-decoration: none;
+  display: inline;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+
+
+.commentData {
+  display: flex;
+  flex-direction: column;
+}
+
+.commentHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.commentLinks {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+div.commentLinks a {
+  font-size: 14px;
+  margin-top : 5px;
+  margin-right: 10px;
+  color:#365899;
+
+}
+
+div.PostItemContainer a:hover {
+  text-decoration: underline;
 }
