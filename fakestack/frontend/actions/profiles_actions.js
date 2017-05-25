@@ -70,7 +70,8 @@ export const acceptFriending = (viewedId) => dispatch => {
 
 export const createFriending = (viewedId) => dispatch => {
     return FriendAPIUtil.createFriending(viewedId).then(
-      res => dispatch(receiveProp(res)),
+      res => {
+        return dispatch(receiveProp(res));},
       err => dispatch(receiveProfileErrors(err.responseJSON))
     );
   };

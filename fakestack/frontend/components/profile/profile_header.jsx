@@ -14,6 +14,7 @@ class ProfileHeader extends React.Component {
                         ["friends", "Friends"],
                         ["photos", "Photos"]];
     this.friendsButtonContent = this.friendsButtonContent.bind(this);
+    this.handleFriendClick = this.handleFriendClick.bind(this);
   }
 
 
@@ -38,12 +39,12 @@ class ProfileHeader extends React.Component {
       case currentUserProfile.friends.includes(viewedId):
         return "Do Nothing";
       case currentUserProfile.requesters.includes(viewedId):
-        this.acceptFriending(viewedId);
+        this.props.acceptFriending(viewedId);
         return "Accept Request";
       case currentUserProfile.recipients.includes(viewedId):
         return "Do Nothing";
       default:
-        this.createFriending(viewedId);
+        this.props.createFriending(viewedId);
         return  "Create Request";
     }
   }
@@ -53,7 +54,7 @@ class ProfileHeader extends React.Component {
     let viewedId = viewedUserProfile.id;
     switch (true) {
       case currentUserProfile.friends.includes(viewedId):
-        return <div> <FaCheck/> CheckMark Friends </div>;
+        return <div> <FaCheck/>Friends </div>;
       case currentUserProfile.requesters.includes(viewedId):
         return <div> <FaUserPlus/> Accept Friend Request </div>;
       case currentUserProfile.recipients.includes(viewedId):

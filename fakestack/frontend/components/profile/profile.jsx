@@ -1,9 +1,10 @@
 import React from 'react';
-import ProfileHeader from './profile_header';
+import ProfileHeaderContainer from './profile_header_container';
 import HeaderContainer from '../header_nav/header_container';
 import {Route} from 'react-router-dom';
 import Timeline from './timeline/timeline';
 import AboutProfileContainer from './aboutprofile/about_profile_container';
+import FriendsContainer from './friends/friends_container';
 
 
 class Profile extends React.Component{
@@ -29,9 +30,10 @@ class Profile extends React.Component{
     const {uploadPic, viewedUserProfile, currentUserProfile, match} = this.props;
     return viewedUserProfile.id === undefined ? <div></div> : (
       <div id="profilePage">
-        <ProfileHeader uploadPic={uploadPic} currentUserProfile={currentUserProfile} viewedUserProfile={viewedUserProfile} match={match}/>
+        <ProfileHeaderContainer match={match}/>
         <Route path="/profile/:userId/timeline" component={Timeline}></Route>
         <Route path="/profile/:userId/about" component={AboutProfileContainer}></Route>
+        <Route path="/profile/:userId/friends" component={FriendsContainer}></Route>
       </div>
     );
   }

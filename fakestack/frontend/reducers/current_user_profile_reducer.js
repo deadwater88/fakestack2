@@ -1,5 +1,6 @@
-import { RECEIVE_PROFILE_ERRORS, RECEIVE_CURRENT_USER_PROFILE, CLEAR_ERRORS } from '../actions/user_actions';
 import merge from 'lodash/merge';
+
+import {RECEIVE_PROP, RECEIVE_PROFILE_ERRORS,  RECEIVE_CURRENT_USER_PROFILE, CLEAR_ERRORS} from '../actions/profiles_actions';
 
 
 const CurrentUserProfileReducer = (state = {}, action) => {
@@ -9,6 +10,8 @@ const CurrentUserProfileReducer = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_CURRENT_USER_PROFILE:
       return action.currentUserProfile;
+    case RECEIVE_PROP:
+      return  merge(newState, action.prop);
     case RECEIVE_PROFILE_ERRORS:
       newState.errors = action.errors;
       return newState;

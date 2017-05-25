@@ -1,0 +1,35 @@
+
+.secondaryContainer > h1 {
+
+}
+
+.secondaryContainer {
+  font-size: 26px;
+  font-weight: bold;
+  color: #4B4F56;
+  padding: 15px;
+  background-color: #F6F7F9;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #D3D6DB;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.firstRowHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+ul.friendsListContainer {
+  background-color: white;
+  padding: 15px;
+}

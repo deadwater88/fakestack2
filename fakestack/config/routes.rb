@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :show, :update] do
       resources :relevant_users, only: [:index]
     end
+    resources :friendings, only: [:create, :update, :destroy]
     resources :comments, only: [:create, :index, :show, :update, :destroy]
     resources :posts, only: [:create, :index, :show, :update, :destroy]
     resource :session, only: [:create, :destroy]
