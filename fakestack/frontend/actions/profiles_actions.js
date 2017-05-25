@@ -1,4 +1,5 @@
 import * as ProfileAPIUtil from "../utils/profile_api_util";
+import * as FriendAPIUtil from '../utils/friend_api_util';
 import * as UserApiUtil from '../utils/user_api_util';
 
 export const RECEIVE_CURRENT_USER_PROFILE = 'RECEIVE_CURRENT_USER_PROFILE';
@@ -7,7 +8,9 @@ export const RECEIVE_VIEWED_PROFILE = 'RECEIVE_VIEWED_PROFILE';
 
 export const RECEIVE_PROFILE_ERRORS = 'RECEIVE_PROFILE_ERRORS';
 
-export const RECEIVE_RELEVANT_USERS = 'RECEIVE_RELEVANT_USERS'
+export const RECEIVE_RELEVANT_USERS = 'RECEIVE_RELEVANT_USERS';
+
+export const RECEIVE_PROP = 'RECEIVE_PROP';
 
 export const uploadPic = (prop, userId)=> dispatch => {
   return ProfileAPIUtil.uploadPic(prop, userId).then(
@@ -39,15 +42,8 @@ export const fetchCurrentUser = (id) => dispatch => {
     UserApiUtil.fetchRelevantUsers(id).then(
       res => dispatch(receiveRelevantUsers(res)),
       err => dispatch(receiveProfileErrors(err.responseJSON))
-    )
+    );
   });
-
-};
-export const fetchViewedProfile = (id) => dispatch => {
-  return ProfileAPIUtil.fetchUser(id).then(
-    res => dispatch(receiveViewedProfile(res)),
-    err => dispatch(receiveProfileErrors(err.responseJSON))
-  );
 };
 
 export const fetchRelevantUsers = (id) => dispatch => {
@@ -57,11 +53,38 @@ export const fetchRelevantUsers = (id) => dispatch => {
     );
   };
 
+export const fetchViewedProfile = (id) => dispatch => {
+  return ProfileAPIUtil.fetchUser(id).then(
+    res => dispatch(receiveViewedProfile(res)),
+    err => dispatch(receiveProfileErrors(err.responseJSON))
+  );
+};
+
+export const acceptFriending = (viewedId) => dispatch => {
+    return FriendAPIUtil.acceptFriending(viewedId).then(
+      res => dispatch(receiveProp(res)),
+      err => dispatch(receiveProfileErrors(err.responseJSON))
+    );
+  };
+
+
+export const createFriending = (viewedId) => dispatch => {
+    return FriendAPIUtil.createFriending(viewedId).then(
+      res => dispatch(receiveProp(res)),
+      err => dispatch(receiveProfileErrors(err.responseJSON))
+    );
+  };
+
+export const receiveProp = (prop) => ({
+  type: RECEIVE_PROP,
+  prop
+});
+
 
 export const receiveRelevantUsers = (relevant_users) => ({
   type: RECEIVE_RELEVANT_USERS,
   relevant_users
-})
+});
 
 export const receiveCurrentUserProfile = currentUserProfile => ({
   type: RECEIVE_CURRENT_USER_PROFILE,

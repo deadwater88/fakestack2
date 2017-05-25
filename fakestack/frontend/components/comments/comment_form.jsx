@@ -24,11 +24,12 @@ class CommentForm extends React.Component {
   render(){
     const className = this.props.className;
     return (
-      <form className="commentForm">
+      <form id={this.props.id} className="commentForm">
         <ProfilePictureContainer imgUrl={this.props.currentUserProfile.profileImgUrl} className="commentIcon"/>
         <div onKeyPress={this.handleSubmitComment}
            contentEditable={true}
           className="comment InputContainer"
+          id={this.props.id + "Input"}
           placeholder="Write a comment">
         </div>
       </form>);

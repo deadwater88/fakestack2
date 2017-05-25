@@ -11,7 +11,8 @@ class Post < ApplicationRecord
 
   has_many :comments, as: :parent,
     foreign_key: :parent_id,
-    class_name: :Comment
+    class_name: :Comment,
+    dependent: :destroy
 
 
 end

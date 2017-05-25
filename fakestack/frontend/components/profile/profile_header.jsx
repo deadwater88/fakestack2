@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, NavLink} from 'react-router-dom';
-import {FaChevronDown, FaPencil, FaCamera} from 'react-icons/lib/fa/';
+import {FaChevronDown, FaPencil, FaCamera, FaUserPlus, FaCheck} from 'react-icons/lib/fa/';
 import ProfilePictureContainer from './profile_picture_container';
 
 
@@ -13,7 +13,9 @@ class ProfileHeader extends React.Component {
                         ["about/overview", "About"],
                         ["friends", "Friends"],
                         ["photos", "Photos"]];
+    this.friendsButtonContent = this.friendsButtonContent.bind(this);
   }
+
 
 
   uploadCoverPic(e){
@@ -28,11 +30,44 @@ class ProfileHeader extends React.Component {
     });
   }
 
-  render(){
+  handleFriendClick(e){
+    e.preventDefault();
+    const { currentUserProfile, viewedUserProfile} = this.props;
+    let viewedId = viewedUserProfile.id;
+    switch (true) {
+      case currentUserProfile.friends.includes(viewedId):
+        return "Do Nothing";
+      case currentUserProfile.requesters.includes(viewedId):
+        this.acceptFriending(viewedId);
+        return "Accept Request";
+      case currentUserProfile.recipients.includes(viewedId):
+        return "Do Nothing";
+      default:
+        this.createFriending(viewedId);
+        return  "Create Request";
+    }
+  }
 
+  friendsButtonContent() {
+    const { currentUserProfile, viewedUserProfile} = this.props;
+    let viewedId = viewedUserProfile.id;
+    switch (true) {
+      case currentUserProfile.friends.includes(viewedId):
+        return <div> <FaCheck/> CheckMark Friends </div>;
+      case currentUserProfile.requesters.includes(viewedId):
+        return <div> <FaUserPlus/> Accept Friend Request </div>;
+      case currentUserProfile.recipients.includes(viewedId):
+        return  <div> <FaUserPlus/> Friend Request Sent </div>;
+      default:
+        return (<div> <FaUserPlus/> Add Friend </div>);
+    }
+  }
+
+  render(){
     const {uploadProfilePic, currentUserProfile, viewedUserProfile} = this.props;
     const coverImgUrl = currentUserProfile.coverImgUrl;
-    const editCheck = currentUserProfile.id === viewedUserProfile.id ? {}: {display: "none"};
+    const isSelf = currentUserProfile.id === viewedUserProfile.id;
+    const editCheck = isSelf ? {}: {display: "none"};
     return (
         <div id="profileHeader">
           <div id="profilePictureContainer">
@@ -60,13 +95,19 @@ class ProfileHeader extends React.Component {
               <FaChevronDown/>
             </a>
           </div>
-            <Link to={`/profile/${currentUserProfile.id}/about/overview`}>
-              <button id="headerButton" style={editCheck} >
-                <FaPencil/>
-                Edit Profile
-              </button>
-            </Link>
-        </div>
+            <div id="profileButtonsHeader">
+              {isSelf ? "" : (<button className="headerButton" onClick= {this.handleFriendClick}>
+                {this.friendsButtonContent()}
+              </button>)
+              }
+              <Link to={`/profile/${currentUserProfile.id}/about/overview`}>
+                <button className="headerButton" style={editCheck} >
+                  <FaPencil/>
+                  Edit Profile
+                </button>
+              </Link>
+            </div>
+          </div>
     );
   }
 }

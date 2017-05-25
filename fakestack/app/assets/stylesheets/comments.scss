@@ -23,6 +23,16 @@
   align-items: flex-start;
 }
 
+div.commentData .commentForm {
+  display: none;
+  width: 425px;
+}
+
+div.commentData {
+  display: flex;
+  align-items: stretch;
+}
+
 .commentHeader  img.commentIcon {
   height: 32px;
   width: 32px;
@@ -55,7 +65,6 @@
 .commentMetaContent {
   display: flex;
   flex-direction: row;
-  width:425px;
 }
 
 .commentMetaContent > p   {
@@ -88,6 +97,7 @@
 .commentHeader {
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .commentLinks {

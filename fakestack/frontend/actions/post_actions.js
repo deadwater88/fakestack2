@@ -3,6 +3,7 @@ import * as PostAPIUtil from "../utils/post_api_util";
 import {fetchComments, fetchUserRelevantComments} from './comment_actions';
 import {receiveNotice, RECEIVE_NOTICE} from './notification_actions';
 
+
 export const RECEIVE_POST = 'RECEIVE_POST';
 
 export const RECEIVE_POSTS = "RECEIVE_POSTS";
@@ -31,7 +32,7 @@ export const publishPost = (post) => dispatch => {
 export const deletePost = (postId) => dispatch => {
   return PostAPIUtil.deletePost(postId).then(
     (res => {
-      return dispatch(deletePost(res));
+      return dispatch(removePost(res));
     }),
     err => dispatch(receiveNotice(err.responseJSON))
   );
@@ -44,7 +45,7 @@ const receivePosts = (posts) => ({
   posts
 });
 
-const receivePost = (post) => ({
+export const receivePost = (post) => ({
   type: RECEIVE_POST,
   post
 });

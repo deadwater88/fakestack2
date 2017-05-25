@@ -6,7 +6,9 @@ import {withRouter} from 'react-router-dom';
 const mapStateToProps = (state, ownProps) =>({
   currentUserProfile: state.currentUserProfile,
   viewedUserProfile: state.viewedUserProfile,
-  parent: ownProps.parent
+  parent: ownProps.parent,
+  id: ownProps.id
+
 });
 
 const mapDispatchToProps = (dispatch) => ({

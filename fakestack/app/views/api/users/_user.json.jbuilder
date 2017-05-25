@@ -11,11 +11,9 @@ json.extract!(user,
               :places,
               :profile_img_url,
               :cover_img_url,
-              :biography,
-              :friends)
+              :biography)
 
-json.friends do
-  user.friends.map do |friend|
-    friend.id
-  end
-end
+
+json.friends (user.friends.map{|friend| friend.id})
+json.requesters user.requesters.pluck(:id)
+json.recipients user.recipients.pluck(:id)

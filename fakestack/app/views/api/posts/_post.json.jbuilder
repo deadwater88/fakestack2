@@ -5,4 +5,4 @@
                  :created_at,
                  :updated_at,
                  :content)
-  json.comments post.comments.order(created_at: :desc).pluck(:id)
+  json.comments post.comments.order(created_at: :asc).pluck(:id)

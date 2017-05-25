@@ -9,14 +9,17 @@ import CommentItemContainer from '../comments/comment_item_container';
 class PostItem extends React.Component{
   constructor(props){
     super(props);
-    this.handleDeletePost = this.handleDeletePost.bind(this)
+    this.handleDeletePost = this.handleDeletePost.bind(this);
+    const{authorId, createdAt, id, content, comments} = this.props.post;
+    this.state = {authorId, createdAt, id, content, comments};
   }
 
-  componentWillReceiveNewProps(newProps){
+  componentWillReceiveProps(newProps){
+    const{authorId, createdAt, id, content, comments} = newProps.post;
+    this.setState = {authorId, createdAt, id, content, comments};
   }
 
   handleDeletePost(e){
-    e.preventDefault;
     this.props.deletePost(this.props.post.id);
   }
 

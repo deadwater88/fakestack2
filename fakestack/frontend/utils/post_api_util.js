@@ -13,6 +13,7 @@ export const publishPost = (post) => {
     data: post
   });
 };
+
 export const deletePost = (postId) => {
   return $.ajax({
     method: "DELETE",

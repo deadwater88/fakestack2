@@ -159,16 +159,22 @@ p.postContent {
     margin-left: 10px;
     font-size: 18px;
     padding-bottom: 15px;
+    white-space: pre-line;
+
 }
 
 h5.timeStamp {
   color: #90949c;
 }
 
+div.commentSection {
+  flex-grow: 1;
+}
+
 div.dropDown.post {
-  display: absolute;
-  top: 10px;
-  left: 450px;
+  position: absolute;
+  top: 5px;
+  right: 15px;
   height: 8px;
   width: 8px;
   color: #D6D9DD;
@@ -177,5 +183,12 @@ div.dropDown.post {
 div.dropDown.post:hover{
   color: #B3B7BE;
   cursor: pointer;
+}
 
+div.commentHeader:hover .dropDown {
+
+}
+
+div.commentHeader > div .dropDown {
+  position: absolute;
 }

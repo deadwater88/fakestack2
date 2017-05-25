@@ -202,34 +202,44 @@ a.profilePicLink svg {
 
 }
 
-#headerButton {
+.headerButton {
   display: flex;
-  position: absolute;
-  right: 20px;
-  bottom: 65px;
   background-color: #F6F7F9;
   width: auto;
   height: 30px;
   align-items: center;
   font-size: 12px;
   font-weight: bold;
-  color: #4B4F56;
   padding: 0 10px 0 10px;
   border: 1px solid black;
-  border-radius: 3px;
+  border-radius: 2px;
   z-index: 5;
+  text-decoration: none;
+  color: #4b4f56 !important;
 }
 
-#headerButton:hover {
+#profileButtonsHeader {
+  position: absolute;
+  right: 20px;
+  bottom: 65px;
+  z-index: 10;
+}
+
+#profileButtonsHeader * {
+  text-decoration: none;
+  color: #4B4F56 !important;
+}
+
+.headerButton:hover {
   background-color: #E9EBEE;
   cursor: pointer;
 }
 
-#headerButton:active {
+.headerButton:active {
   box-shadow: 0 0 3px 3px #5275BB;
 }
 
-#headerButton svg {
+.headerButton svg {
   margin-right: 5px;
 }
 

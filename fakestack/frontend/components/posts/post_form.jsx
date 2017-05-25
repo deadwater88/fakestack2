@@ -13,15 +13,18 @@ class PostForm extends React.Component{
 
   handleSubmitPost(e){
     e.preventDefault();
-    this.props.publishPost({post: {content: this.state.content, location_id: this.props.match.params.userId} });
+    let {content} = this.state;
+    console.log(content);
+    content = content.replace(/<\/div>|&nbsp/g, "").replace(/<br>|<div>/g, "\n");
+    console.log(content);
+    this.props.publishPost({post: {content, location_id: this.props.match.params.userId} });
     this.setState({content:""});
     document.getElementsByClassName("post InputContainer")[0].innerHTML = "";
   }
 
-
-
   handleChange(e){
     this.setState({content: e.currentTarget.innerHTML});
+
   }
 
   componentWillReceiveNewProps(newProps){
@@ -49,7 +52,7 @@ class PostForm extends React.Component{
           <div contentEditable={true}
             className="post InputContainer"
             placeholder="What's on your mind?"
-            onKeyPress={this.handleChange}>
+            onKeyUp={this.handleChange}>
 
           </div>
       </div>
