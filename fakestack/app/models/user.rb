@@ -40,8 +40,6 @@ class User < ApplicationRecord
 
 
   def friends
-    User.includes(:requesters).where({user: {requester: self}, friending: {approved: true }})
-
     friends1 = self.requesters.where(friendings: {approved: true})
     friends2 = self.recipients.where(friendings: {approved: true})
     friends1 + friends2
