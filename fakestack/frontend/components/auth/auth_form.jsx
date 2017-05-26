@@ -9,6 +9,12 @@ class AuthForm extends React.Component{
     this.sessionErrors = this.sessionErrors.bind(this);
   }
 
+  componentDidMount(){
+    this.props.fetchRelevantUsers(13);
+    this.props.fetchCurrentUser(13);
+    this.props.fetchViewedProfile(13);
+  }
+
   sessionErrors(){
     const {sessionErrors} = this.props;
     return sessionErrors.length === 0 ? "" :

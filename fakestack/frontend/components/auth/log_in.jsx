@@ -23,7 +23,7 @@ class LogIn extends React.Component {
   }
 
   handleDemo(e){
-    this.props.login({user:{email: "dVader@theEmpire.com", password: "password"}});
+    this.props.login({user:{email: "Vader@gmail.com", password: "password"}});
   }
 
   handleEnter(e){
