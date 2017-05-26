@@ -1,4 +1,4 @@
-import values from 'lodash/values'
+import values from 'lodash/values';
 
 
 export const selectCurrentUserComments = (state)=> {
@@ -7,9 +7,13 @@ export const selectCurrentUserComments = (state)=> {
 };
 
 export const selectAllRelevantUsers = (state) => {
-  return Object.values(state.relevantUsers)
-}
+  return Object.values(state.relevantUsers);
+};
 
 export const selectWallPosts = (state, location_id) => {
-  return Object.values(state.posts).filter(post => post.locationId === parseInt(location_id))
-}
+  return Object.values(state.posts).filter(post => post.locationId === parseInt(location_id));
+};
+
+export const selectAuthor = (state, authorId) => {
+  return state.relevantUsers[authorId] || {};
+};

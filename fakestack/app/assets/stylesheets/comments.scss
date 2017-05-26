@@ -30,7 +30,7 @@ div.commentData .commentForm {
 
 div.commentData {
   display: flex;
-  align-items: stretch;
+
 }
 
 .commentHeader img.commentIcon {
@@ -72,6 +72,7 @@ div.commentData {
 .commentMetaContent {
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
 }
 
 .commentMetaContent > p   {
@@ -83,6 +84,8 @@ div.commentData {
   display: inline;
   word-wrap: break-word;
   font-size: 14px;
+  white-space: pre-wrap;
+  width: 388px;
 }
 
 .commentMetaContent a  {

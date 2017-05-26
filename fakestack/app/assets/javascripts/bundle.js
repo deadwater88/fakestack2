@@ -12009,6 +12009,8 @@ var _reactRouterDom = __webpack_require__(7);
 
 var _comment_actions = __webpack_require__(44);
 
+var _selectors = __webpack_require__(226);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
@@ -12019,7 +12021,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     relevantUsers: state.relevantUsers,
     idx: ownProps.idx,
     formId: ownProps.formId,
-    noReply: ownProps.noReply
+    noReply: ownProps.noReply,
+    author: (0, _selectors.selectAuthor)(state, ownProps.comment.authorId)
   };
 };
 
@@ -18830,9 +18833,9 @@ var AuthForm = function (_React$Component) {
   _createClass(AuthForm, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.fetchRelevantUsers(13);
-      this.props.fetchCurrentUser(13);
-      this.props.fetchViewedProfile(13);
+      // this.props.fetchRelevantUsers(13);
+      // this.props.fetchCurrentUser(13);
+      // this.props.fetchViewedProfile(13);
     }
   }, {
     key: 'sessionErrors',
@@ -19750,8 +19753,8 @@ var CommentItem = function (_React$Component) {
           content = _props$comment.content,
           replies = _props$comment.replies,
           comments = _props$comment.comments;
+      var author = this.props.author;
 
-      var author = this.props.relevantUsers[authorId];
       var timestamp = (0, _date_format.format1)(createdAt);
       return _react2.default.createElement(
         'div',
@@ -20562,7 +20565,7 @@ var PostItem = function (_React$Component) {
           content = _props$post.content,
           comments = _props$post.comments;
 
-      var author = this.props.relevantUsers[authorId];
+      var author = this.props.author;
       var timestamp = (0, _date_format.format1)(createdAt);
       return _react2.default.createElement(
         'div',
@@ -20639,6 +20642,8 @@ var _reactRouterDom = __webpack_require__(7);
 
 var _post_actions = __webpack_require__(33);
 
+var _selectors = __webpack_require__(226);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
@@ -20647,7 +20652,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     viewedUserProfile: state.viewedUserProfile,
     post: ownProps.post,
     relevantUsers: state.relevantUsers,
-    comments: state.comments
+    comments: state.comments,
+    author: (0, _selectors.selectAuthor)(state, ownProps.post.authorId)
   };
 };
 
@@ -23681,7 +23687,7 @@ var ProtectedRoute = exports.ProtectedRoute = (0, _reactRouterDom.withRouter)((0
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.selectWallPosts = exports.selectAllRelevantUsers = exports.selectCurrentUserComments = undefined;
+exports.selectAuthor = exports.selectWallPosts = exports.selectAllRelevantUsers = exports.selectCurrentUserComments = undefined;
 
 var _values = __webpack_require__(72);
 
@@ -23701,6 +23707,10 @@ var selectWallPosts = exports.selectWallPosts = function selectWallPosts(state, 
   return Object.values(state.posts).filter(function (post) {
     return post.locationId === parseInt(location_id);
   });
+};
+
+var selectAuthor = exports.selectAuthor = function selectAuthor(state, authorId) {
+  return state.relevantUsers[authorId] || {};
 };
 
 /***/ }),

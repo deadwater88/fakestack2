@@ -10,9 +10,9 @@ class AuthForm extends React.Component{
   }
 
   componentDidMount(){
-    this.props.fetchRelevantUsers(13);
-    this.props.fetchCurrentUser(13);
-    this.props.fetchViewedProfile(13);
+    // this.props.fetchRelevantUsers(13);
+    // this.props.fetchCurrentUser(13);
+    // this.props.fetchViewedProfile(13);
   }
 
   sessionErrors(){

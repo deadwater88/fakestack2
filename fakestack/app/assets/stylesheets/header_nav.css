@@ -197,18 +197,18 @@ svg.profileIcon, img.profileIcon {
   display: none;
   background-color: white;
   width: 450px;
+  height: 550px;
+  overflow-y: scroll;
 
 }
 
 
-
-#friendsRequestsContainer > .requestItem {
-}
 
 .friendsRequestsInfo {
   display: flex;
   justify-content: space-between;
-  flex-grow: 1
+  flex-grow: 1;
+  margin-left: 5px;
 }
 
 
@@ -224,12 +224,13 @@ svg.profileIcon, img.profileIcon {
 #friendsRequestsContainer img.profileIcon, #friendsRequestsContainer svg.profileIcon {
   height: 60px;
   width: 60px;
-  margin: 5px 10px 5px 10px;
+  margin: 15px 10px 5px 30px;
 }
 
-.requestItem {
+#headerNav .requestItem {
   border-bottom: 1px solid #DDDFE2;
-  position: static;
+  display: inline;
+  background-color: white;
 }
 
 .requestLink a {

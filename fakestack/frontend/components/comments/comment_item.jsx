@@ -59,7 +59,7 @@ class CommentItem extends React.Component{
       return <div></div>;
     }
     let {authorId, createdAt, id, content, replies, comments} = this.props.comment;
-    const author = this.props.relevantUsers[authorId];
+    const {author }= this.props;
     const timestamp = format1(createdAt);
     return (
     <div className="CommentItemContainer" key={ id + "commentItemContainer" + this.props.idx }>
