@@ -6,6 +6,7 @@ import AboutDetailsContainer from './about_details_container';
 import AboutPlacesContainer from './about_places_container';
 import UnitFormArrayImg from './unit_form_array_img';
 import OverviewContainer from './overview_container';
+import FriendsContainer from '../friends/friends_container'
 
 class AboutProfile extends React.Component {
 
@@ -35,18 +36,22 @@ class AboutProfile extends React.Component {
 
   render(){
     return (
-      <div id="editProfile" className="primaryContainer">
-        <h1>
-          <FaUser/>
-          <a>About</a>
-        </h1>
-        <div id="editProfileContent"  className="primaryContent">
-          {this.navLinks()}
-          <Route path='/profile/:userId/about/overview' component={OverviewContainer} />
-          <Route path='/profile/:userId/about/places'   component={AboutPlacesContainer}/>
-          <Route path='/profile/:userId/about/details' component={AboutDetailsContainer} />
+      <div>
+        <div id="editProfile" className="primaryContainer">
 
+          <h1>
+            <FaUser/>
+            <a>About</a>
+          </h1>
+          <div id="editProfileContent"  className="primaryContent">
+            {this.navLinks()}
+            <Route path='/profile/:userId/about/overview' component={OverviewContainer} />
+            <Route path='/profile/:userId/about/places'   component={AboutPlacesContainer}/>
+            <Route path='/profile/:userId/about/details' component={AboutDetailsContainer} />
+
+          </div>
         </div>
+        <FriendsContainer/>
       </div>
     );
 

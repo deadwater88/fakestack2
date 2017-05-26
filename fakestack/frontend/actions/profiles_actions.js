@@ -76,6 +76,14 @@ export const createFriending = (viewedId) => dispatch => {
     );
   };
 
+  export const deleteFriending = (viewedId) => dispatch => {
+      return FriendAPIUtil.deleteFriending(viewedId).then(
+        res => {
+          return dispatch(receiveCurrentUserProfile(res));},
+        err => dispatch(receiveProfileErrors(err.responseJSON))
+      );
+    };
+
 export const receiveProp = (prop) => ({
   type: RECEIVE_PROP,
   prop

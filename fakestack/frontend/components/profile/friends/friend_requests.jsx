@@ -1,46 +1,87 @@
 import React from 'react';
 import ProfileIcon from '../profile_icon';
 import {Link} from 'react-router-dom';
-import * as FriendUtil from '../../../utils/friend_button_util';
 import {FaChevronDown, FaPencil, FaCamera, FaUserPlus, FaCheck, FaGroup, FaPlus} from 'react-icons/lib/fa/';
 
 
 class FriendRequests extends React.Component {
   constructor(props){
     super(props);
-    this.friendsButtonContent = FriendUtil.friendsButtonContent.bind(this);
-    this.handleFriendClickId = FriendUtil.handleFriendClickId.bind(this);
+    this.friendsButtonContent = this.friendsButtonContent.bind(this);
+    this.handleFriendClickId = this.handleFriendClickId.bind(this);
+    this.handleDeleteRequest = this.handleDeleteRequest.bind(this);
   }
 
+  friendsButtonContent(id){
+    const { currentUserProfile} = this.props;
+    let viewedId =  id||this.props.friend.id;
+    switch (true) {
+      case currentUserProfile.friends.includes(viewedId):
+        return <div> <FaCheck/>Friends </div>;
+      case currentUserProfile.requesters.includes(viewedId):
+        return <div> Confirm </div>;
+      case currentUserProfile.recipients.includes(viewedId):
+        return  <div> <FaUserPlus/> Request Sent </div>;
+      default:
+        return (<div> <FaUserPlus/> Add Friend </div>);
+    }
+  };
+
+  handleFriendClickId(id){
+    return (e) => {
+    e.preventDefault();
+    const { currentUserProfile, viewedUserProfile} = this.props;
+    let viewedId = id;
+    switch (true) {
+      case currentUserProfile.friends.includes(viewedId):
+        return "Do Nothing";
+      case currentUserProfile.requesters.includes(viewedId):
+        this.props.acceptFriending(viewedId);
+        return "Confirm";
+      case currentUserProfile.recipients.includes(viewedId):
+        return "Do Nothing";
+      default:
+        this.props.createFriending(viewedId);
+        return  "Create Request";
+      }
+    }
+
+  };
+  handleDeleteRequest(id){
+    return (e) => {
+      e.preventDefault();
+      this.props.deleteFriending(id);
+    }
+  }
 
 
   render() {
    const {currentUserProfile, relevantUsers} = this.props;
-   debugger
    let requests = currentUserProfile.requests;
    requests = requests.map((userId)=>(relevantUsers[userId]));
-   debugger
    return (
-     <div>
-       {requests.map((request)=>{
+     <ul id = "friendsRequestsContainer" className = "dropDown-content requests">
+        <h4> Friend Requests </h4>
+       {requests.map((request, idx)=>{
          const {firstName, lastName, profileImgUrl, id, friendCount} = request;
-         debugger;
-         return (<div className= "friendItem">
+         return (<div key={"fItem" + idx} className= "requestItem">
            <ProfileIcon imgUrl={profileImgUrl} />
-           <div className="friendInfoContainer">
+           <div className="friendsRequestsInfo">
              <div className= "friendInfo">
-               <h3><Link to={`/profile/${id}`}> {`${firstName} ${lastName}`} </Link> </h3>
-               <h5><Link to={`/profile/${id}/friends`}> {friendCount || ""} Friends</Link></h5>
+               <h3 className={"requestLink"}><Link to={`/profile/${id}`}> {`${firstName} ${lastName}`} </Link> </h3>
              </div>
              <div className="buttonContainer">
-               <button className="headerButton item" onClick= {this.handleFriendClickId(id)}>
+               <button className="submitPost request" onClick= {this.handleFriendClickId(id)}>
                  {this.friendsButtonContent(id)}
+               </button>
+               <button onClick={this.handleDeleteRequest(id)} className="headerButton request">
+                 Delete Request
                </button>
              </div>
            </div>
          </div>);})
-       })
-     </div>
+       }
+     </ul>
    );
   };
 }

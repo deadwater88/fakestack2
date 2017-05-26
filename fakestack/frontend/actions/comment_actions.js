@@ -1,7 +1,7 @@
 import * as CommentAPIUtil from "../utils/comment_api_util";
 
 import {receivePost, fetchPost} from './post_actions';
-import {receiveNotice, RECEIVE_NOTICE} from './notification_actions';
+import {receiveNotice, RECEIVE_NOTICE} from './notice_actions';
 
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT';
 

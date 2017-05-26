@@ -20,13 +20,12 @@ class Api::FriendingsController < ApplicationController
   end
 
   def destroy
-    @friending = Friending.find_by(requester_id: params[:friending][:requester_id], recipient_id: params[:friending][:recipient_id])
-    if @friending.destroy
-      render json: {friends: current_user.friends}
-    else
-      render json: ["Failed to unFriend"], status: 400
-    end
-
+    @friending = Friending.find_by(recipient_id: current_user, requester_id: params[:id])
+    @friending.destroy if @friending
+    @friending = Friending.find_by(recipient_id: params[:id], requester_id: current_user)
+    @friending.destroy if @friending
+    @user = current_user
+      render 'api/users/show'
   end
 
   private

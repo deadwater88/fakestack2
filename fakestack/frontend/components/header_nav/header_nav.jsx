@@ -27,7 +27,12 @@ class HeaderNav extends React.Component {
     document.getElementsByClassName("dropDown-content logOut")[0].classList.toggle("show");
   }
 
-  showFriendsRequests(e){
+  showRequests(e){
+    e.preventDefault;
+    document.getElementsByClassName("dropDown-content requests")[0].classList.toggle("show")
+  }
+
+  renderFriendsRequests(e){
     if (Object.keys(this.props.relevantUsers).length === 0) {
       return "";
     }
@@ -54,9 +59,9 @@ class HeaderNav extends React.Component {
                 <Link to='/home'>Home</Link>
             </div>
             <div id="menu2">
-              <div>
-                <FaGroup className="icon"/>
-                {this.showFriendsRequests()}
+              <div id="friendRequestsDrop" >
+                <div title={"Friend Requests"} onClick={this.showRequests}> <FaGroup className="icon" /></div>
+                {this.renderFriendsRequests()}
               </div>
               <FaCommentsO className="icon"/>
               <FaGlobe className="icon"/>

@@ -54,7 +54,7 @@ ul.dropDown-content a {
 }
 
 ul.show {
-  display: flex;
+  display: flex !important;
 }
 
 .alert {

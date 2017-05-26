@@ -185,3 +185,56 @@ svg.profileIcon, img.profileIcon {
 #searchFriends svg, #searchFriends img {
   margin-right: 10px;
 }
+
+#friendRequestsDrop {
+  position: relative;
+}
+
+#friendsRequestsContainer {
+  position: absolute;
+  bottom: -150px;
+  left: -200px;
+  display: none;
+  background-color: white;
+  width: 450px;
+}
+
+.friendsRequestsInfo {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1
+}
+
+#friendsRequestsContainer > h4 {
+  padding: 10px;
+  font-weight: bold;
+  color: #333333;
+  border-bottom: 1px solid #DDDFE2;
+  text-decoration: none;
+
+}
+
+#friendsRequestsContainer img.profileIcon, #friendsRequestsContainer svg.profileIcon {
+  height: 60px;
+  width: 60px;
+  margin: 5px 10px 5px 10px;
+}
+
+.requestItem {
+  border-bottom: 1px solid #DDDFE2;
+}
+
+.requestLink a {
+  color: #365899 !important;
+  text-decoration: none;
+  padding: 0px !important;
+}
+
+.submitPost.request {
+  height: 30px;
+}
+
+.headerButton.request {
+  border: 1px solid #CDCFD3;
+  margin-right: 10px;
+}

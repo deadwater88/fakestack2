@@ -33,6 +33,10 @@
   z-index: 3;
 }
 
+.profileImg img:hover, .profileImg svg:hover {
+  cursor: pointer;
+}
+
 #coverImgHolder > h1 {
   color: white;
   z-index: 100;

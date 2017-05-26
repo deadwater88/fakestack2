@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :index, :show, :update, :destroy]
     resources :posts, only: [:create, :index, :show, :update, :destroy]
     resource :session, only: [:create, :destroy]
+    resources :noticse, only: [:index]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

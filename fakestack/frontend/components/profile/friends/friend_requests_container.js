@@ -1,5 +1,5 @@
 import FriendRequests from './friend_requests';
-import {fetchViewedProfile, unFriend, createFriending, acceptFriending} from '../../../actions/profiles_actions';
+import {fetchViewedProfile, deleteFriending, createFriending, acceptFriending} from '../../../actions/profiles_actions';
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) =>({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  unFriend: (viewedId) => { dispatch(unFriend(viewedId));},
+  deleteFriending: (viewedId) => { dispatch(deleteFriending(viewedId));},
   createFriending: (viewedId) => {dispatch(createFriending(viewedId));},
   acceptFriending: (viewedId) => {dispatch(acceptFriending(viewedId));}
 });

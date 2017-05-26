@@ -8,9 +8,48 @@ import * as FriendUtil from '../../../utils/friend_button_util';
 class FriendItem extends React.Component {
   constructor(props){
     super(props);
-    this.handleFriendClick = FriendUtil.handleFriendClick.bind(this);
-    this.friendsButtonContent = FriendUtil.friendsButtonContent.bind(this);
+    this.handleFriendClick = this.handleFriendClick.bind(this);
+    this.friendsButtonContent = this.friendsButtonContent.bind(this);
+    this.handleUnFriendClick = this.handleUnFriendClick.bind(this);
   }
+
+  friendsButtonContent() {
+    const { currentUserProfile} = this.props;
+    let viewedId = this.props.friend.id;
+    switch (true) {
+      case currentUserProfile.friends.includes(viewedId):
+        return <div> <FaCheck/>Friends </div>;
+      case currentUserProfile.requesters.includes(viewedId):
+        return <div> <FaUserPlus/> Accept Friend Request </div>;
+      case currentUserProfile.recipients.includes(viewedId):
+        return  <div> <FaUserPlus/> Friend Request Sent </div>;
+      default:
+        return (<div> <FaUserPlus/> Add Friend </div>);
+    }
+  };
+
+  handleFriendClick(e){
+    e.preventDefault();
+    const { currentUserProfile, viewedUserProfile} = this.props;
+    let viewedId = this.props.friend.id;
+    switch (true) {
+      case currentUserProfile.friends.includes(viewedId):
+        return "Do Nothing";
+      case currentUserProfile.requesters.includes(viewedId):
+        this.props.acceptFriending(viewedId);
+        return "Accept Request";
+      case currentUserProfile.recipients.includes(viewedId):
+        return "Do Nothing";
+      default:
+        this.props.createFriending(viewedId);
+        return  "Create Request";
+    }
+  };
+    handleUnFriendClick(id){
+      return (e) =>{
+      e.preventDefault();
+      this.props.deleteFriending(id)}
+    }
 
 
   render(){
@@ -25,8 +64,11 @@ class FriendItem extends React.Component {
           <h5><Link to={`/profile/${id}/friends`}> {friendCount || ""} Friends</Link></h5>
         </div>
         <div className="buttonContainer">
-          <button className="headerButton item" onClick= {this.handleFriendClick}>
+          {id === currentUserProfile.id ? "" : (<button className="headerButton item" onClick= {this.handleFriendClick}>
             {this.friendsButtonContent()}
+          </button>)}
+          <button className="headerButton item" onClick= {this.handleUnFriendClick(id)}>
+            UnFriend
           </button>
         </div>
       </div>
