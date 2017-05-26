@@ -22723,11 +22723,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var friendsButtonContent = exports.friendsButtonContent = function friendsButtonContent(id) {
-  debugger;
   var currentUserProfile = undefined.props.currentUserProfile;
 
   var viewedId = id || undefined.props.friend.id;
-  debugger;
   switch (true) {
     case currentUserProfile.friends.includes(viewedId):
       return React.createElement(

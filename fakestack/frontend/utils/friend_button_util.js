@@ -1,8 +1,6 @@
 export const friendsButtonContent = (id) => {
-  debugger;
   const { currentUserProfile} = this.props;
   let viewedId =  id||this.props.friend.id;
-  debugger
   switch (true) {
     case currentUserProfile.friends.includes(viewedId):
       return <div> <FaCheck/>Friends </div>;
