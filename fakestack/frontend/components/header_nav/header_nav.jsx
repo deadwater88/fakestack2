@@ -2,7 +2,8 @@ import React from 'react';
 import {FaFacebookOfficial, FaGroup, FaCommentsO, FaQuestionCircle, FaGlobe, FaChevronDown} from 'react-icons/lib/fa/';
 import NavSearchBar from './nav_search_bar';
 import {Link, Redirect, withRouter} from 'react-router-dom';
-import ProfilePicture from '../profile/profile_picture_container';
+import ProfileIcon from '../profile/profile_icon';
+import FriendsRequests from '../profile/friends/friend_requests';
 
 class HeaderNav extends React.Component {
   constructor(props){
@@ -18,12 +19,16 @@ class HeaderNav extends React.Component {
 
   componentWillMount(){
     this.props.fetchCurrentUser(this.props.currentUser.id);
-    this.props.fetchRelevantUsers(this.props.currentUser.id)
+    this.props.fetchRelevantUsers(this.props.currentUser.id);
   }
 
   showDropdown(e) {
     e.preventDefault;
     document.getElementsByClassName("dropDown-content logOut")[0].classList.toggle("show");
+  }
+
+  showFriendsRequests(e){
+    return (<FriendsRequests props={this.props} />);
   }
 
   render(){
@@ -40,13 +45,16 @@ class HeaderNav extends React.Component {
             <div id="headerNavMenu">
             <div id="menu1">
               <Link to={`/profile/${this.props.currentUser.id}/timeline`} id={"profilelink"}>
-                <ProfilePicture imgUrl={this.props.currentUserProfile.profileImgUrl} className="profileIcon"/>
+                <ProfileIcon imgUrl={this.props.currentUserProfile.profileImgUrl} className="profileIcon"/>
                 <h3 className="firstName">{firstName}</h3>
               </Link>
                 <Link to='/home'>Home</Link>
             </div>
             <div id="menu2">
-              <FaGroup className="icon"/>
+              <div>
+                <FaGroup className="icon"/>
+                {this.showFriendsRequests()}
+              </div>
               <FaCommentsO className="icon"/>
               <FaGlobe className="icon"/>
             </div>
@@ -58,7 +66,6 @@ class HeaderNav extends React.Component {
                   <a onClick={this.handleLogOut}>Log Out</a>
                 </ul>
               </div>
-
             </div>
           </div>
         </div>

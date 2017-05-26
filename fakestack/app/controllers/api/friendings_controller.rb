@@ -13,7 +13,7 @@ class Api::FriendingsController < ApplicationController
   def update
     @friending = Friending.find_by(requester_id: params[:friending][:requester_id], recipient_id: current_user.id)
     if @friending.update_attributes(friending_params)
-      render json: {friends: current_user.friends}
+      render json: {friends: current_user.friends.map {|friend| friend.id}}
     else
       render json: ["Failed to Accept Friend Request"], status: 400
     end

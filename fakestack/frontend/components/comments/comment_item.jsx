@@ -55,6 +55,9 @@ class CommentItem extends React.Component{
   }
 
   render(){
+    if (!this.props.comment) {
+      return <div></div>;
+    }
     let {authorId, createdAt, id, content, replies, comments} = this.props.comment;
     const author = this.props.relevantUsers[authorId];
     const timestamp = format1(createdAt);

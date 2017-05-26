@@ -20,6 +20,16 @@ export const fetchPosts = (userId) => dispatch => {
   );
 };
 
+
+export const fetchPost = (postId) => dispatch => {
+  return PostAPIUtil.fetchPost(postId).then(
+    (res => {
+      dispatch(receivePost(res));
+    }),
+    err => dispatch(receiveNotice(err.responseJSON))
+  );
+};
+
 export const publishPost = (post) => dispatch => {
   return PostAPIUtil.publishPost(post).then(
     (res => {

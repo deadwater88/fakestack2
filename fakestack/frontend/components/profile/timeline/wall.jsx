@@ -8,7 +8,7 @@ class Wall extends React.Component {
   }
 
   componentWillMount(){
-    console.log(this.props.fetchPosts(this.props.location_id));
+    this.props.fetchPosts(this.props.location_id);
   }
 
   render(){

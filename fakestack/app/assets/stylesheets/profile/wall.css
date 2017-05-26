@@ -66,6 +66,12 @@ div#formNav {
 
 }
 
+#PostForm svg.profileIcon {
+  height: 40px;
+  width: 40px;
+  margin: 10px;
+}
+
 
 .profileThumb {
   height: 40px;

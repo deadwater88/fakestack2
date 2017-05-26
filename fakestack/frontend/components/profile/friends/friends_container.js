@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) =>({
   currentUserProfile: state.currentUserProfile,
   viewedUserProfile: state.viewedUserProfile,
-  relevant_users: state.relevant_users
+  relevantUsers: state.relevantUsers
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -17,3 +17,5 @@ json.extract!(user,
 json.friends (user.friends.map{|friend| friend.id})
 json.requesters user.requesters.pluck(:id)
 json.recipients user.recipients.pluck(:id)
+
+json.requests (user.requesters.pluck(:id) - user.friends.map{|friend| friend.id } )

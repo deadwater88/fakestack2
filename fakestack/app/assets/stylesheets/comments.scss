@@ -11,7 +11,7 @@
   background-color: white;
 }
 
-.commentForm img {
+.commentForm img, .commentForm svg {
   height: 32px;
   width: 32px;
   margin: 10px;
@@ -33,7 +33,14 @@ div.commentData {
   align-items: stretch;
 }
 
-.commentHeader  img.commentIcon {
+.commentHeader img.commentIcon {
+  height: 32px;
+  width: 32px;
+  margin: 10px 10px 0px 10px;
+
+}
+
+.commentHeader svg.commentIcon {
   height: 32px;
   width: 32px;
   margin: 10px 10px 0px 10px;

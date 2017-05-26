@@ -15,8 +15,7 @@ class PostItem extends React.Component{
   }
 
   componentWillReceiveProps(newProps){
-    const{authorId, createdAt, id, content, comments} = newProps.post;
-    this.setState = {authorId, createdAt, id, content, comments};
+    
   }
 
   handleDeletePost(e){
@@ -36,6 +35,9 @@ class PostItem extends React.Component{
   }
 
   render(){
+    if (!this.props.post) {
+      return <div></div>;
+    }
     const{authorId, createdAt, id, content, comments} = this.props.post;
     const author = this.props.relevantUsers[authorId];
     const timestamp = format1(createdAt);

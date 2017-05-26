@@ -19,7 +19,13 @@ class Api::CommentsController < ApplicationController
     @comment = Comment.find_by(id: params[:id])
     if @comment.author_id == current_user.id
       @comment.destroy
-      render json: {id: @comment.id}
+      if @comment.parent_type == "Comment"
+        @comment = @comment.parent
+        render :show
+      else
+        @post = @comment.parent
+        render "api/posts/show"
+      end
     else
       render json: ["Only authors may delete their own comments"], status: 401
     end

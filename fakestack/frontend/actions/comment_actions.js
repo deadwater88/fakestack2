@@ -1,6 +1,6 @@
 import * as CommentAPIUtil from "../utils/comment_api_util";
 
-import {receivePost} from './post_actions';
+import {receivePost, fetchPost} from './post_actions';
 import {receiveNotice, RECEIVE_NOTICE} from './notification_actions';
 
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT';
@@ -32,14 +32,12 @@ export const fetchUserRelevantComments = (userId) => dispatch => {
 export const publishComment = (comment) => dispatch => {
   return CommentAPIUtil.publishComment(comment).then(
     (res => {
-      dispatch(receiveComment(res.comment));
-      if (res.comment.parentType == "Post") {
-          dispatch(receivePost(res.post));
+      dispatch(receiveComment(res));
+      if (comment.parent_type === "Post") {
+          dispatch(receivePost(res.parent));
       } else {
           dispatch(receiveComment(res.parent));
       }
-
-
     }),
     err => dispatch(receiveNotice(err.responseJSON))
   );
@@ -48,15 +46,16 @@ export const publishComment = (comment) => dispatch => {
 export const deleteComment = (commentId) => dispatch => {
   return CommentAPIUtil.deleteComment(commentId).then(
     (res => {
-      return dispatch(removeComment(res));
+      res.comments ? dispatch(receivePost(res)) :
+      dispatch(receiveComment(res));
     }),
     err => dispatch(receiveNotice(err.responseJSON))
   );
 };
 
-const removeComment = (comment) => ({
+const removeComment = (id) => ({
   type: REMOVE_COMMENT,
-  comment
+  id
 });
 
 

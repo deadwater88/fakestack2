@@ -4,7 +4,7 @@
   margin: 10px;
 }
 
-.postIcon img {
+.postIcon img, .postIcon svg {
   height: 40px;
   width: 40px;
   margin: 10px;

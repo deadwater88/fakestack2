@@ -1,6 +1,6 @@
 import React from 'react';
 import {FaFlag, FaPencil, FaCamera, FaUserPlus} from 'react-icons/lib/fa/';
-import ProfilePictureContainer from '../profile/profile_picture_container';
+import ProfileIcon from '../profile/profile_icon';
 
 
 class PostForm extends React.Component{
@@ -14,9 +14,7 @@ class PostForm extends React.Component{
   handleSubmitPost(e){
     e.preventDefault();
     let {content} = this.state;
-    console.log(content);
     content = content.replace(/<\/div>|&nbsp/g, "").replace(/<br>|<div>/g, "\n");
-    console.log(content);
     this.props.publishPost({post: {content, location_id: this.props.match.params.userId} });
     this.setState({content:""});
     document.getElementsByClassName("post InputContainer")[0].innerHTML = "";
@@ -48,7 +46,7 @@ class PostForm extends React.Component{
         </a>
       </div>
       <div id="postFormInput">
-        <ProfilePictureContainer imgUrl={this.props.currentUserProfile.profileImgUrl} className=""/>
+        <ProfileIcon imgUrl={this.props.currentUserProfile.profileImgUrl} className="commentFormIcon"/>
           <div contentEditable={true}
             className="post InputContainer"
             placeholder="What's on your mind?"
