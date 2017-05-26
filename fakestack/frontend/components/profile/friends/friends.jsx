@@ -8,7 +8,7 @@ class Friends extends React.Component {
     super(props);
   }
 
-
+  
 
   renderfriendsList(){
     const {relevantUsers, currentUserProfile, viewedUserProfile} = this.props;
@@ -23,8 +23,7 @@ class Friends extends React.Component {
             <FriendItemContainer friend={friend}/>
           </li>
         ))}
-      </ul>)
-;
+      </ul>);
   }
 
   render() {

@@ -3,45 +3,13 @@ import {FaChevronDown, FaPencil, FaCamera, FaUserPlus, FaCheck, FaGroup, FaPlus}
 import ProfileIcon from '../profile_icon';
 import FriendItemContainer from './friend_item_container';
 import {Link} from 'react-router-dom';
+import * as FriendUtil from '../../../utils/friend_button_util';
 
 class FriendItem extends React.Component {
   constructor(props){
     super(props);
-    this.handleFriendClick = this.handleFriendClick.bind(this);
-  }
-
-
-  friendsButtonContent() {
-    const { currentUserProfile} = this.props;
-    let viewedId = this.props.friend.id;
-    switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
-        return <div> <FaCheck/>Friends </div>;
-      case currentUserProfile.requesters.includes(viewedId):
-        return <div> <FaUserPlus/> Accept Friend Request </div>;
-      case currentUserProfile.recipients.includes(viewedId):
-        return  <div> <FaUserPlus/> Friend Request Sent </div>;
-      default:
-        return (<div> <FaUserPlus/> Add Friend </div>);
-    }
-  }
-
-  handleFriendClick(e){
-    e.preventDefault();
-    const { currentUserProfile, viewedUserProfile} = this.props;
-    let viewedId = this.props.friend.id;
-    switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
-        return "Do Nothing";
-      case currentUserProfile.requesters.includes(viewedId):
-        this.props.acceptFriending(viewedId);
-        return "Accept Request";
-      case currentUserProfile.recipients.includes(viewedId):
-        return "Do Nothing";
-      default:
-        this.props.createFriending(viewedId);
-        return  "Create Request";
-    }
+    this.handleFriendClick = FriendUtil.handleFriendClick.bind(this);
+    this.friendsButtonContent = FriendUtil.friendsButtonContent.bind(this);
   }
 
 

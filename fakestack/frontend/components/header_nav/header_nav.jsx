@@ -3,7 +3,7 @@ import {FaFacebookOfficial, FaGroup, FaCommentsO, FaQuestionCircle, FaGlobe, FaC
 import NavSearchBar from './nav_search_bar';
 import {Link, Redirect, withRouter} from 'react-router-dom';
 import ProfileIcon from '../profile/profile_icon';
-import FriendsRequests from '../profile/friends/friend_requests';
+import FriendsRequestsContainer from '../profile/friends/friend_requests_container';
 
 class HeaderNav extends React.Component {
   constructor(props){
@@ -28,7 +28,10 @@ class HeaderNav extends React.Component {
   }
 
   showFriendsRequests(e){
-    return (<FriendsRequests props={this.props} />);
+    if (Object.keys(this.props.relevantUsers).length === 0) {
+      return "";
+    }
+    return (<FriendsRequestsContainer />);
   }
 
   render(){
@@ -40,7 +43,7 @@ class HeaderNav extends React.Component {
           <div id="searchContainer">
             <Link to='/home'> <FaFacebookOfficial className="white"/>
             </Link>
-            <NavSearchBar relevantUsers={this.props.relevantUsers}/>
+            <NavSearchBar relevantUsers={this.props.arrayRelevantUsers}/>
           </div>
             <div id="headerNavMenu">
             <div id="menu1">

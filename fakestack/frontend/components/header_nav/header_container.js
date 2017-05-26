@@ -8,7 +8,8 @@ import HeaderNav from './header_nav';
 const mapStateToProps = (state) =>({
   currentUser: state.session.currentUser,
   currentUserProfile: state.currentUserProfile,
-  relevantUsers: selectAllRelevantUsers(state)
+  arrayRelevantUsers: selectAllRelevantUsers(state),
+  relevantUsers: state.relevantUsers
 });
 
 const mapDispatchToProps = (dispatch) => ({
