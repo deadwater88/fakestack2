@@ -36,12 +36,12 @@ class SignUp extends React.Component {
     let images = [FaNewspaperO,
                   FaUser,
                   FaMusic];
-    let title = ["See photos and comments",
+    let title = ["See posts and comments",
                   "Find friends",
                   "Find your interests"];
     let sub = ["from friends in News Feed.",
                   "through friends.",
-                  "with fakebook Search."];
+                  "with fakestack Search."];
     return (<div id="features">
       <h2>Do this and That or Not. Im Not Your Father</h2>
       {images.map((Imagel, index)=>

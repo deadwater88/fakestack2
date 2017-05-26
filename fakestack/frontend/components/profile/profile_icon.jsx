@@ -5,7 +5,7 @@ import {FaUser} from 'react-icons/lib/fa/';
 const ProfileIcon = (props) => {
   const {imgUrl} = props;
   return imgUrl !== "" ? (
-    <img className="profileIcon" src={imgUrl} />
+    <img className="profileIcon" src={imgUrl.replace("http", "https")} />
   ) :
   (
     <FaUser className="profileIcon" />
