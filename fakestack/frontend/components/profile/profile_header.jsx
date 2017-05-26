@@ -79,7 +79,7 @@ class ProfileHeader extends React.Component {
             <div onClick={this.uploadCoverPic} id="editCoverButton" style={editCheck}>
               Add Cover Photo
             </div>
-            { coverImgUrl === "" ? <div id="coverImg"></div> : <img src={viewedUserProfile.coverImgUrl} id="coverImg"/>}
+            { coverImgUrl === "" ? <div id="coverImg"></div> : <img src={viewedUserProfile.coverImgUrl.replace("http", "https")} id="coverImg"/>}
             <h1> {`${viewedUserProfile.firstName} ${viewedUserProfile.lastName}`} </h1>
           </div>
           <div id="profileNav">
