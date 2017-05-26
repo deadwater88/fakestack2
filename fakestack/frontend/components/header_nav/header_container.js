@@ -14,8 +14,8 @@ const mapStateToProps = (state) =>({
 
 const mapDispatchToProps = (dispatch) => ({
   logout: (user) => { dispatch(logout(user));},
-  fetchCurrentUser: (id) => { dispatch(fetchCurrentUser(id))},
-  fetchRelevantUsers: (id)=> { dispatch(fetchRelevantUsers(id))}
+  fetchCurrentUser: (id) => { dispatch(fetchCurrentUser(id));},
+  fetchRelevantUsers: (id)=> { dispatch(fetchRelevantUsers(id));}
 });
 
 export default connect(mapStateToProps,

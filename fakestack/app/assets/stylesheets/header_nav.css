@@ -197,6 +197,12 @@ svg.profileIcon, img.profileIcon {
   display: none;
   background-color: white;
   width: 450px;
+
+}
+
+
+
+#friendsRequestsContainer > .requestItem {
 }
 
 .friendsRequestsInfo {
@@ -204,6 +210,7 @@ svg.profileIcon, img.profileIcon {
   justify-content: space-between;
   flex-grow: 1
 }
+
 
 #friendsRequestsContainer > h4 {
   padding: 10px;
@@ -222,12 +229,13 @@ svg.profileIcon, img.profileIcon {
 
 .requestItem {
   border-bottom: 1px solid #DDDFE2;
+  position: static;
 }
 
 .requestLink a {
   color: #365899 !important;
   text-decoration: none;
-  padding: 0px !important;
+  padding: 5px !important;
 }
 
 .submitPost.request {

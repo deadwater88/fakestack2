@@ -9,6 +9,8 @@ class User < ApplicationRecord
   validates :email, :session_token, :password_digest, uniqueness: true
 
 
+
+
   after_initialize :ensure_token
   attr_reader :password
 

@@ -20048,7 +20048,11 @@ var NavSearchBar = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (NavSearchBar.__proto__ || Object.getPrototypeOf(NavSearchBar)).call(this, props));
 
-    _this.state = { filteredUsers: _this.props.relevantUsers };
+    _this.state = { filteredUsers: _this.props.relevantUsers.slice(0, 15).sort(function (a, b) {
+        if (a.lastName < b.lastName) return -1;
+        if (a.lastName > b.lastName) return 1;
+        return 0;
+      }) };
     _this.filterUsers = _this.filterUsers.bind(_this);
     return _this;
   }
@@ -20056,7 +20060,7 @@ var NavSearchBar = function (_React$Component) {
   _createClass(NavSearchBar, [{
     key: 'filterUsers',
     value: function filterUsers(e) {
-      e.preventDefault;
+      e.preventDefault();
       var input = e.currentTarget.value.toLowerCase();
       var filteredUsers = this.props.relevantUsers.filter(function (user) {
         var _map = [user.firstName, user.lastName].map(function (word) {
@@ -20067,6 +20071,10 @@ var NavSearchBar = function (_React$Component) {
             lastName = _map2[1];
 
         return firstName.match(input) || lastName.match(input);
+      }).slice(0, 15).sort(function (a, b) {
+        if (a.lastName < b.lastName) return -1;
+        if (a.lastName > b.lastName) return 1;
+        return 0;
       });
       this.setState({ filteredUsers: filteredUsers });
     }
