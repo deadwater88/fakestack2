@@ -25,7 +25,7 @@ class FriendRequests extends React.Component {
       default:
         return (<div> <FaUserPlus/> Add Friend </div>);
     }
-  };
+  }
 
   handleFriendClickId(id){
     return (e) => {
@@ -44,9 +44,9 @@ class FriendRequests extends React.Component {
         this.props.createFriending(viewedId);
         return  "Create Request";
       }
-    }
+    };
 
-  };
+  }
   handleDeleteRequest(id){
     return (e) => {
       e.preventDefault();
@@ -57,6 +57,9 @@ class FriendRequests extends React.Component {
 
   render() {
    const {currentUserProfile, relevantUsers} = this.props;
+   if (!currentUserProfile.requests) {
+     return <div></div>;
+   }
    let requests = currentUserProfile.requests;
    requests = requests.map((userId)=>(relevantUsers[userId]));
    return (

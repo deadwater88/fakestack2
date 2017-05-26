@@ -33,12 +33,15 @@ class User < ApplicationRecord
   has_many :authored_posts,
     foreign_key: :author_id,
     class_name: :Post
-    
+
   has_many :wall_posts,
     foreign_key: :location_id,
     class_name: :Post
 
+
   def friends
+    User.includes(:requesters).where({user: {requester: self}, friending: {approved: true }})
+
     friends1 = self.requesters.where(friendings: {approved: true})
     friends2 = self.recipients.where(friendings: {approved: true})
     friends1 + friends2
