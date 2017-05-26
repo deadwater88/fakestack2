@@ -13,10 +13,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scripts": {
-      "postinstall": "webpack",
-      "webpack": "webpack --watch"
-    }
+    "postinstall": "webpack",
+    "webpack": "webpack --watch"
   },
   "author": "",
   "license": "ISC",
