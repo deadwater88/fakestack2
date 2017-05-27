@@ -7,7 +7,10 @@ import PostsReducer from './posts_reducer';
 import CommentsReducer from './comments_reducer';
 import NoticesReducer from './notices_reducer';
 
-const rootReducer = combineReducers({
+
+
+
+const appReducer = combineReducers({
   session: SessionReducer,
   currentUserProfile: CurrentUserProfileReducer,
   viewedUserProfile: viewedUserProfileReducer,
@@ -16,5 +19,14 @@ const rootReducer = combineReducers({
   comments: CommentsReducer,
   notices: NoticesReducer
 });
+
+
+const rootReducer = (state, action) => {
+  if (action.type === 'LOGOUT') {
+    state = undefined
+  }
+
+  return appReducer(state, action)
+}
 
 export default rootReducer;

@@ -15,9 +15,9 @@ const App = (props) =>  {
       <ProtectedRoute path="/" component={HeaderContainer} > LoggedIn </ProtectedRoute>
     </header>
     <Switch>
-      <ProtectedRoute path="/home" component={ProfileContainer} > LoggedIn </ProtectedRoute>
-      <ProtectedRoute path="/friends/requests" component={FriendRequestsContainer} > LoggedIn </ProtectedRoute>
+      <ProtectedRoute path="/home" component={NewsFeed} > LoggedIn </ProtectedRoute>
       <ProtectedRoute path={`/profile/:userId`} component={ProfileContainer} >  </ProtectedRoute>
+      <ProtectedRoute path="/friends/requests" component={FriendRequestsContainer} > LoggedIn </ProtectedRoute>
       <AuthRoute path="/" component={AuthFormContainer}></AuthRoute>
     </Switch>
   </div>

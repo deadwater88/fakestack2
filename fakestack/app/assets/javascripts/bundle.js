@@ -6729,7 +6729,7 @@ var removePost = function removePost(post) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clearErrors = exports.signup = exports.logout = exports.login = exports.CLEAR_ERRORS = exports.RECEIVE_ERRORS = exports.RECEIVE_CURRENT_USER = undefined;
+exports.clearErrors = exports.signup = exports.logout = exports.login = exports.LOGOUT = exports.CLEAR_ERRORS = exports.RECEIVE_ERRORS = exports.RECEIVE_CURRENT_USER = undefined;
 
 var _session_api_util = __webpack_require__(227);
 
@@ -6740,6 +6740,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var RECEIVE_ERRORS = exports.RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 var CLEAR_ERRORS = exports.CLEAR_ERRORS = 'CLEAR_ERRORS';
+var LOGOUT = exports.LOGOUT = 'LOGOUT';
 
 var login = exports.login = function login(user) {
   return function (dispatch) {
@@ -6754,7 +6755,7 @@ var login = exports.login = function login(user) {
 var logout = exports.logout = function logout() {
   return function (dispatch) {
     return SessionAPIUtil.logout().then(function (res) {
-      return dispatch(receiveCurrentUser(null));
+      return dispatch(logOut());
     }, function (err) {
       return dispatch(receiveErrors(err.responseJSON));
     });
@@ -6768,6 +6769,12 @@ var signup = exports.signup = function signup(user) {
     }, function (err) {
       return dispatch(receiveErrors(err.responseJSON));
     });
+  };
+};
+
+var logOut = function logOut() {
+  return {
+    type: LOGOUT
   };
 };
 
@@ -6811,8 +6818,7 @@ var _fa = __webpack_require__(10);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ProfileIcon = function ProfileIcon(props) {
-  var imgUrl = props.imgUrl;
-
+  var imgUrl = props.imgUrl || "";
   return imgUrl !== "" ? _react2.default.createElement('img', { className: 'profileIcon', src: imgUrl.replace("http", "https") }) : _react2.default.createElement(_fa.FaUser, { className: 'profileIcon' });
 };
 
@@ -18797,18 +18803,18 @@ var App = function App(props) {
       null,
       _react2.default.createElement(
         _route_util.ProtectedRoute,
-        { path: '/home', component: _profile_container2.default },
-        ' LoggedIn '
-      ),
-      _react2.default.createElement(
-        _route_util.ProtectedRoute,
-        { path: '/friends/requests', component: _friend_requests_container2.default },
+        { path: '/home', component: _newsfeed2.default },
         ' LoggedIn '
       ),
       _react2.default.createElement(
         _route_util.ProtectedRoute,
         { path: '/profile/:userId', component: _profile_container2.default },
         '  '
+      ),
+      _react2.default.createElement(
+        _route_util.ProtectedRoute,
+        { path: '/friends/requests', component: _friend_requests_container2.default },
+        ' LoggedIn '
       ),
       _react2.default.createElement(_route_util.AuthRoute, { path: '/', component: _auth_form_container2.default })
     )
@@ -22190,6 +22196,7 @@ var Profile = function (_React$Component) {
     value: function componentWillMount() {
       var viewedUserProfile = this.props.viewedUserProfile;
 
+      debugger;
       if (viewedUserProfile.id !== parseInt(this.props.match.params.userId)) {
         this.props.fetchViewedProfile(this.props.match.params.userId);
       }
@@ -22417,7 +22424,7 @@ var ProfileHeader = function (_React$Component) {
             { onClick: this.uploadCoverPic, id: 'editCoverButton', style: editCheck },
             'Add Cover Photo'
           ),
-          coverImgUrl === "" ? _react2.default.createElement('div', { id: 'coverImg' }) : _react2.default.createElement('img', { src: viewedUserProfile.coverImgUrl, id: 'coverImg' }),
+          coverImgUrl === "" ? _react2.default.createElement('div', { id: 'coverImg' }) : _react2.default.createElement('img', { src: viewedUserProfile.coverImgUrl.replace("http", "https"), id: 'coverImg' }),
           _react2.default.createElement(
             'h1',
             null,
@@ -23278,7 +23285,7 @@ var _notices_reducer2 = _interopRequireDefault(_notices_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var rootReducer = (0, _redux.combineReducers)({
+var appReducer = (0, _redux.combineReducers)({
   session: _session_reducer2.default,
   currentUserProfile: _current_user_profile_reducer2.default,
   viewedUserProfile: _viewed_user_profile_reducer2.default,
@@ -23287,6 +23294,14 @@ var rootReducer = (0, _redux.combineReducers)({
   comments: _comments_reducer2.default,
   notices: _notices_reducer2.default
 });
+
+var rootReducer = function rootReducer(state, action) {
+  if (action.type === 'LOGOUT') {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
 
 exports.default = rootReducer;
 

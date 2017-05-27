@@ -6,7 +6,7 @@ class Api::FriendingsController < ApplicationController
     if @friending.save
       render json: {recipients: current_user.recipients.pluck(:id)}
     else
-      render json: ["Failed to Add Friend"], status: 400
+      render json: ['Failed to Add Friend'], status: 400
     end
   end
 
