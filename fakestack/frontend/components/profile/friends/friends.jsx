@@ -7,7 +7,7 @@ class Friends extends React.Component {
   constructor(props){
     super(props);
     const {relevantUsers, currentUserProfile, viewedUserProfile} = this.props;
-    this.state = {friends: viewedUserProfile.friends.map(friendId => relevantusers[friendId])}
+    this.state = {friends: viewedUserProfile.friends.map(friendId => relevantUsers[friendId])}
 
   }
 

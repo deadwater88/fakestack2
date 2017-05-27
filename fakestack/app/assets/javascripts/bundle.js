@@ -22043,7 +22043,7 @@ var Friends = function (_React$Component) {
         viewedUserProfile = _this$props.viewedUserProfile;
 
     _this.state = { friends: viewedUserProfile.friends.map(function (friendId) {
-        return relevantusers[friendId];
+        return relevantUsers[friendId];
       }) };
 
     return _this;
