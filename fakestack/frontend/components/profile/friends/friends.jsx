@@ -6,9 +6,11 @@ import FriendItemContainer from './friend_item_container';
 class Friends extends React.Component {
   constructor(props){
     super(props);
+    const {relevantUsers, currentUserProfile, viewedUserProfile} = this.props;
+    this.state = {friends: viewedUserProfile.friends.map(friendId => relevantusers[friendId])}
+
   }
 
-  
 
   renderfriendsList(){
     const {relevantUsers, currentUserProfile, viewedUserProfile} = this.props;

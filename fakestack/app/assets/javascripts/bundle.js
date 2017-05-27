@@ -22035,7 +22035,18 @@ var Friends = function (_React$Component) {
   function Friends(props) {
     _classCallCheck(this, Friends);
 
-    return _possibleConstructorReturn(this, (Friends.__proto__ || Object.getPrototypeOf(Friends)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Friends.__proto__ || Object.getPrototypeOf(Friends)).call(this, props));
+
+    var _this$props = _this.props,
+        relevantUsers = _this$props.relevantUsers,
+        currentUserProfile = _this$props.currentUserProfile,
+        viewedUserProfile = _this$props.viewedUserProfile;
+
+    _this.state = { friends: viewedUserProfile.friends.map(function (friendId) {
+        return relevantusers[friendId];
+      }) };
+
+    return _this;
   }
 
   _createClass(Friends, [{
@@ -22196,7 +22207,6 @@ var Profile = function (_React$Component) {
     value: function componentWillMount() {
       var viewedUserProfile = this.props.viewedUserProfile;
 
-      debugger;
       if (viewedUserProfile.id !== parseInt(this.props.match.params.userId)) {
         this.props.fetchViewedProfile(this.props.match.params.userId);
       }

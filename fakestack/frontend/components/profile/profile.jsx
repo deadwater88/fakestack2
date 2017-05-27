@@ -21,7 +21,6 @@ class Profile extends React.Component{
 
   componentWillMount(){
     const {viewedUserProfile} = this.props;
-    debugger
     if ( viewedUserProfile.id !== parseInt(this.props.match.params.userId)) {
       this.props.fetchViewedProfile(this.props.match.params.userId);
     }
