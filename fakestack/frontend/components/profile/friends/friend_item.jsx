@@ -8,6 +8,7 @@ import * as FriendUtil from '../../../utils/friend_button_util';
 class FriendItem extends React.Component {
   constructor(props){
     super(props);
+    this.state = {UnfriendButton: true}
     this.handleFriendClick = this.handleFriendClick.bind(this);
     this.friendsButtonContent = this.friendsButtonContent.bind(this);
     this.handleUnFriendClick = this.handleUnFriendClick.bind(this);
@@ -48,7 +49,8 @@ class FriendItem extends React.Component {
     handleUnFriendClick(id){
       return (e) =>{
       e.preventDefault();
-      this.props.deleteFriending(id)}
+      this.props.deleteFriending(id)
+      this.setState({UnfriendButton: false})}
     }
 
 
@@ -67,9 +69,13 @@ class FriendItem extends React.Component {
           {id === currentUserProfile.id ? "" : (<button className="headerButton item" onClick= {this.handleFriendClick}>
             {this.friendsButtonContent()}
           </button>)}
-          <button className="headerButton item" onClick= {this.handleUnFriendClick(id)}>
-            UnFriend
-          </button>
+          {
+            this.state.UnfriendButton ? <button className="headerButton item" onClick= {this.handleUnFriendClick(id)}>
+              Unfriend
+            </button> :
+            ""
+          }
+
         </div>
       </div>
     </div>);

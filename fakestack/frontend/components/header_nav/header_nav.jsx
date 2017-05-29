@@ -10,6 +10,8 @@ class HeaderNav extends React.Component {
     super(props);
     this.handleLogOut = this.handleLogOut.bind(this);
     this.showDropdown = this.showDropdown.bind(this);
+    this.showRequests = this.showRequests.bind(this);
+
   }
 
   handleLogOut(e) {
@@ -22,14 +24,27 @@ class HeaderNav extends React.Component {
     this.props.fetchRelevantUsers(this.props.currentUser.id);
   }
 
+  addClickOut(className){
+    const listener = (e) => {
+        let target = document.getElementsByClassName(className)[0]
+        if (target) {
+          target.classList.remove("show")
+          document.removeEventListener("click", listener)
+        }
+    }
+    return listener
+  }
+
   showDropdown(e) {
     e.preventDefault;
     document.getElementsByClassName("dropDown-content logOut")[0].classList.toggle("show");
+    document.addEventListener("click", this.addClickOut("dropDown-content logOut"));
   }
 
   showRequests(e){
     e.preventDefault;
-    document.getElementsByClassName("dropDown-content requests")[0].classList.toggle("show")
+    document.getElementsByClassName("dropDown-content requests")[0].classList.toggle("show");
+    document.addEventListener("click", this.addClickOut("dropDown-content requests"));
   }
 
   renderFriendsRequests(e){
@@ -52,7 +67,7 @@ class HeaderNav extends React.Component {
           </div>
             <div id="headerNavMenu">
             <div id="menu1">
-              <Link to={`/profile/${this.props.currentUser.id}/timeline`} id={"profilelink"}>
+              <Link title={"Profile"} to={`/profile/${this.props.currentUser.id}/timeline`} id={"profilelink"}>
                 <ProfileIcon imgUrl={this.props.currentUserProfile.profileImgUrl} className="profileIcon"/>
                 <h3 className="firstName">{firstName}</h3>
               </Link>
@@ -68,7 +83,7 @@ class HeaderNav extends React.Component {
             </div>
             <div id="menu3">
               <FaQuestionCircle  className="icon"/>
-              <div className="dropDown">
+              <div className="dropDown" title="Log Out">
                 <FaChevronDown onClick={this.showDropdown} className="icon"/>
                 <ul className="dropDown-content logOut">
                   <a onClick={this.handleLogOut}>Log Out</a>

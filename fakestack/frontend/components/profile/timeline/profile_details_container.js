@@ -3,11 +3,12 @@ import ProfileDetails from './profile_details';
 import { updateProp } from '../../../actions/profiles_actions';
 import { withRouter } from 'react-router';
 import {fetchViewedProfile} from '../../../actions/profiles_actions';
-
+import {parseDetails} from '../../../utils/selectors';
 
 const mapStateToProps = (state) =>({
   currentUserProfile: state.currentUserProfile,
-  viewedUserProfile: state.viewedUserProfile
+  viewedUserProfile: state.viewedUserProfile,
+  details: parseDetails(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

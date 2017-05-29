@@ -10,8 +10,8 @@ export const RECEIVE_POSTS = "RECEIVE_POSTS";
 
 export const REMOVE_POST = 'REMOVE_POST';
 
-export const fetchPosts = (userId) => dispatch => {
-  return PostAPIUtil.fetchPosts(userId).then(
+export const fetchPosts = (userId, type) => dispatch => {
+  return PostAPIUtil.fetchPosts(userId, type).then(
     (res => {
       dispatch(receivePosts(res));
       dispatch(fetchUserRelevantComments(userId));

@@ -185,7 +185,25 @@ div.dropDown.post {
   color: #D6D9DD;
 }
 
-div.dropDown.post:hover{
+div.dropDown.comment {
+  position: absolute;
+  top: 5px;
+  right: 32px;
+  height: 8px;
+  width: 8px;
+  color: #D6D9DD;
+}
+
+.commentsRest > ul > li > div > div > .dropDown {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  height: 8px;
+  width: 8px;
+  color: #D6D9DD;
+}
+
+div.dropDown:hover{
   color: #B3B7BE;
   cursor: pointer;
 }

@@ -6658,9 +6658,9 @@ var RECEIVE_POSTS = exports.RECEIVE_POSTS = "RECEIVE_POSTS";
 
 var REMOVE_POST = exports.REMOVE_POST = 'REMOVE_POST';
 
-var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
+var fetchPosts = exports.fetchPosts = function fetchPosts(userId, type) {
   return function (dispatch) {
-    return PostAPIUtil.fetchPosts(userId).then(function (res) {
+    return PostAPIUtil.fetchPosts(userId, type).then(function (res) {
       dispatch(receivePosts(res));
       dispatch((0, _comment_actions.fetchUserRelevantComments)(userId));
     }, function (err) {
@@ -6735,6 +6735,8 @@ var _session_api_util = __webpack_require__(227);
 
 var SessionAPIUtil = _interopRequireWildcard(_session_api_util);
 
+var _profiles_actions = __webpack_require__(12);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
@@ -6745,7 +6747,8 @@ var LOGOUT = exports.LOGOUT = 'LOGOUT';
 var login = exports.login = function login(user) {
   return function (dispatch) {
     return SessionAPIUtil.login(user).then(function (res) {
-      return dispatch(receiveCurrentUser(res));
+      dispatch(receiveCurrentUser(res));
+      dispatch((0, _profiles_actions.receiveCurrentUserProfile)(res));
     }, function (err) {
       return dispatch(receiveErrors(err.responseJSON));
     });
@@ -6849,8 +6852,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     currentUserProfile: state.currentUserProfile,
     viewedUserProfile: state.viewedUserProfile,
-    imgUrl: ownProps.imgUrl,
-    className: ownProps.className
+    imgUrl: ownProps.imgUrl || "",
+    className: ownProps.className || ""
   };
 };
 
@@ -9234,7 +9237,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.selectAuthor = exports.selectWallPosts = exports.selectAllRelevantUsers = exports.selectCurrentUserComments = undefined;
+exports.parseDetails = exports.selectAuthor = exports.selectFeedPosts = exports.selectWallPosts = exports.selectAllRelevantUsers = exports.selectCurrentUserComments = undefined;
 
 var _values = __webpack_require__(73);
 
@@ -9251,13 +9254,42 @@ var selectAllRelevantUsers = exports.selectAllRelevantUsers = function selectAll
 };
 
 var selectWallPosts = exports.selectWallPosts = function selectWallPosts(state, location_id) {
-  return Object.values(state.posts).filter(function (post) {
+  var posts = Object.values(state.posts).filter(function (post) {
     return post.locationId === parseInt(location_id);
+  });
+  return posts.sort(function (post1, post2) {
+    return new Date(post2.createdAt) - new Date(post1.createdAt);
+  });
+};
+
+var selectFeedPosts = exports.selectFeedPosts = function selectFeedPosts(state) {
+  var posts = Object.values(state.posts);
+  return posts.sort(function (post1, post2) {
+    return new Date(post2.createdAt) - new Date(post1.createdAt);
   });
 };
 
 var selectAuthor = exports.selectAuthor = function selectAuthor(state, authorId) {
   return state.relevantUsers[authorId] || {};
+};
+
+var parseDetails = exports.parseDetails = function parseDetails(state) {
+  var details = [];
+  var _state$currentUserPro = state.currentUserProfile,
+      currentCity = _state$currentUserPro.currentCity,
+      hometown = _state$currentUserPro.hometown,
+      otherNames = _state$currentUserPro.otherNames;
+
+  if (currentCity !== "") {
+    details.push(["Lives in " + currentCity, 'currentCity']);
+  }
+  if (hometown !== "") {
+    details.push(["From " + hometown, "hometown"]);
+  }
+  otherNames.forEach(function (name) {
+    details.push(["Also goes by " + name, 'otherName']);
+  });
+  return details;
 };
 
 /***/ }),
@@ -18771,17 +18803,17 @@ var _header_container = __webpack_require__(63);
 
 var _header_container2 = _interopRequireDefault(_header_container);
 
-var _newsfeed = __webpack_require__(182);
+var _newsfeed_container = __webpack_require__(1092);
 
-var _newsfeed2 = _interopRequireDefault(_newsfeed);
+var _newsfeed_container2 = _interopRequireDefault(_newsfeed_container);
 
 var _profile_container = __webpack_require__(201);
 
 var _profile_container2 = _interopRequireDefault(_profile_container);
 
-var _friend_requests_container = __webpack_require__(103);
+var _friend_requests_page_container = __webpack_require__(1094);
 
-var _friend_requests_container2 = _interopRequireDefault(_friend_requests_container);
+var _friend_requests_page_container2 = _interopRequireDefault(_friend_requests_page_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18803,7 +18835,7 @@ var App = function App(props) {
       null,
       _react2.default.createElement(
         _route_util.ProtectedRoute,
-        { path: '/home', component: _newsfeed2.default },
+        { path: '/home', component: _newsfeed_container2.default },
         ' LoggedIn '
       ),
       _react2.default.createElement(
@@ -18813,7 +18845,7 @@ var App = function App(props) {
       ),
       _react2.default.createElement(
         _route_util.ProtectedRoute,
-        { path: '/friends/requests', component: _friend_requests_container2.default },
+        { path: '/friends/requests', component: _friend_requests_page_container2.default },
         ' LoggedIn '
       ),
       _react2.default.createElement(_route_util.AuthRoute, { path: '/', component: _auth_form_container2.default })
@@ -19806,7 +19838,7 @@ var CommentItem = function (_React$Component) {
           { className: 'commentHeader' },
           _react2.default.createElement(
             'div',
-            { className: 'dropDown post', onClick: this.handleDeleteComment },
+            { className: 'dropDown comment', onClick: this.handleDeleteComment },
             _react2.default.createElement(_fa.FaClose, null)
           ),
           _react2.default.createElement(_profile_picture_container2.default, { imgUrl: author.profileImgUrl,
@@ -19921,6 +19953,8 @@ var HeaderNav = function (_React$Component) {
 
     _this.handleLogOut = _this.handleLogOut.bind(_this);
     _this.showDropdown = _this.showDropdown.bind(_this);
+    _this.showRequests = _this.showRequests.bind(_this);
+
     return _this;
   }
 
@@ -19937,16 +19971,30 @@ var HeaderNav = function (_React$Component) {
       this.props.fetchRelevantUsers(this.props.currentUser.id);
     }
   }, {
+    key: 'addClickOut',
+    value: function addClickOut(className) {
+      var listener = function listener(e) {
+        var target = document.getElementsByClassName(className)[0];
+        if (target) {
+          target.classList.remove("show");
+          document.removeEventListener("click", listener);
+        }
+      };
+      return listener;
+    }
+  }, {
     key: 'showDropdown',
     value: function showDropdown(e) {
       e.preventDefault;
       document.getElementsByClassName("dropDown-content logOut")[0].classList.toggle("show");
+      document.addEventListener("click", this.addClickOut("dropDown-content logOut"));
     }
   }, {
     key: 'showRequests',
     value: function showRequests(e) {
       e.preventDefault;
       document.getElementsByClassName("dropDown-content requests")[0].classList.toggle("show");
+      document.addEventListener("click", this.addClickOut("dropDown-content requests"));
     }
   }, {
     key: 'renderFriendsRequests',
@@ -19989,7 +20037,7 @@ var HeaderNav = function (_React$Component) {
               { id: 'menu1' },
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: '/profile/' + this.props.currentUser.id + '/timeline', id: "profilelink" },
+                { title: "Profile", to: '/profile/' + this.props.currentUser.id + '/timeline', id: "profilelink" },
                 _react2.default.createElement(_profile_icon2.default, { imgUrl: this.props.currentUserProfile.profileImgUrl, className: 'profileIcon' }),
                 _react2.default.createElement(
                   'h3',
@@ -20026,7 +20074,7 @@ var HeaderNav = function (_React$Component) {
               _react2.default.createElement(_fa.FaQuestionCircle, { className: 'icon' }),
               _react2.default.createElement(
                 'div',
-                { className: 'dropDown' },
+                { className: 'dropDown', title: 'Log Out' },
                 _react2.default.createElement(_fa.FaChevronDown, { onClick: this.showDropdown, className: 'icon' }),
                 _react2.default.createElement(
                   'ul',
@@ -20201,11 +20249,7 @@ var EastBar = function (_React$Component) {
     key: "render",
     value: function render() {
 
-      return _react2.default.createElement(
-        "div",
-        { id: "eastBar" },
-        "EastBar"
-      );
+      return _react2.default.createElement("div", { id: "eastBar" });
     }
   }]);
 
@@ -20243,6 +20287,14 @@ var _eastbar = __webpack_require__(181);
 
 var _eastbar2 = _interopRequireDefault(_eastbar);
 
+var _post_form_container = __webpack_require__(185);
+
+var _post_form_container2 = _interopRequireDefault(_post_form_container);
+
+var _post_item_container = __webpack_require__(187);
+
+var _post_item_container2 = _interopRequireDefault(_post_item_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20261,11 +20313,16 @@ var NewsFeed = function (_React$Component) {
   }
 
   _createClass(NewsFeed, [{
-    key: 'componentWillReceiveNewProps',
-    value: function componentWillReceiveNewProps(newProps) {}
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.props.fetchPosts(this.props.currentUserProfile.id);
+      this.props.fetchRelevantUsers();
+    }
   }, {
     key: 'render',
     value: function render() {
+      var posts = this.props.posts;
+
       return _react2.default.createElement(
         'div',
         { id: 'newsfeedpage' },
@@ -20275,8 +20332,11 @@ var NewsFeed = function (_React$Component) {
           _react2.default.createElement(_westbar2.default, null),
           _react2.default.createElement(
             'div',
-            null,
-            'Main Content'
+            { id: 'feedContainer' },
+            _react2.default.createElement(_post_form_container2.default, null),
+            posts.map(function (post, idx) {
+              return _react2.default.createElement(_post_item_container2.default, { key: idx + "PIC", post: post, idx: idx });
+            })
           ),
           _react2.default.createElement(_eastbar2.default, null)
         )
@@ -20327,11 +20387,7 @@ var WestBar = function (_React$Component) {
     key: "render",
     value: function render() {
 
-      return _react2.default.createElement(
-        "div",
-        { id: "westBar" },
-        "WestBar"
-      );
+      return _react2.default.createElement("div", { id: "westBar" });
     }
   }]);
 
@@ -20392,7 +20448,7 @@ var PostForm = function (_React$Component) {
       var content = this.state.content;
 
       content = content.replace(/<\/div>|&nbsp/g, "").replace(/<br>|<div>/g, "\n");
-      this.props.publishPost({ post: { content: content, location_id: this.props.match.params.userId } });
+      this.props.publishPost({ post: { content: content, location_id: this.props.match.params.userId || this.props.currentUserProfile.id } });
       this.setState({ content: "" });
       document.getElementsByClassName("post InputContainer")[0].innerHTML = "";
     }
@@ -20401,9 +20457,6 @@ var PostForm = function (_React$Component) {
     value: function handleChange(e) {
       this.setState({ content: e.currentTarget.innerHTML });
     }
-  }, {
-    key: 'componentWillReceiveNewProps',
-    value: function componentWillReceiveNewProps(newProps) {}
   }, {
     key: 'render',
     value: function render() {
@@ -21644,6 +21697,7 @@ var FriendItem = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (FriendItem.__proto__ || Object.getPrototypeOf(FriendItem)).call(this, props));
 
+    _this.state = { UnfriendButton: true };
     _this.handleFriendClick = _this.handleFriendClick.bind(_this);
     _this.friendsButtonContent = _this.friendsButtonContent.bind(_this);
     _this.handleUnFriendClick = _this.handleUnFriendClick.bind(_this);
@@ -21721,6 +21775,7 @@ var FriendItem = function (_React$Component) {
       return function (e) {
         e.preventDefault();
         _this2.props.deleteFriending(id);
+        _this2.setState({ UnfriendButton: false });
       };
     }
   }, {
@@ -21776,11 +21831,11 @@ var FriendItem = function (_React$Component) {
               { className: 'headerButton item', onClick: this.handleFriendClick },
               this.friendsButtonContent()
             ),
-            _react2.default.createElement(
+            this.state.UnfriendButton ? _react2.default.createElement(
               'button',
               { className: 'headerButton item', onClick: this.handleUnFriendClick(id) },
-              'UnFriend'
-            )
+              'Unfriend'
+            ) : ""
           )
         )
       );
@@ -22021,6 +22076,8 @@ var _friend_item_container = __webpack_require__(102);
 
 var _friend_item_container2 = _interopRequireDefault(_friend_item_container);
 
+var _reactRouterDom = __webpack_require__(7);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22106,11 +22163,15 @@ var Friends = function (_React$Component) {
                 'div',
                 { className: 'friend buttonContainer' },
                 _react2.default.createElement(
-                  'button',
-                  { id: 'requestsButton', className: 'headerButton item' },
-                  ' Friend Requests ',
-                  this.props.currentUserProfile.requests.length,
-                  ' '
+                  _reactRouterDom.Link,
+                  { to: '/friends/requests' },
+                  _react2.default.createElement(
+                    'button',
+                    { id: 'requestsButton', className: 'headerButton item' },
+                    ' Friend Requests ',
+                    this.props.currentUserProfile.requests.length,
+                    ' '
+                  )
                 ),
                 _react2.default.createElement(
                   'button',
@@ -22226,7 +22287,7 @@ var Profile = function (_React$Component) {
         _react2.default.createElement(_profile_header_container2.default, { match: match }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/timeline', component: _timeline2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/about', component: _about_profile_container2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/profile/:userId/friends', component: _friends_container2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile/:userId/friends', component: _friends_container2.default })
       );
     }
   }]);
@@ -22757,7 +22818,7 @@ var ProfileDetails = function (_React$Component) {
           _react2.default.createElement(
             'h5',
             null,
-            this.state.intro
+            this.state.intro === "" ? "Write something about yourself" : this.state.intro
           ),
           _react2.default.createElement(_fa.FaPencil, { onClick: this.toggleEditMode, className: 'editPencil' })
         )
@@ -22766,6 +22827,14 @@ var ProfileDetails = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+
+      var icons = { hometown: function hometown() {
+          return _react2.default.createElement(_fa.FaGlobe, null);
+        }, currentCity: function currentCity() {
+          return _react2.default.createElement(_fa.FaHome, null);
+        }, otherName: function otherName() {
+          return _react2.default.createElement(_fa.FaTag, null);
+        } };
       return _react2.default.createElement(
         'div',
         { id: 'profile' },
@@ -22788,13 +22857,14 @@ var ProfileDetails = function (_React$Component) {
         _react2.default.createElement(
           'ul',
           { id: 'profileDetails' },
-          _react2.default.createElement(
-            'li',
-            { className: 'profileDetail' },
-            ' ',
-            _react2.default.createElement(_fa.FaGlobe, null),
-            ' Test Profile Detail'
-          )
+          this.props.details.map(function (detail, idx) {
+            return _react2.default.createElement(
+              'li',
+              { key: "pfDetail" + idx, className: 'profileDetail' },
+              icons[detail[1]](),
+              detail[0]
+            );
+          })
         )
       );
     }
@@ -22826,12 +22896,15 @@ var _profiles_actions = __webpack_require__(12);
 
 var _reactRouter = __webpack_require__(15);
 
+var _selectors = __webpack_require__(64);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUserProfile: state.currentUserProfile,
-    viewedUserProfile: state.viewedUserProfile
+    viewedUserProfile: state.viewedUserProfile,
+    details: (0, _selectors.parseDetails)(state)
   };
 };
 
@@ -23627,10 +23700,10 @@ var fetchNotices = exports.fetchNotices = function fetchNotices() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var fetchPosts = exports.fetchPosts = function fetchPosts(userId) {
+var fetchPosts = exports.fetchPosts = function fetchPosts(userId, type) {
   return $.ajax({
     method: "GET",
-    url: "api/posts?user_id=" + userId
+    url: "api/posts?user_id=" + userId + "&type=" + type
   });
 };
 
@@ -68136,6 +68209,314 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 1092 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _newsfeed = __webpack_require__(182);
+
+var _newsfeed2 = _interopRequireDefault(_newsfeed);
+
+var _reactRedux = __webpack_require__(9);
+
+var _session_actions = __webpack_require__(34);
+
+var _post_actions = __webpack_require__(33);
+
+var _profiles_actions = __webpack_require__(12);
+
+var _selectors = __webpack_require__(64);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserProfile: state.session.currentUser,
+    relevantUsersArray: (0, _selectors.selectAllRelevantUsers)(state),
+    posts: (0, _selectors.selectFeedPosts)(state),
+    comments: state.comments
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    logout: function logout(user) {
+      return dispatch((0, _session_actions.logout)(user));
+    },
+    fetchPosts: function fetchPosts(userId) {
+      return dispatch((0, _post_actions.fetchPosts)(userId, "feed"));
+    },
+    fetchRelevantUsers: function fetchRelevantUsers(userId) {
+      return dispatch((0, _profiles_actions.fetchRelevantUsers)(userId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_newsfeed2.default);
+
+/***/ }),
+/* 1093 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _profile_icon = __webpack_require__(35);
+
+var _profile_icon2 = _interopRequireDefault(_profile_icon);
+
+var _reactRouterDom = __webpack_require__(7);
+
+var _fa = __webpack_require__(10);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FriendRequestsPage = function (_React$Component) {
+  _inherits(FriendRequestsPage, _React$Component);
+
+  function FriendRequestsPage(props) {
+    _classCallCheck(this, FriendRequestsPage);
+
+    var _this = _possibleConstructorReturn(this, (FriendRequestsPage.__proto__ || Object.getPrototypeOf(FriendRequestsPage)).call(this, props));
+
+    _this.friendsButtonContent = _this.friendsButtonContent.bind(_this);
+    _this.handleFriendClickId = _this.handleFriendClickId.bind(_this);
+    _this.handleDeleteRequest = _this.handleDeleteRequest.bind(_this);
+    return _this;
+  }
+
+  _createClass(FriendRequestsPage, [{
+    key: 'friendsButtonContent',
+    value: function friendsButtonContent(id) {
+      var currentUserProfile = this.props.currentUserProfile;
+
+      var viewedId = id || this.props.friend.id;
+      switch (true) {
+        case currentUserProfile.friends.includes(viewedId):
+          return _react2.default.createElement(
+            'div',
+            null,
+            ' ',
+            _react2.default.createElement(_fa.FaCheck, null),
+            'Friends '
+          );
+        case currentUserProfile.requesters.includes(viewedId):
+          return _react2.default.createElement(
+            'div',
+            null,
+            ' Confirm '
+          );
+        case currentUserProfile.recipients.includes(viewedId):
+          return _react2.default.createElement(
+            'div',
+            null,
+            ' ',
+            _react2.default.createElement(_fa.FaUserPlus, null),
+            ' Request Sent '
+          );
+        default:
+          return _react2.default.createElement(
+            'div',
+            null,
+            ' ',
+            _react2.default.createElement(_fa.FaUserPlus, null),
+            ' Add Friend '
+          );
+      }
+    }
+  }, {
+    key: 'handleFriendClickId',
+    value: function handleFriendClickId(id) {
+      var _this2 = this;
+
+      return function (e) {
+        e.preventDefault();
+        var _props = _this2.props,
+            currentUserProfile = _props.currentUserProfile,
+            viewedUserProfile = _props.viewedUserProfile;
+
+        var viewedId = id;
+        switch (true) {
+          case currentUserProfile.friends.includes(viewedId):
+            return "Do Nothing";
+          case currentUserProfile.requesters.includes(viewedId):
+            _this2.props.acceptFriending(viewedId);
+            return "Confirm";
+          case currentUserProfile.recipients.includes(viewedId):
+            return "Do Nothing";
+          default:
+            _this2.props.createFriending(viewedId);
+            return "Create Request";
+        }
+      };
+    }
+  }, {
+    key: 'handleDeleteRequest',
+    value: function handleDeleteRequest(id) {
+      var _this3 = this;
+
+      return function (e) {
+        e.preventDefault();
+        _this3.props.deleteFriending(id);
+      };
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
+
+      var _props2 = this.props,
+          currentUserProfile = _props2.currentUserProfile,
+          relevantUsers = _props2.relevantUsers;
+
+      if (!currentUserProfile.requests || Object.keys(relevantUsers).length === 0) {
+        return _react2.default.createElement('div', null);
+      }
+      var requests = currentUserProfile.requests;
+      requests = requests.map(function (userId) {
+        return relevantUsers[userId];
+      });
+      return _react2.default.createElement(
+        'div',
+        { id: 'friendsRequestsPage' },
+        _react2.default.createElement(
+          'ul',
+          { id: 'friendsRequestsListContainer' },
+          _react2.default.createElement(
+            'h1',
+            { id: 'requestsPageHeader' },
+            'Respond to your ',
+            requests.length,
+            ' Friend Requests'
+          ),
+          requests.map(function (request, idx) {
+            var firstName = request.firstName,
+                lastName = request.lastName,
+                profileImgUrl = request.profileImgUrl,
+                id = request.id,
+                friendCount = request.friendCount;
+
+            return _react2.default.createElement(
+              'div',
+              { key: "fItem" + idx, className: 'requestItem' },
+              _react2.default.createElement(
+                'div',
+                { className: 'friendsRequestsList' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'friendInfoList' },
+                  _react2.default.createElement(_profile_icon2.default, { imgUrl: profileImgUrl }),
+                  _react2.default.createElement(
+                    'h3',
+                    { className: "requestLink" },
+                    _react2.default.createElement(
+                      _reactRouterDom.Link,
+                      { to: '/profile/' + id },
+                      ' ',
+                      firstName + ' ' + lastName,
+                      ' '
+                    ),
+                    ' '
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'buttonContainerList' },
+                  _react2.default.createElement(
+                    'button',
+                    { className: 'submitPost request', onClick: _this4.handleFriendClickId(id) },
+                    _this4.friendsButtonContent(id)
+                  ),
+                  _react2.default.createElement(
+                    'button',
+                    { onClick: _this4.handleDeleteRequest(id), className: 'headerButton request' },
+                    'Delete Request'
+                  )
+                )
+              )
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return FriendRequestsPage;
+}(_react2.default.Component);
+
+exports.default = FriendRequestsPage;
+
+/***/ }),
+/* 1094 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _friend_requests_page = __webpack_require__(1093);
+
+var _friend_requests_page2 = _interopRequireDefault(_friend_requests_page);
+
+var _profiles_actions = __webpack_require__(12);
+
+var _reactRouterDom = __webpack_require__(7);
+
+var _reactRedux = __webpack_require__(9);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile,
+    relevantUsers: state.relevantUsers
+
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    deleteFriending: function deleteFriending(viewedId) {
+      dispatch((0, _profiles_actions.deleteFriending)(viewedId));
+    },
+    createFriending: function createFriending(viewedId) {
+      dispatch((0, _profiles_actions.createFriending)(viewedId));
+    },
+    acceptFriending: function acceptFriending(viewedId) {
+      dispatch((0, _profiles_actions.acceptFriending)(viewedId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_friend_requests_page2.default);
 
 /***/ })
 /******/ ]);

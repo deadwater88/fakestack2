@@ -1,9 +1,11 @@
-export const fetchPosts = (userId) => {
+export const fetchPosts = (userId, type) => {
   return $.ajax({
     method: "GET",
-    url: `api/posts?user_id=${userId}`
+    url: `api/posts?user_id=${userId}&type=${type}`
   });
 };
+
+
 
 export const fetchPost = (postId) => {
   return $.ajax({

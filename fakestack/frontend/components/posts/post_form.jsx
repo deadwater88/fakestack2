@@ -15,7 +15,7 @@ class PostForm extends React.Component{
     e.preventDefault();
     let {content} = this.state;
     content = content.replace(/<\/div>|&nbsp/g, "").replace(/<br>|<div>/g, "\n");
-    this.props.publishPost({post: {content, location_id: this.props.match.params.userId} });
+    this.props.publishPost({post: {content, location_id: this.props.match.params.userId|| this.props.currentUserProfile.id} });
     this.setState({content:""});
     document.getElementsByClassName("post InputContainer")[0].innerHTML = "";
   }
@@ -24,10 +24,6 @@ class PostForm extends React.Component{
     this.setState({content: e.currentTarget.innerHTML});
 
   }
-
-  componentWillReceiveNewProps(newProps){
-  }
-
   render(){
     return (
     <form id="PostForm">

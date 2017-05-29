@@ -93,3 +93,64 @@ ul#friendsListContainer {
 #requestsButton {
   margin-right: -2px
 }
+
+.friend.buttonContainer a {
+  text-decoration: none
+}
+
+#friendsRequestsPage {
+  display: flex;
+  justify-content: center;
+}
+
+h1#requestsPageHeader {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+#friendsRequestsListContainer {
+  width: 800px;
+  border: 1px solid #D3D6DB;
+  background-color: white;
+  margin: 25px 0 25px 0;
+  padding: 0 25px 0 25px;
+}
+
+.friendsRequestsList {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #D3D6DB;
+  padding: 15px 0 15px 0;
+}
+
+  .friendsRequestsList .headerButton.request {
+    margin-right: 0px;
+  }
+
+.friendInfoList {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.friendInfoList h3.requestLink {
+  padding-top: 20px;
+  align-self:flex-start;
+}
+
+.friendInfoList svg, .friendInfoList img {
+  height: 75px;
+  width: 75px;
+}
+
+.friendInfoList svg {
+  background-color: gray;
+}
+
+
+
+.buttonContainerList {
+  display: flex;
+  align-items: center;
+}

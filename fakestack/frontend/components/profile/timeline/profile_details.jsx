@@ -1,5 +1,5 @@
 import React from 'react';
-import {FaGlobe, FaCircle, FaPencil} from 'react-icons/lib/fa/';
+import {FaGlobe, FaCircle, FaPencil, FaHome, FaTag} from 'react-icons/lib/fa/';
 class ProfileDetails extends React.Component {
 
   constructor(props){
@@ -59,13 +59,15 @@ class ProfileDetails extends React.Component {
     return (
       <label htmlFor="introTextInput">
         <div id="introContainer">
-          <h5>{this.state.intro}</h5>
+          <h5>{(this.state.intro === "") ? "Write something about yourself" : this.state.intro }</h5>
           <FaPencil onClick={this.toggleEditMode} className="editPencil"/>
         </div>
       </label>);
   }
 
   render(){
+
+    const icons = {hometown: ()=><FaGlobe/>, currentCity: ()=> <FaHome/>, otherName: ()=> <FaTag/> }
     return(
       <div id="profile">
         <section className="intro">
@@ -80,7 +82,12 @@ class ProfileDetails extends React.Component {
           {this.state.introEditMode ? this.editProp() : this.showProp()}
         </section>
         <ul id="profileDetails">
-          <li className= "profileDetail"> <FaGlobe/> Test Profile Detail</li>
+          {this.props.details.map((detail, idx)=>{
+            return <li key={"pfDetail" + idx} className= "profileDetail">
+                {icons[detail[1]]()}
+                {detail[0]}
+              </li>
+          })}
         </ul>
       </div>
     );

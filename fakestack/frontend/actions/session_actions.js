@@ -1,4 +1,5 @@
 import * as SessionAPIUtil from "../utils/session_api_util";
+import {receiveCurrentUserProfile} from "./profiles_actions";
 
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 export const RECEIVE_ERRORS = 'RECEIVE_ERRORS';
@@ -7,7 +8,10 @@ export const LOGOUT = 'LOGOUT'
 
 export const login = (user)=> dispatch => {
   return SessionAPIUtil.login(user).then(
-    res => dispatch(receiveCurrentUser(res)),
+    res => {
+      dispatch(receiveCurrentUser(res));
+      dispatch(receiveCurrentUserProfile(res));
+    },
     err => dispatch(receiveErrors(err.responseJSON))
   );
 };
