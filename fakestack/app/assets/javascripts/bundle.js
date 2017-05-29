@@ -19974,6 +19974,11 @@ var HeaderNav = function (_React$Component) {
     key: 'addClickOut',
     value: function addClickOut(className) {
       var listener = function listener(e) {
+        var targetClass = e.target.classList.value;
+        if (targetClass.match("request")) {
+          e.stopPropagation();
+          return "";
+        }
         var target = document.getElementsByClassName(className)[0];
         if (target) {
           target.classList.remove("show");
@@ -22031,11 +22036,11 @@ var FriendRequests = function (_React$Component) {
                   { className: 'submitPost request', onClick: _this4.handleFriendClickId(id) },
                   _this4.friendsButtonContent(id)
                 ),
-                _react2.default.createElement(
+                currentUserProfile.requests.includes(id) ? _react2.default.createElement(
                   'button',
                   { onClick: _this4.handleDeleteRequest(id), className: 'headerButton request' },
                   'Delete Request'
-                )
+                ) : ""
               )
             )
           );

@@ -26,6 +26,11 @@ class HeaderNav extends React.Component {
 
   addClickOut(className){
     const listener = (e) => {
+       let targetClass = e.target.classList.value
+        if (targetClass.match("request")) {
+          e.stopPropagation()
+          return ""
+        }
         let target = document.getElementsByClassName(className)[0]
         if (target) {
           target.classList.remove("show")

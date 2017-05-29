@@ -145,9 +145,12 @@ h1#requestsPageHeader {
 }
 
 .friendInfoList svg {
-  background-color: gray;
+  background-color: gray ;
 }
 
+.submitPost.request svg {
+  fill: #5A5A5A !important;
+}
 
 
 .buttonContainerList {
