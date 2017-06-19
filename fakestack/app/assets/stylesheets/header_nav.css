@@ -247,3 +247,10 @@ svg.profileIcon, img.profileIcon {
   border: 1px solid #CDCFD3;
   margin-right: 10px;
 }
+
+#searchNoResults {
+  color: #4080FF;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px;
+}

@@ -11,7 +11,7 @@ class NavSearchBar extends React.Component {
       if(a.lastName < b.lastName) return -1;
       if(a.lastName > b.lastName) return 1;
       return 0;
-  })};
+  }), query: ""};
     this.filterUsers = this.filterUsers.bind(this);
   }
 
@@ -19,6 +19,7 @@ class NavSearchBar extends React.Component {
 
   filterUsers (e) {
     e.preventDefault();
+    this.setState({query: e.currentTarget.value})
     let input = e.currentTarget.value.toLowerCase();
     let filteredUsers = this.props.relevantUsers.filter((user)=> {
       const [firstName, lastName] = [user.firstName, user.lastName].map((word) => word.toLowerCase());
@@ -32,6 +33,12 @@ class NavSearchBar extends React.Component {
 
   }
 
+  noUsers() {
+    return (
+      <h3 id="searchNoResults"> No results for {this.state.query} </h3>
+    )
+  }
+
 
   render (){
     const filteredUsers = this.state.filteredUsers;
@@ -39,7 +46,7 @@ class NavSearchBar extends React.Component {
     <div id="NavSearchBar" className="dropDown">
         <input onChange={this.filterUsers} type="text" className="searchFriends" placeholder="Find Friends" />
         <ul id="searchFriends" className="dropDown-content">
-          {filteredUsers.map((user,idx) => (
+          {filteredUsers.length == 0 ? this.noUsers() : filteredUsers.map((user,idx) => (
             <Link className="friendSearch" key={"friendsearch" + idx} to={`/profile/${user.id}/timeline`}>
               <ProfileIcon className="searchIcon" imgUrl={user.profileImgUrl} />
               <h5 className="searchFriends"> {`${user.firstName} ${user.lastName}`}  </h5>

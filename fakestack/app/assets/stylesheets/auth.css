@@ -20,6 +20,12 @@
 table#loginForm {
  margin-right: 50px;
 }
+
+td.formLabel {
+  padding-bottom: 5px;
+  padding-left: 2px;
+}
+
 #logoutBar input {
  border: 1px solid black;
  font-size: 14px;

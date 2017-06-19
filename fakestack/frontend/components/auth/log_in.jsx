@@ -42,14 +42,13 @@ class LogIn extends React.Component {
       <table id="loginForm">
         <tbody>
           <tr>
-            <td>
-              <label htmlFor="email"> Email </label>
+            <td className="formLabel">
+              <label  htmlFor="email"> Email </label>
+            </td>
+            <td className="formLabel">
+              <label  htmlFor="password"> Password</label>
             </td>
             <td>
-              <label htmlFor="password"> Password</label>
-            </td>
-            <td>
-
             </td>
           </tr>
           <tr>

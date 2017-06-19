@@ -1,4 +1,4 @@
-r# This file is auto-generated from the current state of the database. Instead
+# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
@@ -10,7 +10,7 @@ r# This file is auto-generated from the current state of the database. Instead
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522035017) do
+ActiveRecord::Schema.define(version: 20170619001921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,23 @@ ActiveRecord::Schema.define(version: 20170522035017) do
     t.index ["location_id"], name: "index_posts_on_location_id", using: :btree
   end
 
+  create_table "schoolhistories", force: :cascade do |t|
+    t.string   "school",                      null: false
+    t.string   "school_url"
+    t.string   "school_img_url"
+    t.integer  "user_id",                     null: false
+    t.string   "location"
+    t.text     "description"
+    t.boolean  "graduated"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "concentrations", default: [],              array: true
+    t.string   "type"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["user_id"], name: "index_schoolhistories_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                        null: false
     t.string   "password_digest",              null: false
@@ -66,6 +83,22 @@ ActiveRecord::Schema.define(version: 20170522035017) do
     t.index ["last_name"], name: "index_users_on_last_name", using: :btree
     t.index ["password_digest"], name: "index_users_on_password_digest", unique: true, using: :btree
     t.index ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
+  end
+
+  create_table "workhistories", force: :cascade do |t|
+    t.string   "company",         null: false
+    t.string   "company_url"
+    t.string   "company_img_url"
+    t.integer  "user_id",         null: false
+    t.string   "position"
+    t.string   "location"
+    t.text     "description"
+    t.boolean  "current"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["user_id"], name: "index_workhistories_on_user_id", using: :btree
   end
 
 end

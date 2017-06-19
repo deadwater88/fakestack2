@@ -40,6 +40,14 @@ class User < ApplicationRecord
     foreign_key: :location_id,
     class_name: :Post
 
+  has_many :work_histories,
+    foreign_key: :user_id,
+    class_name: :Workhistory
+
+  has_many :school_histories,
+    foreign_key: :user_id,
+    class_name: :Schoolhistory
+
 
   def friends
     friends1 = requesters.where(friendings: {approved: true})
