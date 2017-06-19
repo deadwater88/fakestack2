@@ -16,6 +16,17 @@ export const updateProp = (prop, userId) => {
 
 };
 
+export const updateProfileProp = (prop, url) => {
+  debugger;
+  return $.ajax({
+    method: "POST",
+    url: `api/${url}`,
+    contentType: "application/json",
+    data: JSON.stringify(prop)
+  });
+
+};
+
 export const fetchUser = (userId) => {
   return $.ajax({
     method: "GET",

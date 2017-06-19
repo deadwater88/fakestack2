@@ -12,6 +12,25 @@ select:last-child {
   margin-right: 15px
 }
 
+select:focus {
+  box-shadow: 0 0 1px 1px #7DA8FB;
+}
+
 .subentry {
   width: 268px;
+}
+
+.radio {
+    padding: 1px 0 1px 0;
+}
+
+.radio label {
+  color: #666;
+  font-weight: bold;
+
+}
+
+input.checkbox {
+  transform: scale(1.5);
+  background: white
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import UnitFormText from './unit_form_text';
 import UnitFormArrayImg from './unit_form_array_img';
 import UnitForm from './unit_form';
-import CollegeForm from './forms/college_form';
+import CollegeFormContainer from './forms/college_form_container';
 
 
 class AboutEducationForm extends React.Component {
@@ -26,13 +26,7 @@ class AboutEducationForm extends React.Component {
                             values: this.props.viewedUserProfile.places};
       return (
       <div className="propertyForm">
-        <CollegeForm/>
-        <div className="propertyContainer">
-          <h3 className="contentHeader"> COLLEGE </h3>
-          <UnitForm profileInfo={profileInfoCurrentCity}
-            viewedUserProfile={this.props.viewedUserProfile}
-            updateProp={this.props.updateProp} />
-        </div>
+        <CollegeFormContainer/>
         <div className="propertyContainer">
           <h3 className="contentHeader"> OTHER PLACES LIVED </h3>
         </div>

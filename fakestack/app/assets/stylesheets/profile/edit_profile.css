@@ -98,6 +98,11 @@ div.entry {
   /*border-bottom: 1px solid #DDDFE2;*/
 }
 
+.entry:last-of-type {
+  background-color: red;
+  border-top: 1px solid #DDDFE2
+}
+
 div.entry h3 {
   color: #666;
   font-size: 18px;
@@ -130,7 +135,9 @@ div.formButtons {
   align-items: center;
   padding-top: 15px;
   align-self: center;
+  width: 589px;
   flex-grow: 1;
+  border-top: 1px solid #DDDFE2;
 }
 
 button:focus {

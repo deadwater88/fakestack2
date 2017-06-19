@@ -4056,7 +4056,7 @@ exports.FaYoutube = _youtube2.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.receiveViewedProfile = exports.receiveProfileErrors = exports.receiveCurrentUserProfile = exports.receiveRelevantUsers = exports.receiveProp = exports.deleteFriending = exports.createFriending = exports.acceptFriending = exports.fetchViewedProfile = exports.fetchRelevantUsers = exports.fetchCurrentUser = exports.updateProp = exports.uploadPic = exports.RECEIVE_PROP = exports.RECEIVE_RELEVANT_USERS = exports.RECEIVE_PROFILE_ERRORS = exports.RECEIVE_VIEWED_PROFILE = exports.RECEIVE_CURRENT_USER_PROFILE = undefined;
+exports.receiveViewedProfile = exports.receiveProfileErrors = exports.receiveCurrentUserProfile = exports.receiveRelevantUsers = exports.receiveProp = exports.deleteFriending = exports.createFriending = exports.acceptFriending = exports.fetchViewedProfile = exports.fetchRelevantUsers = exports.fetchCurrentUser = exports.updateProfileProp = exports.updateProp = exports.uploadPic = exports.RECEIVE_PROP = exports.RECEIVE_RELEVANT_USERS = exports.RECEIVE_PROFILE_ERRORS = exports.RECEIVE_VIEWED_PROFILE = exports.RECEIVE_CURRENT_USER_PROFILE = undefined;
 
 var _profile_api_util = __webpack_require__(228);
 
@@ -4096,6 +4096,16 @@ var uploadPic = exports.uploadPic = function uploadPic(prop, userId) {
 var updateProp = exports.updateProp = function updateProp(prop, userId) {
   return function (dispatch) {
     return ProfileAPIUtil.updateProp(prop, userId).then(function (res) {
+      dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveViewedProfile(res));
+    }, function (err) {
+      return dispatch(receiveProfileErrors(err.responseJSON));
+    });
+  };
+};
+var updateProfileProp = exports.updateProfileProp = function updateProfileProp(prop, url) {
+  return function (dispatch) {
+    return ProfileAPIUtil.updateProfileProp(prop, url).then(function (res) {
       dispatch(receiveCurrentUserProfile(res));
       dispatch(receiveViewedProfile(res));
     }, function (err) {
@@ -24084,6 +24094,16 @@ var updateProp = exports.updateProp = function updateProp(prop, userId) {
     url: "api/users/" + userId,
     contentType: "application/json",
     data: JSON.stringify({ user: prop })
+  });
+};
+
+var updateProfileProp = exports.updateProfileProp = function updateProfileProp(prop, url) {
+  debugger;
+  return $.ajax({
+    method: "POST",
+    url: "api/" + url,
+    contentType: "application/json",
+    data: JSON.stringify(prop)
   });
 };
 
@@ -68608,9 +68628,9 @@ var _unit_form = __webpack_require__(101);
 
 var _unit_form2 = _interopRequireDefault(_unit_form);
 
-var _college_form = __webpack_require__(1097);
+var _college_form_container = __webpack_require__(1103);
 
-var _college_form2 = _interopRequireDefault(_college_form);
+var _college_form_container2 = _interopRequireDefault(_college_form_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68651,19 +68671,7 @@ var AboutEducationForm = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'propertyForm' },
-        _react2.default.createElement(_college_form2.default, null),
-        _react2.default.createElement(
-          'div',
-          { className: 'propertyContainer' },
-          _react2.default.createElement(
-            'h3',
-            { className: 'contentHeader' },
-            ' COLLEGE '
-          ),
-          _react2.default.createElement(_unit_form2.default, { profileInfo: profileInfoCurrentCity,
-            viewedUserProfile: this.props.viewedUserProfile,
-            updateProp: this.props.updateProp })
-        ),
+        _react2.default.createElement(_college_form_container2.default, null),
         _react2.default.createElement(
           'div',
           { className: 'propertyContainer' },
@@ -68718,7 +68726,17 @@ var _unit_field_radio = __webpack_require__(1101);
 
 var _unit_field_radio2 = _interopRequireDefault(_unit_field_radio);
 
+var _unit_field_checkbox = __webpack_require__(1102);
+
+var _unit_field_checkbox2 = _interopRequireDefault(_unit_field_checkbox);
+
+var _merge2 = __webpack_require__(23);
+
+var _merge3 = _interopRequireDefault(_merge2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -68734,18 +68752,70 @@ var CollegeForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (CollegeForm.__proto__ || Object.getPrototypeOf(CollegeForm)).call(this, props));
 
+    _this.state = { school: "",
+      start_date: { year: "", month: "" },
+      end_date: { year: "", month: "" },
+      description: "",
+      graduated: false,
+      concentrations: "",
+      type: 'College',
+      id: false
+    };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleCheckbox = _this.handleCheckbox.bind(_this);
     return _this;
   }
 
   _createClass(CollegeForm, [{
     key: 'handleSubmit',
-    value: function handleSubmit() {
-      "do";
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var props = this.state;
+      props.start_date = props.start_date.year + ' ' + props.start_date.month;
+      props.end_date = props.end_date.year + ' ' + props.end_date.year;
+      props.concentrations = [props.concentrations];
+      this.props.updateProfileProp({ school_history: props }, 'schoolhistories');
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(prop) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, prop, e.target.value));
+      };
+    }
+  }, {
+    key: 'handleCheckbox',
+    value: function handleCheckbox(prop) {
+      var _this3 = this;
+
+      return function (e) {
+        _this3.setState(_defineProperty({}, prop, e.target.checked));
+      };
+    }
+  }, {
+    key: 'handleDateChange',
+    value: function handleDateChange(prop) {
+      var _this4 = this;
+
+      return function (e) {
+        e.preventDefault();
+        var newstate = (0, _merge3.default)(_this4.state[prop], _defineProperty({}, e.target.name, e.target.value));
+        _this4.setState(_defineProperty({}, prop, newstate));
+      };
     }
   }, {
     key: 'render',
     value: function render() {
+      var schoolFormInfo = { inputLabel: "School", value: this.state.school, instruction: "What school did you attend?", handleChange: this.handleChange('school') };
+      var timePeriodInfo = { inputLabel: "TimePeriod", value: { start_date: this.state.start_date, end_date: this.state.end_date }, instruction: "", handleChangeStart: this.handleDateChange('start_date'), handleChangeEnd: this.handleDateChange('end_date') };
+      var descriptionInfo = { inputLabel: "Description", value: this.state.desription, instruction: "", handleChange: this.handleChange('description') };
+      var graduatedInfo = { inputLabel: "Graduated", value: this.state.graduated, instruction: "", handleChange: this.handleCheckbox('graduated') };
+      var concentrationInfo = { inputLabel: "Concentration", value: this.state.concentrations, instruction: "", handleChange: this.handleChange('concentrations') };
+      var attendedInfo = { inputLabel: "Attended for", value: this.state.type, instruction: "", options: ['College', 'Graduate School'], handleChange: this.handleChange('type') };
+
       return _react2.default.createElement(
         'div',
         { className: 'propertyContainer' },
@@ -68758,13 +68828,14 @@ var CollegeForm = function (_React$Component) {
           'div',
           { className: 'imgPropUnit' },
           _react2.default.createElement(
-            'form',
+            'div',
             { className: 'propForm' },
-            _react2.default.createElement(_unit_field_string2.default, { formInfo: { inputLabel: "School", instruction: "What school did you attend?" } }),
-            _react2.default.createElement(_unit_field_text2.default, { formInfo: { inputLabel: "Description", instruction: "" } }),
-            _react2.default.createElement(_unit_field_timeperiod2.default, { formInfo: { inputLabel: "Time Period", instruction: "" } }),
-            _react2.default.createElement(_unit_field_string2.default, { formInfo: { inputLabel: "Concentration", instruction: "" } }),
-            _react2.default.createElement(_unit_field_radio2.default, { formInfo: { inputLabel: "Attended for", instruction: "" } }),
+            _react2.default.createElement(_unit_field_string2.default, { formInfo: schoolFormInfo }),
+            _react2.default.createElement(_unit_field_timeperiod2.default, { formInfo: timePeriodInfo }),
+            _react2.default.createElement(_unit_field_text2.default, { formInfo: descriptionInfo }),
+            _react2.default.createElement(_unit_field_checkbox2.default, { formInfo: graduatedInfo }),
+            _react2.default.createElement(_unit_field_string2.default, { formInfo: concentrationInfo }),
+            _react2.default.createElement(_unit_field_radio2.default, { formInfo: attendedInfo }),
             _react2.default.createElement(
               'div',
               { className: 'formButtons' },
@@ -68823,7 +68894,7 @@ var UnitFieldText = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (UnitFieldText.__proto__ || Object.getPrototypeOf(UnitFieldText)).call(this, props));
 
-    _this.handleChange = _this.props.handleChange;
+    _this.handleChange = _this.props.formInfo.handleChange;
 
     return _this;
   }
@@ -68834,9 +68905,8 @@ var UnitFieldText = function (_React$Component) {
       var _props$formInfo = this.props.formInfo,
           inputLabel = _props$formInfo.inputLabel,
           instruction = _props$formInfo.instruction,
-          count = _props$formInfo.count;
+          value = _props$formInfo.value;
 
-      count = count || 1;
       return _react2.default.createElement(
         "div",
         { className: "entry text" },
@@ -68850,7 +68920,7 @@ var UnitFieldText = function (_React$Component) {
         _react2.default.createElement(
           "div",
           null,
-          _react2.default.createElement("textarea", { onChange: this.handleChange, type: "text", placeholder: instruction })
+          _react2.default.createElement("textarea", { onChange: this.handleChange, type: "text", placeholder: instruction, value: value })
         )
       );
     }
@@ -68894,7 +68964,7 @@ var UnitFieldString = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (UnitFieldString.__proto__ || Object.getPrototypeOf(UnitFieldString)).call(this, props));
 
-    _this.handleChange = _this.props.handleChange;
+    _this.handleChange = _this.props.formInfo.handleChange;
 
     return _this;
   }
@@ -68904,7 +68974,8 @@ var UnitFieldString = function (_React$Component) {
     value: function render() {
       var _props$formInfo = this.props.formInfo,
           inputLabel = _props$formInfo.inputLabel,
-          instruction = _props$formInfo.instruction;
+          instruction = _props$formInfo.instruction,
+          value = _props$formInfo.value;
 
       return _react2.default.createElement(
         "div",
@@ -68919,7 +68990,7 @@ var UnitFieldString = function (_React$Component) {
         _react2.default.createElement(
           "div",
           null,
-          _react2.default.createElement("input", { onChange: this.handleChange, type: "text", placeholder: instruction })
+          _react2.default.createElement("input", { value: value, onChange: this.props.formInfo.handleChange, type: "text", placeholder: instruction })
         )
       );
     }
@@ -68963,8 +69034,8 @@ var UnitTimePeriod = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (UnitTimePeriod.__proto__ || Object.getPrototypeOf(UnitTimePeriod)).call(this, props));
 
-    _this.handleChange = _this.props.handleChange;
-    _this.state = {};
+    _this.handleChangeStart = _this.props.formInfo.handleChangeStart;
+    _this.handleChangeEnd = _this.props.formInfo.handleChangeEnd;
     return _this;
   }
 
@@ -68973,13 +69044,18 @@ var UnitTimePeriod = function (_React$Component) {
     value: function render() {
       var _props$formInfo = this.props.formInfo,
           inputLabel = _props$formInfo.inputLabel,
-          instruction = _props$formInfo.instruction;
+          instruction = _props$formInfo.instruction,
+          value = _props$formInfo.value;
 
       var currentYear = new Date().getFullYear();
       var years = Array.from(Array(40).keys()).map(function (idx) {
         return currentYear + 1 - idx;
       });
-      var months = ['December', 'November', 'October', 'September', 'Auguest', 'July', 'June', 'May', 'April', 'March', 'February', 'January'];
+      var months = ['December', 'November', 'October', 'September', 'August', 'July', 'June', 'May', 'April', 'March', 'February', 'January'];
+      var startyear = value.start_date.year == "" ? "Year:" : value.start_date.year;
+      var startmonth = value.start_date.month == "" ? "Month:" : value.start_date.month;
+      var endyear = value.end_date.year == "" ? "Year:" : value.end_date.year;
+      var endmonth = value.end_date.month == "" ? "Month:" : value.end_date.month;
       return _react2.default.createElement(
         'div',
         { className: 'entry timeperiod' },
@@ -68998,7 +69074,7 @@ var UnitTimePeriod = function (_React$Component) {
             { id: 'dateStart', className: 'date' },
             _react2.default.createElement(
               'select',
-              { id: 'yearStart', value: 'Year:', onChange: this.handleChange },
+              { name: 'year', id: 'yearStart', value: startyear, onChange: this.handleChangeStart },
               _react2.default.createElement(
                 'option',
                 { disabled: true },
@@ -69016,7 +69092,7 @@ var UnitTimePeriod = function (_React$Component) {
             ),
             _react2.default.createElement(
               'select',
-              { id: 'monthStart', value: 'Month:', onChange: this.handleChange },
+              { name: 'month', id: 'monthStart', value: startmonth, onChange: this.handleChangeStart },
               _react2.default.createElement(
                 'option',
                 { disabled: true },
@@ -69039,7 +69115,7 @@ var UnitTimePeriod = function (_React$Component) {
             { id: 'dateEnd', className: 'date' },
             _react2.default.createElement(
               'select',
-              { id: 'yearStart', value: 'Year:', onChange: this.handleChange },
+              { name: 'year', id: 'yearStart', value: endyear, onChange: this.handleChangeEnd },
               _react2.default.createElement(
                 'option',
                 { disabled: true },
@@ -69057,7 +69133,7 @@ var UnitTimePeriod = function (_React$Component) {
             ),
             _react2.default.createElement(
               'select',
-              { id: 'monthEnd', value: 'Month:', onChange: this.handleChange },
+              { name: 'month', id: 'monthEnd', value: endmonth, onChange: this.handleChangeEnd },
               _react2.default.createElement(
                 'option',
                 { disabled: true },
@@ -69117,44 +69193,47 @@ var UnitFieldRadio = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (UnitFieldRadio.__proto__ || Object.getPrototypeOf(UnitFieldRadio)).call(this, props));
 
-    _this.handleChange = _this.props.handleChange;
+    _this.handleChange = _this.props.formInfo.handleChange;
 
     return _this;
   }
 
   _createClass(UnitFieldRadio, [{
-    key: 'render',
+    key: "render",
     value: function render() {
+      var _this2 = this;
+
+      // options will be an array of values representing the possible radio selection values
       var _props$formInfo = this.props.formInfo,
           inputLabel = _props$formInfo.inputLabel,
           instruction = _props$formInfo.instruction,
-          options = _props$formInfo.options;
+          options = _props$formInfo.options,
+          value = _props$formInfo.value;
 
-      options = ['option1', 'option2', 'option3', 'option4'];
       return _react2.default.createElement(
-        'div',
-        { className: 'entry radio' },
+        "div",
+        { className: "entry radio" },
         _react2.default.createElement(
-          'h3',
+          "h3",
           null,
-          ' ',
+          " ",
           inputLabel,
-          ' '
+          " "
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'subentry' },
+          "div",
+          { className: "subentry" },
           _react2.default.createElement(
-            'form',
-            null,
+            "form",
+            { onChange: this.handleChange },
             options.map(function (option, idx) {
               return _react2.default.createElement(
-                'div',
-                { key: "radio" + idx, className: 'radio' },
+                "div",
+                { key: "radio" + idx, className: "radio" },
                 _react2.default.createElement(
-                  'label',
+                  "label",
                   null,
-                  _react2.default.createElement('input', { type: 'radio', value: option, checked: idx == 0 ? true : "" }),
+                  _react2.default.createElement("input", { name: 'radio', type: "radio", value: option, onChange: _this2.handleChange, checked: value === option }),
                   option
                 )
               );
@@ -69169,6 +69248,119 @@ var UnitFieldRadio = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = UnitFieldRadio;
+
+/***/ }),
+/* 1102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UnitFieldCheckbox = function (_React$Component) {
+  _inherits(UnitFieldCheckbox, _React$Component);
+
+  function UnitFieldCheckbox(props) {
+    _classCallCheck(this, UnitFieldCheckbox);
+
+    var _this = _possibleConstructorReturn(this, (UnitFieldCheckbox.__proto__ || Object.getPrototypeOf(UnitFieldCheckbox)).call(this, props));
+
+    _this.handleChange = _this.props.formInfo.handleChange;
+
+    return _this;
+  }
+
+  _createClass(UnitFieldCheckbox, [{
+    key: "render",
+    value: function render() {
+      // options will be an array of values representing the possible radio selection values
+      var _props$formInfo = this.props.formInfo,
+          inputLabel = _props$formInfo.inputLabel,
+          instruction = _props$formInfo.instruction,
+          value = _props$formInfo.value;
+
+      return _react2.default.createElement(
+        "div",
+        { className: "entry radio" },
+        _react2.default.createElement(
+          "h3",
+          null,
+          " ",
+          inputLabel,
+          " "
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "subentry" },
+          _react2.default.createElement(
+            "form",
+            null,
+            _react2.default.createElement("input", { className: "checkbox", type: "checkbox", onChange: this.handleChange, checked: value })
+          )
+        )
+      );
+    }
+  }]);
+
+  return UnitFieldCheckbox;
+}(_react2.default.Component);
+
+exports.default = UnitFieldCheckbox;
+
+/***/ }),
+/* 1103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _college_form = __webpack_require__(1097);
+
+var _college_form2 = _interopRequireDefault(_college_form);
+
+var _reactRedux = __webpack_require__(8);
+
+var _profiles_actions = __webpack_require__(11);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserProfile: state.currentUserProfile,
+    viewedUserProfile: state.viewedUserProfile
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateProfileProp: function updateProfileProp(prop, url) {
+      return dispatch((0, _profiles_actions.updateProfileProp)(prop, url));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_college_form2.default);
 
 /***/ })
 /******/ ]);
