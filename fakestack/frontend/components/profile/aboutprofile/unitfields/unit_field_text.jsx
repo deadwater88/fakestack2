@@ -1,3 +1,4 @@
+import React from 'react';
 
 class UnitFieldText extends React.Component {
   constructor(props){
@@ -7,14 +8,16 @@ class UnitFieldText extends React.Component {
   }
 
   render(){
-    {inputLabel, instruction} = this.props.formInfo
+    let {inputLabel, instruction, count} = this.props.formInfo
+    count = (count || 1)
     return (
-      <div className="entry text">
-        <h3> {inputLabel} </h3>
-        <div>
-          <textarea onChange={this.handleChange} type="text" placeholder= {instruction} value={this.state[propName]} />
-        </div>
-      </div>)
+
+          <div className="entry text">
+            <h3> {inputLabel} </h3>
+              <div>
+                <textarea onChange={this.handleChange} type="text" placeholder={instruction} />
+              </div>
+          </div>)
   }
 }
 

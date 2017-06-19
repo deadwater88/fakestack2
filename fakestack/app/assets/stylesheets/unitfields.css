@@ -1,0 +1,17 @@
+
+select {
+  -webkit-appearance: none;
+  background-color: #DDDDDD;
+  padding: 5px;
+  margin: 1px;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+select:last-child {
+  margin-right: 15px
+}
+
+.subentry {
+  width: 268px;
+}
