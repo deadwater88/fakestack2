@@ -33,7 +33,7 @@ class Profile extends React.Component{
         <ProfileHeaderContainer match={match}/>
         <Route path="/profile/:userId/timeline" component={Timeline}></Route>
         <Route path="/profile/:userId/about" component={AboutProfileContainer}></Route>
-        <Route path="/profile/:userId/friends" component={FriendsContainer}></Route>
+        <Route exact={true} path="/profile/:userId/friends" component={FriendsContainer}></Route>
       </div>
     );
   }

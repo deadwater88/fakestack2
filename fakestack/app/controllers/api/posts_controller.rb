@@ -11,8 +11,11 @@ class Api::PostsController < ApplicationController
 
   def index
     @user = User.find_by(id: params[:user_id])
-    @posts = @user.authored_posts.includes(:comments) + @user.wall_posts.includes(:comments)
-     
+    if params[:type] == "feed"
+      @posts = @user.authored_posts.includes(:comments) + Post.includes(:comments).where({posts: {author: @user.friends}})
+    else
+      @posts = @user.wall_posts.includes(:comments)
+    end
   end
 
   def destroy

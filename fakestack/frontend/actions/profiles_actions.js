@@ -31,6 +31,15 @@ export const updateProp = (prop, userId) => dispatch => {
     err => dispatch(receiveProfileErrors(err.responseJSON))
   );
 };
+export const updateProfileProp = (prop, url) => dispatch => {
+  return ProfileAPIUtil.updateProfileProp(prop, url).then(
+    (res => {
+      dispatch(receiveCurrentUserProfile(res));
+      dispatch(receiveViewedProfile(res));
+    }),
+    err => dispatch(receiveProfileErrors(err.responseJSON))
+  );
+};
 
 export const fetchCurrentUser = (id) => dispatch => {
   ProfileAPIUtil.fetchUser(id).then((res => {

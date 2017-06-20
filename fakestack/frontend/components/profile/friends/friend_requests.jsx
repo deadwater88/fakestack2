@@ -77,9 +77,10 @@ class FriendRequests extends React.Component {
                <button className="submitPost request" onClick= {this.handleFriendClickId(id)}>
                  {this.friendsButtonContent(id)}
                </button>
-               <button onClick={this.handleDeleteRequest(id)} className="headerButton request">
-                 Delete Request
-               </button>
+                {currentUserProfile.requests.includes(id) ? <button onClick={this.handleDeleteRequest(id)} className="headerButton request">
+                   Delete Request
+                 </button> :
+                 ""}
              </div>
            </div>
          </div>);})

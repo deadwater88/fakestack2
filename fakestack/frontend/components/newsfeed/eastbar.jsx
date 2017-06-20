@@ -7,7 +7,6 @@ class EastBar extends React.Component {
 
     return (
       <div id="eastBar">
-        EastBar
       </div>
     );
   }

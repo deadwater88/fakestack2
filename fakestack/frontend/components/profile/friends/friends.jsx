@@ -2,13 +2,16 @@ import React from 'react';
 import {FaChevronDown, FaPencil, FaCamera, FaUserPlus, FaCheck, FaGroup, FaPlus} from 'react-icons/lib/fa/';
 import ProfilePictureContainer from '../profile_picture_container';
 import FriendItemContainer from './friend_item_container';
+import {Link} from 'react-router-dom';
 
 class Friends extends React.Component {
   constructor(props){
     super(props);
+    const {relevantUsers, currentUserProfile, viewedUserProfile} = this.props;
+    this.state = {friends: viewedUserProfile.friends.map(friendId => relevantUsers[friendId])}
+
   }
 
-  
 
   renderfriendsList(){
     const {relevantUsers, currentUserProfile, viewedUserProfile} = this.props;
@@ -35,7 +38,9 @@ class Friends extends React.Component {
           <div className="firstRowHeader">
             <h1> <FaGroup/> Friends</h1>
             <div className="friend buttonContainer">
-              <button id="requestsButton" className="headerButton item"> Friend Requests {this.props.currentUserProfile.requests.length} </button>
+              <Link to={'/friends/requests'}>
+                <button id="requestsButton" className="headerButton item"> Friend Requests {this.props.currentUserProfile.requests.length} </button>
+              </Link>
               <button className="headerButton item find"> <FaPlus/> Find Friends</button>
             </div>
           </div>

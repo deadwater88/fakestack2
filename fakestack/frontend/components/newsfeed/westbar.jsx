@@ -7,7 +7,6 @@ class WestBar extends React.Component {
 
     return (
       <div id="westBar">
-        WestBar
       </div>
     );
   }

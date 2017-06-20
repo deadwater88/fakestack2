@@ -2,7 +2,7 @@
 
 [Fakestack live][heroku]
 
-[heroku]: https://fakestack.herokuapp.com/
+[heroku]: http://www.fakestack.us/
 
 Fakestack is a full-stack web app clone intended to replicate many of the features of Facebook. The back-end framework was builty using Ruby on Rails utilizing a PostgreSQL dataabase, and the front-end was built using React/Redux framework.
 

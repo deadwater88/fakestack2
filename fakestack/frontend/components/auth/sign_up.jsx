@@ -37,13 +37,13 @@ class SignUp extends React.Component {
                   FaUser,
                   FaMusic];
     let title = ["See posts and comments",
-                  "Find friends",
+                  "Make new friends",
                   "Find your interests"];
     let sub = ["from friends in News Feed.",
                   "through friends.",
                   "with fakestack Search."];
     return (<div id="features">
-      <h2>Do this and That or Not. Im Not Your Father</h2>
+      <h2>This isn't facebook. Please Don't sue me </h2>
       {images.map((Imagel, index)=>
         (<div key={index +"img"} className="feature">
           <Imagel className="icon"/>
