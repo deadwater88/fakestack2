@@ -18869,9 +18869,8 @@ var AuthForm = function (_React$Component) {
   _createClass(AuthForm, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // this.props.fetchRelevantUsers(13);
-      // this.props.fetchCurrentUser(13);
-      // this.props.fetchViewedProfile(13);
+      // this.props.fetchCurrentUser();
+
     }
   }, {
     key: 'sessionErrors',
@@ -22417,7 +22416,7 @@ var ProfileHeader = function (_React$Component) {
             { onClick: this.uploadCoverPic, id: 'editCoverButton', style: editCheck },
             'Add Cover Photo'
           ),
-          coverImgUrl === "" ? _react2.default.createElement('div', { id: 'coverImg' }) : _react2.default.createElement('img', { src: viewedUserProfile.coverImgUrl, id: 'coverImg' }),
+          coverImgUrl === "" ? _react2.default.createElement('div', { id: 'coverImg' }) : _react2.default.createElement('img', { src: viewedUserProfile.coverImgUrl.replace("http", "https"), id: 'coverImg' }),
           _react2.default.createElement(
             'h1',
             null,

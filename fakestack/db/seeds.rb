@@ -1,3 +1,6 @@
+require 'net/http'
+
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -78,3 +81,13 @@ users.each do |user1|
     end
   end
 end
+
+
+
+
+url = URI.parse('http://www.example.com/index.html')
+req = Net::HTTP::Get.new(url.to_s)
+res = Net::HTTP.start(url.host, url.port) {|http|
+  http.request(req)
+}
+puts res.body
