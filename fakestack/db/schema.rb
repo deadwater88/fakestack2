@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170622043304) do
+ActiveRecord::Schema.define(version: 20170622055606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20170622043304) do
     t.string   "location"
     t.text     "description"
     t.boolean  "graduated"
-    t.date     "start_date"
-    t.date     "end_date"
+    t.string   "start_date"
+    t.string   "end_date"
     t.string   "concentrations", default: [],              array: true
     t.string   "type"
     t.datetime "created_at",                  null: false
@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(version: 20170622043304) do
     t.string   "location"
     t.text     "description"
     t.boolean  "current"
-    t.date     "start_date"
-    t.date     "end_date"
+    t.string   "start_date"
+    t.string   "end_date"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.index ["user_id"], name: "index_workhistories_on_user_id", using: :btree

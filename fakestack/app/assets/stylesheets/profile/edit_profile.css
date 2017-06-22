@@ -32,19 +32,22 @@ a.navLink {
   flex-direction: row;
   align-items: center;
   border-top: 1px solid #DDDFE2;
+  padding: 15px 0 15px 0;
 }
 
 .imgPropContent > svg {
+  min-width: 36px;
   height: 36px;
   width: 36px;
   fill: #4080ff;
   margin-right: 10px;
+  align-self: flex-start;
 }
 
 .imgPropContent > a {
   font-size: 16px;
   color: #4080ff;
-  padding: 20px 10px 20px 0px;
+  padding: 5px 10px 5px 0px;
 }
 
 .addContent:hover {
@@ -164,7 +167,7 @@ div.imgPropContent.showContent {
 }
 
 div.imgPropContent.showContent:hover div.editDisplay {
-  display: flex;
+  visibility: visible;
 }
 
 
@@ -177,9 +180,11 @@ div.infoDisplay {
 }
 
 div.editDisplay {
-  display: none;
+  visibility: hidden;
   flex-direction: row;
   align-items: center;
+  align-self: flex-start;
+  display: flex;
 }
 
 div.editDisplay a {

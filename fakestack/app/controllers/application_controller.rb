@@ -17,10 +17,4 @@ class ApplicationController < ActionController::Base
     session[:session_token] = nil
   end
 
-  def parseDate(date)
-    if datestring != ''
-      DateTime.parse(date)
-    end
-    datestring
-  end
 end

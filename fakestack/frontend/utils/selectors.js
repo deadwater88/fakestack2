@@ -7,18 +7,18 @@ export const selectCurrentUserComments = (state)=> {
 };
 
 export const selectAllRelevantUsers = (state) => {
-  return Object.values(state.relevantUsers);
+  return values(state.relevantUsers);
 };
 
 export const selectWallPosts = (state, location_id) => {
-  let posts = Object.values(state.posts).filter(post => post.locationId === parseInt(location_id));
+  let posts = values(state.posts).filter(post => post.locationId === parseInt(location_id));
   return posts.sort((post1,post2)=> new Date(post2.createdAt) - new Date(post1.createdAt));
 };
 
 export const selectFeedPosts = (state) => {
-  let posts =  Object.values(state.posts)
+  let posts =  values(state.posts);
   return posts.sort((post1,post2)=> new Date(post2.createdAt) - new Date(post1.createdAt));
-}
+};
 
 export const selectAuthor = (state, authorId) => {
   return state.relevantUsers[authorId] || {};
@@ -35,7 +35,7 @@ export const parseDetails = (state) => {
   }
   otherNames.forEach((name)=>{
     details.push([`Also goes by ${name}`, 'otherName']);
-  })
+  });
   return details;
 
 };

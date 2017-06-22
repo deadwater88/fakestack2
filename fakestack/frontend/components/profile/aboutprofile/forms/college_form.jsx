@@ -31,8 +31,8 @@ class CollegeForm extends React.Component {
     e.preventDefault();
     let {school, start_date, end_date, description, graduated, concentrations, college_type, id} = this.state;
     let props = {school, start_date, end_date, description, graduated, concentrations, college_type, id};
-    props.start_date = `${props.start_date.year} ${props.start_date.month}`;
-    props.end_date = `${props.end_date.year} ${props.end_date.month}`;
+    // props.start_date = ${props.start_date.year} ${props.start_date.month};
+    // props.end_date = `${props.end_date.year} ${props.end_date.month}`;
     props.concentrations = [props.concentrations];
     this.props.updateProfileProp({school_history: props}, 'schoolhistories');
   }
@@ -51,7 +51,6 @@ class CollegeForm extends React.Component {
   handleDateChange(prop) {
     return (e) => {
       e.preventDefault();
-      console.log(this.state);
       let newstate = merge(this.state[prop], {[e.target.name]: e.target.value});
       this.setState({[prop]: newstate});
     };

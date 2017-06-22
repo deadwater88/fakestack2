@@ -55,6 +55,12 @@ class User < ApplicationRecord
     friends1 + friends2
   end
 
+  def friendscount
+    friends1 = requesters.where(friendings: {approved: true}).count
+    friends2 = recipients.where(friendings: {approved: true}).count
+    friends1 + friends2
+  end
+
   def pending_friend_requests
     self.requesters.where(friendings: {approved: false})
   end

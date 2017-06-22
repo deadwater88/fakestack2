@@ -38,7 +38,6 @@ export const updateProp = (prop, userId) => dispatch => {
 export const updateProfileProp = (prop, url) => dispatch => {
   return ProfileAPIUtil.updateProfileProp(prop, url).then(
     (res => {
-      debugger;
       dispatch(receiveCurrentUserProp(res));
       dispatch(receiveViewedProfileProp(res));
     }),
@@ -123,12 +122,12 @@ export const receiveViewedProfile = viewedUserProfile => ({
   viewedUserProfile
 });
 
-export const receiveCurrentUserProp = (res) => ({
+export const receiveCurrentUserProp = (prop) => ({
   type: RECEIVE_CURRENT_USER_PROP,
-  res
+  prop
 });
 
-export const receiveViewedProfileProp = (res) => ({
+export const receiveViewedProfileProp = (prop) => ({
   type: RECEIVE_VIEWED_PROFILE_PROP,
-  res
+  prop
 });

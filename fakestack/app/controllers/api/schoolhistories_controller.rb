@@ -9,6 +9,7 @@ class Api::SchoolhistoriesController < ApplicationController
       else
         @history = Schoolhistory.new(school_history_params)
         @history.user_id = current_user.id
+        @history.id = nil
         if @history.save
           render :show
         else
@@ -21,15 +22,13 @@ class Api::SchoolhistoriesController < ApplicationController
 
   def school_history_params
     purged = params.require(:school_history).permit(:school,
-                                           :start_date,
-                                           :end_date,
                                            :description,
                                            :graduated,
                                            :college_type,
                                            :id,
-                                           concentrations: [])
-    purged[:start_date] = parseDate(purged[:start_date])
-    purged[:end_date] = parseDate(purged[:end_date])
+                                           concentrations: [],
+                                           start_date: [:year, :month],
+                                           end_date: [:month, :year])
   end
 
 

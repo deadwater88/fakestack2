@@ -1,12 +1,8 @@
 import React from 'react';
-import UnitFormText from './unit_form_text';
-import UnitFormArrayImg from './unit_form_array_img';
-import UnitForm from './unit_form';
 import CollegeFormContainer from './forms/college_form_container';
 import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
 
-
-class AboutEducationForm extends React.Component {
+class AboutEducationItem extends React.Component {
 
     renderEducation(){
       return (<div key={"value"} className="imgPropContent showContent">
@@ -51,4 +47,4 @@ class AboutEducationForm extends React.Component {
 }
 
 
-export default AboutEducationForm;
+export default AboutEducationItem;

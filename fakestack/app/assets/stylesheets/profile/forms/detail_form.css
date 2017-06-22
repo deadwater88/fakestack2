@@ -42,7 +42,7 @@ div.entry textarea {
 .imgPropContent.addtext > a {
   font-size: 18px;
   color: #4080ff;
-  padding: 20px 10px 20px 0px;
+  padding: 0px 10px 0px 0px;
 }
 
 .imgPropContent.addtext > svg {
