@@ -4,11 +4,9 @@
 
 [heroku]: http://www.fakestack.us/
 
-Fakestack is a full-stack web app clone intended to replicate many of the features of Facebook. The back-end framework was builty using Ruby on Rails utilizing a PostgreSQL dataabase, and the front-end was built using React/Redux framework.
+Fakestack is a full-stack web app clone intended to replicate many of the features of Facebook as well replicates its UI design as accurately as possible. The back-end framework was built using Ruby on Rails utilizing a PostgreSQL dataabase, and the front-end was built using React/Redux framework.
 
-## Features & Implementation
-
- **NB**: don't copy and paste any of this.  Many folks will implement similar features, and many employers will see the READMEs of a lot of a/A grads.  You must write in a way that distinguishes your README from that of other students', but use this as a guide for what topics to cover.  
+## Features & Implementation  
 
 ### Note Rendering and Editing
 
