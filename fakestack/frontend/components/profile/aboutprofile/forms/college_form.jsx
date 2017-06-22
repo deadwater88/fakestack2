@@ -17,7 +17,7 @@ class CollegeForm extends React.Component {
                    description: "",
                    graduated: false,
                    concentrations: "",
-                   type: 'College',
+                   college_type: 'College',
                    id: false,
                    editMode: false
     };
@@ -29,10 +29,10 @@ class CollegeForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let {school, start_date, end_date, description, graduated, concentrations, type, id} = this.state;
-    let props = {school, start_date, end_date, description, graduated, concentrations, type, id};
+    let {school, start_date, end_date, description, graduated, concentrations, college_type, id} = this.state;
+    let props = {school, start_date, end_date, description, graduated, concentrations, college_type, id};
     props.start_date = `${props.start_date.year} ${props.start_date.month}`;
-    props.end_date = `${props.end_date.year} ${props.end_date.year}`;
+    props.end_date = `${props.end_date.year} ${props.end_date.month}`;
     props.concentrations = [props.concentrations];
     this.props.updateProfileProp({school_history: props}, 'schoolhistories');
   }
@@ -51,6 +51,7 @@ class CollegeForm extends React.Component {
   handleDateChange(prop) {
     return (e) => {
       e.preventDefault();
+      console.log(this.state);
       let newstate = merge(this.state[prop], {[e.target.name]: e.target.value});
       this.setState({[prop]: newstate});
     };
@@ -77,7 +78,7 @@ class CollegeForm extends React.Component {
     let descriptionInfo = {inputLabel: "Description", value:this.state.desription, instruction: "", handleChange: this.handleChange('description')};
     let graduatedInfo = {inputLabel: "Graduated", value:this.state.graduated, instruction: "", handleChange: this.handleCheckbox('graduated')};
     let concentrationInfo = {inputLabel: "Concentration", value:this.state.concentrations, instruction: "", handleChange: this.handleChange('concentrations')};
-    let attendedInfo = {inputLabel: "Attended for", value:this.state.type, instruction: "", options: ['College', 'Graduate School'], handleChange: this.handleChange('type')};
+    let attendedInfo = {inputLabel: "Attended for", value:this.state.college_type, instruction: "", options: ['College', 'Graduate School'], handleChange: this.handleChange('college_type')};
     return (
       <div className="propForm">
         <UnitFieldString formInfo={schoolFormInfo}/>

@@ -10,6 +10,10 @@ export const RECEIVE_PROFILE_ERRORS = 'RECEIVE_PROFILE_ERRORS';
 
 export const RECEIVE_RELEVANT_USERS = 'RECEIVE_RELEVANT_USERS';
 
+export const RECEIVE_CURRENT_USER_PROP = 'RECEIVE_CURRENT_USER_PROP';
+
+export const RECEIVE_VIEWED_PROFILE_PROP = 'RECEIVE_VIEWED_PROFILE_PROP';
+
 export const RECEIVE_PROP = 'RECEIVE_PROP';
 
 export const uploadPic = (prop, userId)=> dispatch => {
@@ -34,8 +38,9 @@ export const updateProp = (prop, userId) => dispatch => {
 export const updateProfileProp = (prop, url) => dispatch => {
   return ProfileAPIUtil.updateProfileProp(prop, url).then(
     (res => {
-      dispatch(receiveCurrentUserProfile(res));
-      dispatch(receiveViewedProfile(res));
+      debugger;
+      dispatch(receiveCurrentUserProp(res));
+      dispatch(receiveViewedProfileProp(res));
     }),
     err => dispatch(receiveProfileErrors(err.responseJSON))
   );
@@ -116,4 +121,14 @@ export const receiveProfileErrors = errors => ({
 export const receiveViewedProfile = viewedUserProfile => ({
   type: RECEIVE_VIEWED_PROFILE,
   viewedUserProfile
+});
+
+export const receiveCurrentUserProp = (res) => ({
+  type: RECEIVE_CURRENT_USER_PROP,
+  res
+});
+
+export const receiveViewedProfileProp = (res) => ({
+  type: RECEIVE_VIEWED_PROFILE_PROP,
+  res
 });

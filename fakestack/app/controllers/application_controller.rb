@@ -1,3 +1,5 @@
+require 'date'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
@@ -13,5 +15,12 @@ class ApplicationController < ActionController::Base
   def logout
     current_user.reset_token if current_user
     session[:session_token] = nil
+  end
+
+  def parseDate(date)
+    if datestring != ''
+      DateTime.parse(date)
+    end
+    datestring
   end
 end

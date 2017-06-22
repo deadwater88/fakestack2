@@ -13,6 +13,11 @@ json.extract!(user,
               :cover_img_url,
               :biography)
 
+json.schoolhistories do
+  user.school_histories.each do |history|
+    json.partial! 'api/schoolhistories/schoolhistory.json',  formats: [:json], schoolhistory: history
+  end
+end
 
 json.friends (user.friends.map{|friend| friend.id})
 json.requesters user.requesters.pluck(:id)

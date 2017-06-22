@@ -17,7 +17,6 @@ export const updateProp = (prop, userId) => {
 };
 
 export const updateProfileProp = (prop, url) => {
-  debugger;
   return $.ajax({
     method: "POST",
     url: `api/${url}`,

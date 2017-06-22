@@ -52,9 +52,9 @@ class UnitTimePeriod extends React.Component {
                 </select>
               </div>
             </div>
-          </div>)
+          </div>);
   }
 }
 
 
-export default UnitTimePeriod
+export default UnitTimePeriod;
