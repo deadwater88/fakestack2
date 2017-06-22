@@ -28,6 +28,7 @@ class SignUp extends React.Component {
   }
 
   handleSubmit(e){
+    e.preventDefault()
     const {email, first_name, last_name, password} = this.state;
     this.props.signup({email, first_name, last_name, password});
   }
@@ -43,7 +44,7 @@ class SignUp extends React.Component {
                   "through friends.",
                   "with fakestack Search."];
     return (<div id="features">
-      <h2>This isn't facebook. Please Don't sue me </h2>
+      <h2>Stay Connected.</h2>
       {images.map((Imagel, index)=>
         (<div key={index +"img"} className="feature">
           <Imagel className="icon"/>
@@ -69,7 +70,7 @@ class SignUp extends React.Component {
       {this.featureslist()}
       <form id="signup">
         <h2>Welcome!</h2>
-        <h3>It's free... for now...</h3>
+        <h3>It's free!</h3>
         <div>
           <input onChange={this.updateValue("first_name")} type="text" placeholder={"First Name"} value= {this.state.firstName}/>
           <input onChange={this.updateValue("last_name")} type="text" placeholder={"Last Name"} value= {this.state.lastName}/>

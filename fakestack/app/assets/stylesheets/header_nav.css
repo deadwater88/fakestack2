@@ -158,7 +158,7 @@ div#menu1 a {
 input.searchFriends:focus + ul#searchFriends {
   display: flex;
 }
-ul#searchFriends:hover {
+ul#searchFriends:active {
   display: flex;
 }
 

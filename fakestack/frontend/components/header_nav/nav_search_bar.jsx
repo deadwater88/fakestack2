@@ -19,7 +19,7 @@ class NavSearchBar extends React.Component {
 
   filterUsers (e) {
     e.preventDefault();
-    this.setState({query: e.currentTarget.value})
+    this.setState({query: e.currentTarget.value});
     let input = e.currentTarget.value.toLowerCase();
     let filteredUsers = this.props.relevantUsers.filter((user)=> {
       const [firstName, lastName] = [user.firstName, user.lastName].map((word) => word.toLowerCase());
@@ -36,7 +36,7 @@ class NavSearchBar extends React.Component {
   noUsers() {
     return (
       <h3 id="searchNoResults"> No results for {this.state.query} </h3>
-    )
+    );
   }
 
 
