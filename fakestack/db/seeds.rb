@@ -64,6 +64,9 @@ User.create(email: 'Dobrynin@gmail.com', password: 'password', first_name: 'Davi
 User.create(email: 'Li@gmail.com', password: 'password', first_name: 'Victor', last_name: 'Li'),
 User.create(email: 'Cruz@gmail.com', password: 'password', first_name: 'Louis', last_name: 'Cruz')]
 
+1000.times do
+  # User.create(email:)
+end
 
 
 demo = User.find_by(email: "Vader@gmail.com");

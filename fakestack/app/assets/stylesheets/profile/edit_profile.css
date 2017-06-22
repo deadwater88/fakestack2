@@ -99,7 +99,6 @@ div.entry {
 }
 
 .entry:last-of-type {
-  background-color: red;
   border-top: 1px solid #DDDFE2
 }
 
