@@ -3,36 +3,22 @@ import UnitFormText from './unit_form_text';
 import UnitFormArrayImg from './unit_form_array_img';
 import UnitForm from './unit_form';
 import CollegeFormContainer from './forms/college_form_container';
+import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
 
 
 class AboutEducationForm extends React.Component {
 
     render (){
-      let editCheck = this.props.currentUserProfile.id === this.props.viewedUserProfile.id ? {}: {display: "none"};
-      let profileInfoCurrentCity = {editCheck: editCheck,
-                           instruction: "Add your current city",
-                           inputLabel: "Current City",
-                           propName: "current_city",
-                           value: this.props.viewedUserProfile.currentCity};
-      let profileInfoHometown = {editCheck: editCheck,
-                           instruction: "Add your hometown",
-                           inputLabel: "Hometown",
-                           propName: "hometown",
-                       value: this.props.viewedUserProfile.hometown};
-       let profileInfoPlaces = {editCheck: editCheck,
-                            instruction: "Add a Place",
-                            inputLabel: "Place",
-                            propName: "places",
-                            values: this.props.viewedUserProfile.places};
+
       return (
       <div className="propertyForm">
-        <CollegeFormContainer/>
+        <div className="propertyContainer">
+          <h3 className="contentHeader"> COLLEGE </h3>
+          <CollegeFormContainer/>
+        </div>
         <div className="propertyContainer">
           <h3 className="contentHeader"> OTHER PLACES LIVED </h3>
         </div>
-        <UnitFormArrayImg profileInfo={profileInfoPlaces}
-          viewedUserProfile={this.props.viewedUserProfile}
-          updateProp={this.props.updateProp} />
       </div>
     );
     }

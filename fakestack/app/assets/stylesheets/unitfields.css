@@ -1,6 +1,6 @@
 
-select {
-  -webkit-appearance: none;
+.subentry select {
+  /*-webkit-appearance: none;*/
   background-color: #DDDDDD;
   padding: 5px;
   margin: 1px;

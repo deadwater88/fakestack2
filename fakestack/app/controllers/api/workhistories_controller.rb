@@ -7,7 +7,7 @@ class Api::WorkhistoriesController < ApplicationController
 
 private
 
-  def school_history_params
+  def work_history_params
     params.require(:school_history).permit(:school, :start_date, :end_date, :description, :graduated, :type, :id, concentrations: [])
   end
 end

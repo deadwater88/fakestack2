@@ -10,7 +10,7 @@ class Api::SchoolhistoriesController < ApplicationController
         if @history.save
           render :show
         else
-          render json: @histoyr.errors.full_messages, status: 400
+          render json: @history.errors.full_messages, status: 400
         end
       end
   end
