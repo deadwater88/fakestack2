@@ -13,7 +13,7 @@ def getPexel()
   page = rand(1000)
   url = URI.parse("http://api.pexels.com/v1/popular?per_page=40&page=#{1000}")
   req = Net::HTTP::Get.new(url.to_s)
-  req['Authorization'] = '563492ad6f9170000100000155c9cc8f281148c27d9cfef9e772f862'
+  req['Authorization'] = ENV['PEXEL_KEY']
   req['Accept'] = 'application/json'
   results = []
   25.times do
