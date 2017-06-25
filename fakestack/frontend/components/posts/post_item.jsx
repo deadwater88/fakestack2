@@ -38,8 +38,7 @@ class PostItem extends React.Component{
     if (!this.props.post) {
       return <div></div>;
     }
-    const{authorId, createdAt, id, content, comments} = this.props.post;
-    const author = this.props.author;
+    const{authorId, createdAt, id, content, comments, author} = this.props.post;
     const timestamp = format1(createdAt);
     return (
     <div className="PostItemContainer" key={"postItemContainer" + this.props.idx }>

@@ -27,7 +27,7 @@ class ProfilePicture extends React.Component {
     let editCheck = editable ? {}: {display: "none"};
     let img;
     if (this.props.imgUrl !== "") {
-      img = (<img src={this.props.imgUrl.replace("http", "https")} className={className}/>);
+      img = (<img src={this.props.imgUrl.replace("http:", "https:")} className={className}/>);
     } else {
       img = (<FaUser className={className}/>);
     }

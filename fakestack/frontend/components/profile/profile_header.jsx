@@ -36,12 +36,12 @@ class ProfileHeader extends React.Component {
     const { currentUserProfile, viewedUserProfile} = this.props;
     let viewedId = viewedUserProfile.id;
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
+      case currentUserProfile.friends[viewedId]:
         return "Do Nothing";
-      case currentUserProfile.requesters.includes(viewedId):
+      case currentUserProfile.requesters[viewedId]:
         this.props.acceptFriending(viewedId);
         return "Accept Request";
-      case currentUserProfile.recipients.includes(viewedId):
+      case currentUserProfile.recipients[viewedId]:
         return "Do Nothing";
       default:
         this.props.createFriending(viewedId);
@@ -53,11 +53,11 @@ class ProfileHeader extends React.Component {
     const { currentUserProfile, viewedUserProfile} = this.props;
     let viewedId = viewedUserProfile.id;
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
+      case Object.keys(currentUserProfile.friends).includes(viewedId):
         return <div> <FaCheck/>Friends </div>;
-      case currentUserProfile.requesters.includes(viewedId):
+      case currentUserProfile.requesters[viewedId]:
         return <div> <FaUserPlus/> Accept Friend Request </div>;
-      case currentUserProfile.recipients.includes(viewedId):
+      case currentUserProfile.recipients[viewedId]:
         return  <div> <FaUserPlus/> Friend Request Sent </div>;
       default:
         return (<div> <FaUserPlus/> Add Friend </div>);
@@ -66,7 +66,7 @@ class ProfileHeader extends React.Component {
 
   render(){
     const {uploadProfilePic, currentUserProfile, viewedUserProfile} = this.props;
-    const coverImgUrl = currentUserProfile.coverImgUrl;
+    const coverImgUrl = viewedUserProfile.coverImgUrl;
     const isSelf = currentUserProfile.id === viewedUserProfile.id;
     const editCheck = isSelf ? {}: {display: "none"};
     return (
@@ -79,7 +79,7 @@ class ProfileHeader extends React.Component {
             <div onClick={this.uploadCoverPic} id="editCoverButton" style={editCheck}>
               Add Cover Photo
             </div>
-            { coverImgUrl === "" ? <div id="coverImg"></div> : <img src={viewedUserProfile.coverImgUrl.replace("http", "https")} id="coverImg"/>}
+            { coverImgUrl === "" ? <div id="coverImg"></div> : <a><img src={viewedUserProfile.coverImgUrl.replace("http:", "https:")} id="coverImg"/></a>}
             <h1> {`${viewedUserProfile.firstName} ${viewedUserProfile.lastName}`} </h1>
           </div>
           <div id="profileNav">

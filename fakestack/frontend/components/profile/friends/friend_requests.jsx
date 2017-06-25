@@ -16,11 +16,11 @@ class FriendRequests extends React.Component {
     const { currentUserProfile} = this.props;
     let viewedId =  id||this.props.friend.id;
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
+      case Object.keys(currentUserProfile.friends).includes(viewedId):
         return <div> <FaCheck/>Friends </div>;
-      case currentUserProfile.requesters.includes(viewedId):
+      case currentUserProfile.requesters[viewedId]:
         return <div> Confirm </div>;
-      case currentUserProfile.recipients.includes(viewedId):
+      case currentUserProfile.recipients[viewedId]:
         return  <div> <FaUserPlus/> Request Sent </div>;
       default:
         return (<div> <FaUserPlus/> Add Friend </div>);
@@ -33,12 +33,12 @@ class FriendRequests extends React.Component {
     const { currentUserProfile, viewedUserProfile} = this.props;
     let viewedId = id;
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
+      case Object.keys(currentUserProfile.friends).includes(viewedId):
         return "Do Nothing";
-      case currentUserProfile.requesters.includes(viewedId):
+      case currentUserProfile.requesters[viewedId]:
         this.props.acceptFriending(viewedId);
         return "Confirm";
-      case currentUserProfile.recipients.includes(viewedId):
+      case currentUserProfile.recipients[viewedId]:
         return "Do Nothing";
       default:
         this.props.createFriending(viewedId);

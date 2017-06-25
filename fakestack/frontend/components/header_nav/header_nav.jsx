@@ -26,7 +26,7 @@ class HeaderNav extends React.Component {
 
   addClickOut(className){
     const listener = (e) => {
-       let targetClass = e.target.classList.value
+       let targetClass = e.target.classList.value;
         if (targetClass.match("request")) {
           e.stopPropagation()
           return ""
@@ -36,8 +36,8 @@ class HeaderNav extends React.Component {
           target.classList.remove("show")
           document.removeEventListener("click", listener)
         }
-    }
-    return listener
+    };
+    return listener;
   }
 
   showDropdown(e) {

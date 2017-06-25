@@ -1,3 +1,4 @@
+require 'byebug'
   json.extract!(comment,
                  :id,
                  :author_id,
@@ -6,7 +7,9 @@
                  :updated_at,
                  :content,
                  :parent_type)
-
+  json.author do
+    json.partial! 'api/users/liteuser.json', user: comment.author
+  end
   json.replies comment.replies.map do |reply|
     json.extract!(reply,
                   :id,
@@ -16,6 +19,11 @@
                   :updated_at,
                   :content,
                   :parent_type)
+    json.set! :author do
+      json.set! :author do
+        json.partial! 'api/users/liteuser.json', user: reply.author
+      end
+    end
   end
 
 json.parent do

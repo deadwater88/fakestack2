@@ -11,8 +11,7 @@ const mapStateToProps = (state, ownProps) =>({
   viewedUserProfile: state.viewedUserProfile,
   post: ownProps.post,
   relevantUsers: state.relevantUsers,
-  comments: state.comments,
-  author: selectAuthor(state, ownProps.post.authorId)
+  comments: state.comments
 });
 
 const mapDispatchToProps = (dispatch) => ({
