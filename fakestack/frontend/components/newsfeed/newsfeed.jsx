@@ -13,7 +13,7 @@ class NewsFeed extends React.Component{
 
   componentWillMount(){
     this.props.fetchPosts(this.props.currentUserProfile.id);
-    this.props.fetchRelevantUsers();
+    // this.props.fetchRelevantUsers();
   }
 
   render(){
