@@ -1,5 +1,4 @@
 require 'net/http'
-require 'byebug'
 require 'json'
 require 'faker'
 require_relative './generateProfiles/getQuotes.rb'
