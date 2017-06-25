@@ -16,11 +16,11 @@ class FriendRequests extends React.Component {
     const { currentUserProfile} = this.props;
     let viewedId =  id||this.props.friend.id;
     switch (true) {
-      case Object.keys(currentUserProfile.friends).includes(viewedId):
+      case !!currentUserProfile.friends[viewedId]:
         return <div> <FaCheck/>Friends </div>;
-      case currentUserProfile.requesters[viewedId]:
+      case !!currentUserProfile.requesters[viewedId]:
         return <div> Confirm </div>;
-      case currentUserProfile.recipients[viewedId]:
+      case !!currentUserProfile.recipients[viewedId]:
         return  <div> <FaUserPlus/> Request Sent </div>;
       default:
         return (<div> <FaUserPlus/> Add Friend </div>);
@@ -30,15 +30,15 @@ class FriendRequests extends React.Component {
   handleFriendClickId(id){
     return (e) => {
     e.preventDefault();
-    const { currentUserProfile, viewedUserProfile} = this.props;
+    const { currentUserProfile} = this.props;
     let viewedId = id;
     switch (true) {
       case Object.keys(currentUserProfile.friends).includes(viewedId):
         return "Do Nothing";
-      case currentUserProfile.requesters[viewedId]:
+      case !!currentUserProfile.requesters[viewedId]:
         this.props.acceptFriending(viewedId);
         return "Confirm";
-      case currentUserProfile.recipients[viewedId]:
+      case !!currentUserProfile.recipients[viewedId]:
         return "Do Nothing";
       default:
         this.props.createFriending(viewedId);
@@ -56,17 +56,18 @@ class FriendRequests extends React.Component {
 
 
   render() {
-   const {currentUserProfile, relevantUsers} = this.props;
+   const {currentUserProfile} = this.props;
    if (!currentUserProfile.requests) {
      return <div></div>;
    }
    let requests = currentUserProfile.requests;
-   requests = requests.map((userId)=>(relevantUsers[userId]));
+   let requesters = currentUserProfile.requesters;
+   requests = requests.map((userId)=>(requesters[userId]));
    return (
      <ul id = "friendsRequestsContainer" className = "dropDown-content requests">
         <h4> Friend Requests </h4>
        {requests.map((request, idx)=>{
-         const {firstName, lastName, profileImgUrl, id, friendCount} = request;
+         const {firstName, lastName, profileImgUrl, id} = request;
          return (<div key={"fItem" + idx} className= "requestItem">
            <ProfileIcon imgUrl={profileImgUrl} />
            <div className="friendsRequestsInfo">

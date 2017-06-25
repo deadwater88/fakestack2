@@ -21,20 +21,20 @@ class HeaderNav extends React.Component {
 
   componentWillMount(){
     this.props.fetchCurrentUser(this.props.currentUser.id);
-    this.props.fetchRelevantUsers(this.props.currentUser.id);
+    // this.props.fetchRelevantUsers(this.props.currentUser.id);
   }
 
   addClickOut(className){
     const listener = (e) => {
        let targetClass = e.target.classList.value;
         if (targetClass.match("request")) {
-          e.stopPropagation()
-          return ""
+          e.stopPropagation();
+          return "";
         }
-        let target = document.getElementsByClassName(className)[0]
+        let target = document.getElementsByClassName(className)[0];
         if (target) {
-          target.classList.remove("show")
-          document.removeEventListener("click", listener)
+          target.classList.remove("show");
+          document.removeEventListener("click", listener);
         }
     };
     return listener;
@@ -52,15 +52,15 @@ class HeaderNav extends React.Component {
     document.addEventListener("click", this.addClickOut("dropDown-content requests"));
   }
 
-  renderFriendsRequests(e){
-    if (Object.keys(this.props.relevantUsers).length === 0) {
+  renderFriendsRequests(){
+    if (!this.props.currentUserProfile) {
       return "";
     }
     return (<FriendsRequestsContainer />);
   }
 
   render(){
-    const {firstName, lastName} = this.props.currentUser;
+    const {firstName} = this.props.currentUser;
     return (
       <div id="headerMaster">
         <div id="headerNavContent"></div>
@@ -68,7 +68,7 @@ class HeaderNav extends React.Component {
           <div id="searchContainer">
             <a href='/'> <FaFacebookOfficial className="white"/>
             </a>
-            <NavSearchBar relevantUsers={this.props.arrayRelevantUsers}/>
+            <NavSearchBar relevantUsers={this.props.arrayRelevantUsers} fetchRelevantUsers={this.props.fetchRelevantUsers} fetc/>
           </div>
             <div id="headerNavMenu">
             <div id="menu1">

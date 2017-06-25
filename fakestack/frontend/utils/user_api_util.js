@@ -1,6 +1,6 @@
-export const fetchRelevantUsers = (userId) => {
+export const fetchRelevantUsers = (query) => {
   return $.ajax({
     method: "GET",
-    url: `api/users/${userId}/relevant_users`
+    url: `api/users/${query}/relevant_users`
   });
 };

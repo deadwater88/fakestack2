@@ -7,11 +7,7 @@ import {Link} from 'react-router-dom';
 class NavSearchBar extends React.Component {
   constructor(props){
     super(props);
-    this.state = {filteredUsers: this.props.relevantUsers.slice(0,15).sort(function(a, b){
-      if(a.lastName < b.lastName) return -1;
-      if(a.lastName > b.lastName) return 1;
-      return 0;
-  }), query: ""};
+       this.state = {filteredUsers: []};
     this.filterUsers = this.filterUsers.bind(this);
   }
 
@@ -20,17 +16,15 @@ class NavSearchBar extends React.Component {
   filterUsers (e) {
     e.preventDefault();
     this.setState({query: e.currentTarget.value});
-    let input = e.currentTarget.value.toLowerCase();
-    let filteredUsers = this.props.relevantUsers.filter((user)=> {
-      const [firstName, lastName] = [user.firstName, user.lastName].map((word) => word.toLowerCase());
-      return (firstName.match(input) || lastName.match(input));
-    }).slice(0,15).sort(function(a, b){
-      if(a.lastName < b.lastName) return -1;
-      if(a.lastName > b.lastName) return 1;
-      return 0;
-  });
-    this.setState({filteredUsers});
+    this.props.fetchRelevantUsers(e.currentTarget.value).then(()=>{
+      this.setState({filteredUsers: this.props.relevantUsers});
+    });
 
+
+  }
+
+  componentwillreceiveprops(newProps){
+    this.setState({filteredUsers: newProps.relevantUsers});
   }
 
   noUsers() {

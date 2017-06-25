@@ -36,10 +36,6 @@ class PostForm extends React.Component{
           <FaCamera/>
           Photo
         </a>
-        <a>
-          <FaFlag/>
-          Life Event
-        </a>
       </div>
       <div id="postFormInput">
         <ProfileIcon imgUrl={this.props.currentUserProfile.profileImgUrl} className="commentFormIcon"/>
