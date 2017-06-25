@@ -30,8 +30,8 @@ profiles.each_with_index do |profile, index|
   first_name = profile['name']['first']
   User.create(email: profile['email'],
               password: 'password',
-              first_name: first_name,
-              last_name: profile['name']['last'],
+              first_name: first_name.capitalize,
+              last_name: profile['name']['last'].capitalize,
               profile_img_url: profile['picture']['large'],
               current_city: profile['location']['city'],
               intro: "My name is #{first_name}. I'm from #{hometown} and my favorite food is #{Faker::Food.ingredient}.",
