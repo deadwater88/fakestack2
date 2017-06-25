@@ -6,8 +6,8 @@ class ProfileDetails extends React.Component {
     super(props);
     this.state = { profileId: this.props.match.params.userId,
                    introEditMode: false,
-                   introCount: props.viewedUserProfile.intro.length,
-                   intro: props.viewedUserProfile.intro
+                   introCount: this.props.viewedUserProfile.intro.length,
+                   intro: this.props.viewedUserProfile.intro
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
@@ -33,6 +33,7 @@ class ProfileDetails extends React.Component {
   }
 
   toggleEditMode(e){
+    e.preventDefault();
     this.setState({introEditMode: !this.state.introEditMode});
   }
 
@@ -56,18 +57,20 @@ class ProfileDetails extends React.Component {
   }
 
   showProp(){
+    let editCheck = this.props.viewedUserProfile.id === this.props.currentUserProfile.id ? {} : {display: 'none'};
+    let intro = this.props.viewedUserProfile.intro;
     return (
       <label htmlFor="introTextInput">
         <div id="introContainer">
-          <h5>{(this.state.intro === "") ? "Write something about yourself" : this.state.intro }</h5>
-          <FaPencil onClick={this.toggleEditMode} className="editPencil"/>
+          <h5>{(intro === "") ? "Write something about yourself" : intro }</h5>
+          <FaPencil style={editCheck} onClick={this.toggleEditMode} className="editPencil"/>
         </div>
       </label>);
   }
 
   render(){
 
-    const icons = {hometown: ()=><FaGlobe/>, currentCity: ()=> <FaHome/>, otherName: ()=> <FaTag/> }
+    const icons = {hometown: ()=><FaGlobe/>, currentCity: ()=> <FaHome/>, otherName: ()=> <FaTag/> };
     return(
       <div id="profile">
         <section className="intro">
@@ -83,10 +86,10 @@ class ProfileDetails extends React.Component {
         </section>
         <ul id="profileDetails">
           {this.props.details.map((detail, idx)=>{
-            return <li key={"pfDetail" + idx} className= "profileDetail">
+            return (<li key={"pfDetail" + idx} className= "profileDetail">
                 {icons[detail[1]]()}
                 {detail[0]}
-              </li>
+              </li>);
           })}
         </ul>
       </div>
