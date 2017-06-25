@@ -1,4 +1,4 @@
-require 'byebug'
+
   json.extract!(comment,
                  :id,
                  :author_id,

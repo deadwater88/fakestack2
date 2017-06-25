@@ -1,4 +1,4 @@
-require 'byebug'
+
 
   json.set! :id, user.id
   json.set! :first_name, user.first_name
