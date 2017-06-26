@@ -10,13 +10,13 @@ class ProfilePicture extends React.Component {
 
 
   uploadProfilePic(e){
+    e.preventDefault();
     const upLoadProfilePic = this.props.uploadProfilePic;
     const userId = this.props.currentUserProfile.id;
     window.cloudinary.openUploadWidget(window.cloudinary_options,
     (error, images)=>{
       if (error === null) {
         upLoadProfilePic({profile_img_url: images[0].url}, userId);
-      } else {
       }
     });
   }
@@ -27,7 +27,7 @@ class ProfilePicture extends React.Component {
     let editCheck = editable ? {}: {display: "none"};
     let img;
     if (this.props.imgUrl !== "") {
-      img = (<img src={this.props.imgUrl.replace("http", "https")} className={className}/>);
+      img = (<img src={this.props.imgUrl.replace("http:", "https:")} className={className}/>);
     } else {
       img = (<FaUser className={className}/>);
     }

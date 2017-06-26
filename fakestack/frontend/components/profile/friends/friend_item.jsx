@@ -8,48 +8,55 @@ import * as FriendUtil from '../../../utils/friend_button_util';
 class FriendItem extends React.Component {
   constructor(props){
     super(props);
-    this.state = {UnfriendButton: true}
+    this.state = {UnfriendButton: true};
     this.handleFriendClick = this.handleFriendClick.bind(this);
     this.friendsButtonContent = this.friendsButtonContent.bind(this);
     this.handleUnFriendClick = this.handleUnFriendClick.bind(this);
   }
 
-  friendsButtonContent() {
+  friendsButtonContent(id) {
     const { currentUserProfile} = this.props;
     let viewedId = this.props.friend.id;
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
-        return <div> <FaCheck/>Friends </div>;
-      case currentUserProfile.requesters.includes(viewedId):
+      case !!currentUserProfile.friends[viewedId]:
+        return (
+        <div className= "dropDown">
+          <FaCheck/>Friends
+            <ul className="dropDown-Friend">
+              <div onClick={this.handleUnFriendClick(id)}>UnFriend</div>
+            </ul>
+        </div>);
+      case !!currentUserProfile.requesters[viewedId]:
         return <div> <FaUserPlus/> Accept Friend Request </div>;
-      case currentUserProfile.recipients.includes(viewedId):
+      case !!currentUserProfile.recipients[viewedId]:
         return  <div> <FaUserPlus/> Friend Request Sent </div>;
       default:
         return (<div> <FaUserPlus/> Add Friend </div>);
     }
-  };
+  }
 
   handleFriendClick(e){
     e.preventDefault();
-    const { currentUserProfile, viewedUserProfile} = this.props;
+    const { currentUserProfile} = this.props;
     let viewedId = this.props.friend.id;
+
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
+      case !!currentUserProfile.friends[viewedId]:
         return "Do Nothing";
-      case currentUserProfile.requesters.includes(viewedId):
+      case !!currentUserProfile.requesters[viewedId]:
         this.props.acceptFriending(viewedId);
         return "Accept Request";
-      case currentUserProfile.recipients.includes(viewedId):
+      case !!currentUserProfile.recipients[viewedId]:
         return "Do Nothing";
       default:
         this.props.createFriending(viewedId);
         return  "Create Request";
     }
-  };
+  }
     handleUnFriendClick(id){
       return (e) =>{
       e.preventDefault();
-      this.props.deleteFriending(id)
+      this.props.deleteFriending(id);
       this.setState({UnfriendButton: false})}
     }
 
@@ -67,14 +74,8 @@ class FriendItem extends React.Component {
         </div>
         <div className="buttonContainer">
           {id === currentUserProfile.id ? "" : (<button className="headerButton item" onClick= {this.handleFriendClick}>
-            {this.friendsButtonContent()}
+            {this.friendsButtonContent(id)}
           </button>)}
-          {
-            this.state.UnfriendButton ? <button className="headerButton item" onClick= {this.handleUnFriendClick(id)}>
-              Unfriend
-            </button> :
-            ""
-          }
 
         </div>
       </div>

@@ -1,5 +1,4 @@
 require 'net/http'
-require 'byebug'
 require 'json'
 
 
@@ -28,4 +27,5 @@ def getQuotes()
   end
 
   results
+  File.write('./db/generateProfiles/quotes.txt', results)
 end

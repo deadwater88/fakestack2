@@ -16,11 +16,11 @@ class FriendRequestsPage extends React.Component {
     const { currentUserProfile} = this.props;
     let viewedId =  id||this.props.friend.id;
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
+      case Object.keys(currentUserProfile.friends).includes(viewedId):
         return <div> <FaCheck/>Friends </div>;
-      case currentUserProfile.requesters.includes(viewedId):
+      case !!currentUserProfile.requesters[viewedId]:
         return <div> Confirm </div>;
-      case currentUserProfile.recipients.includes(viewedId):
+      case !!currentUserProfile.recipients[viewedId]:
         return  <div> <FaUserPlus/> Request Sent </div>;
       default:
         return (<div> <FaUserPlus/> Add Friend </div>);
@@ -33,12 +33,12 @@ class FriendRequestsPage extends React.Component {
     const { currentUserProfile, viewedUserProfile} = this.props;
     let viewedId = id;
     switch (true) {
-      case currentUserProfile.friends.includes(viewedId):
+      case Object.keys(currentUserProfile.friends).includes(viewedId):
         return "Do Nothing";
-      case currentUserProfile.requesters.includes(viewedId):
+      case !!currentUserProfile.requesters[viewedId]:
         this.props.acceptFriending(viewedId);
         return "Confirm";
-      case currentUserProfile.recipients.includes(viewedId):
+      case !!currentUserProfile.recipients[viewedId]:
         return "Do Nothing";
       default:
         this.props.createFriending(viewedId);
@@ -56,12 +56,12 @@ class FriendRequestsPage extends React.Component {
 
 
   render() {
-   const {currentUserProfile, relevantUsers} = this.props;
-   if (!currentUserProfile.requests || Object.keys(relevantUsers).length === 0) {
+   const {currentUserProfile} = this.props;
+   if (!currentUserProfile) {
      return <div></div>;
    }
    let requests = currentUserProfile.requests;
-   requests = requests.map((userId)=>(relevantUsers[userId]));
+   requests = requests.map((userId)=>(currentUserProfile.requesters[userId]));
    return (
      <div id="friendsRequestsPage">
        <ul id = "friendsRequestsListContainer" >
@@ -69,7 +69,7 @@ class FriendRequestsPage extends React.Component {
              Respond to your {requests.length} Friend Requests
            </h1>
          {requests.map((request, idx)=>{
-           const {firstName, lastName, profileImgUrl, id, friendCount} = request;
+           const {firstName, lastName, profileImgUrl, id} = request;
            return (<div key={"fItem" + idx} className= "requestItem">
              <div className="friendsRequestsList">
                <div className= "friendInfoList">
@@ -90,7 +90,7 @@ class FriendRequestsPage extends React.Component {
        </ul>
      </div>
    );
-  };
+  }
 }
 
 

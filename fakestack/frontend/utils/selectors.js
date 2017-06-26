@@ -26,7 +26,7 @@ export const selectAuthor = (state, authorId) => {
 
 export const parseDetails = (state) => {
   const details = [];
-  const {currentCity, hometown, otherNames} = state.currentUserProfile;
+  const {currentCity, hometown, otherNames} = state.viewedUserProfile;
   if (currentCity !== "") {
     details.push([`Lives in ${currentCity}`, 'currentCity']);
   }

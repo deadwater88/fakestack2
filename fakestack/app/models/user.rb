@@ -50,14 +50,24 @@ class User < ApplicationRecord
 
 
   def friends
-    friends1 = requesters.where(friendings: {approved: true})
-    friends2 = recipients.where(friendings: {approved: true})
+    friends1 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.requester_id AND requesters.approved = 'true'")
+    .where('requesters.recipient_id = ?', id)
+    friends2 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.recipient_id AND requesters.approved = 'true'")
+    .where('requesters.requester_id = ?', id)
+
     friends1 + friends2
+    # .joins("INNER JOIN friendings AS recipients ON users.id = recipients.recipient_id AND recipients.approved = 'true'")
+    # .where('requesters.recipient_id = ? OR recipients.requester_id = ?', id, id)
+    # friends1 = requesters.where(friendings: {approved: true})
+    # friends2 = recipients.where(friendings: {approved: true})
+    # friends1 + friends2
   end
 
   def friendscount
-    friends1 = requesters.where(friendings: {approved: true}).count
-    friends2 = recipients.where(friendings: {approved: true}).count
+    friends1 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.requester_id AND requesters.approved = 'true'")
+    .where('requesters.recipient_id = ?', id).count
+    friends2 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.recipient_id AND requesters.approved = 'true'")
+    .where('requesters.requester_id = ?', id).count
     friends1 + friends2
   end
 

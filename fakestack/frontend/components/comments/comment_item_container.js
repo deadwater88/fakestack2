@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import CommentItem from './comment_item';
 import {withRouter} from 'react-router-dom';
 import {publishComment, deleteComment} from '../../actions/comment_actions';
-import {selectAuthor} from '../../utils/selectors';
 
 const mapStateToProps = (state, ownProps) =>({
   currentUserProfile: state.currentUserProfile,
@@ -11,8 +10,7 @@ const mapStateToProps = (state, ownProps) =>({
   relevantUsers: state.relevantUsers,
   idx: ownProps.idx,
   formId: ownProps.formId,
-  noReply: ownProps.noReply,
-  author: selectAuthor(state, ownProps.comment.authorId)
+  noReply: ownProps.noReply
 });
 
 const mapDispatchToProps = (dispatch) => ({

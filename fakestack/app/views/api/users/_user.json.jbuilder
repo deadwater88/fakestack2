@@ -19,8 +19,25 @@ json.schoolhistories do
   end
 end
 
-json.friends (user.friends.map{|friend| friend.id})
-json.requesters user.requesters.pluck(:id)
-json.recipients user.recipients.pluck(:id)
-
+json.friends do
+  user.friends.each do |friend|
+    json.set! friend.id do
+      json.partial! 'api/users/liteuser.json', user: friend
+    end
+  end
+end
+json.requesters do
+  user.requesters.each do |requester|
+    json.set! requester.id do
+      json.partial! 'api/users/liteuser.json', user: requester
+    end
+  end
+end
+json.recipients do
+  user.recipients.each do |recipient|
+    json.set! recipient.id do
+      json.partial! 'api/users/liteuser.json', user: recipient
+    end
+  end
+end
 json.requests (user.requesters.pluck(:id) - user.friends.map{|friend| friend.id } )
