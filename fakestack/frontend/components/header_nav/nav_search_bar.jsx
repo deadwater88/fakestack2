@@ -9,14 +9,22 @@ class NavSearchBar extends React.Component {
     super(props);
        this.state = {filteredUsers: []};
     this.filterUsers = this.filterUsers.bind(this);
+    this.setFilterCall = this.setFilterCall.bind(this);
+  }
+
+  setFilterCall(e){
+    e.preventDefault();
+    let value = e.currentTarget.value;
+    clearTimeout(this.filterCall);
+    if (value.length >= 3) {
+      this.filterCall = setTimeout(()=> this.filterUsers(value), 1000);
+    }
   }
 
 
-
-  filterUsers (e) {
-    e.preventDefault();
-    this.setState({query: e.currentTarget.value});
-    this.props.fetchRelevantUsers(e.currentTarget.value).then(()=>{
+  filterUsers (value) {
+    this.setState({query: value});
+    this.props.fetchRelevantUsers(value).then(()=>{
       this.setState({filteredUsers: this.props.relevantUsers});
     });
 
@@ -38,7 +46,7 @@ class NavSearchBar extends React.Component {
     const filteredUsers = this.state.filteredUsers;
     return (
     <div id="NavSearchBar" className="dropDown">
-        <input onChange={this.filterUsers} type="text" className="searchFriends" placeholder="Find Friends" />
+        <input onChange={this.setFilterCall} type="text" className="searchFriends" placeholder="Find Friends" />
         <ul id="searchFriends" className="dropDown-content">
           {filteredUsers.length == 0 ? this.noUsers() : filteredUsers.map((user,idx) => (
             <Link className="friendSearch" key={"friendsearch" + idx} to={`/profile/${user.id}/timeline`}>
