@@ -7,7 +7,7 @@
 Fakestack is a full-stack web app clone intended to replicate many of the features of Facebook as well replicates its UI design as accurately as possible. The back-end framework was built using Ruby on Rails utilizing a PostgreSQL dataabase, and the front-end was built using React/Redux framework.
 
 ![image of fakestack](docs/images/FBScreenshot.png)
-![image of facebook](docs/images/FSScreenshot.png)
+![image of facebook](docs/images/FSScreenShot.png)
 
 ## Features & Implementation  
 
