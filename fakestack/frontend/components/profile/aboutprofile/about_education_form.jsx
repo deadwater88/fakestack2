@@ -4,22 +4,56 @@ import UnitFormArrayImg from './unit_form_array_img';
 import UnitForm from './unit_form';
 import CollegeFormContainer from './forms/college_form_container';
 import {FaUser, FaPlus, FaPencil, FaClose} from 'react-icons/lib/fa/';
-
+import CollegeForm from './forms/college_form';
 
 class AboutEducationForm extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {editIndex: this.props.schoolHistories.map(()=> false)};
+    this.toggleEditMode = this.toggleEditMode.bind(this);
 
-    renderEducation(){
-      return (<div key={"value"} className="imgPropContent showContent">
+  }
+
+  toggleEditMode(idx){
+    return ()=> {
+      let editIndex = this.state.editIndex;
+      editIndex[idx] = !editIndex[idx];
+      this.setState({editIndex});
+    };
+  }
+
+  educationHeader(schoolHistory){
+    let header = [];
+    let endYear = schoolHistory.endDate.year;
+    let concentration = schoolHistory.concentration;
+    let location = schoolHistory.location;
+    if (schoolHistory['graduated'] && endYear ) {
+      header.push(`Class of ${endYear}`);
+    }
+    if (concentration) {
+      header.push(concentration);
+    }
+    if (location) {
+      header.push(location);
+    }
+    return header.join(" \u00B7 ");
+
+  }
+
+    renderEducation(schoolHistory, idx){
+      let editMode = this.state.editIndex[idx];
+      let header = this.educationHeader(schoolHistory);
+      return editMode ? <CollegeFormContainer toggleEditMode={this.toggleEditMode(idx)} schoolHistory={schoolHistory} key={idx + "schoolHistory"} /> : (<div key={"schoolHistory" + idx} className="imgPropContent showContent">
         <FaPlus/>
         <div className= "infoDisplay">
           <div className="valueDisplay">
             <h1 className="boldBlue">
-              {'Berkeley'}
+              {schoolHistory.school}
             </h1>
-            <p className="standard"> "Class of 2014" {'\u00B7'} "Biochemistry" . "Berkeley,CA" </p>
-            <p className="grayStandard"> Test Description A longer description. No one needs to know. How I test my profile. More stuff. Lorem Ipsum. More stuff. Do I wrap? I hope I do. </p>
+            <p className="standard"> {header} </p>
+            <p className="gray standard"> {schoolHistory.description} </p>
           </div>
-          <div onClick={this.toggleEditMode} className="editDisplay" >
+          <div onClick={this.toggleEditMode(idx)} className="editDisplay" >
             <a>
               <FaPencil/>
               Edit
@@ -34,13 +68,16 @@ class AboutEducationForm extends React.Component {
     }
 
     render (){
+      let currentUser = this.props.currentUserProfile.id === this.props.viewedUserProfile.id;
 
       return (
       <div className="propertyForm">
         <div className="propertyContainer">
           <h3 className="contentHeader"> COLLEGE </h3>
-          {this.renderEducation()}
-          <CollegeFormContainer/>
+          {this.props.schoolHistories.map((schoolHistory, idx)=>{
+            return this.renderEducation(schoolHistory,idx);
+          })}
+          {currentUser ?  <CollegeFormContainer/> : "" }
         </div>
         <div className="propertyContainer">
           <h3 className="contentHeader"> OTHER PLACES LIVED </h3>

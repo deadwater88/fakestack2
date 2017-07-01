@@ -57,7 +57,8 @@ class FriendItem extends React.Component {
       return (e) =>{
       e.preventDefault();
       this.props.deleteFriending(id);
-      this.setState({UnfriendButton: false})}
+      this.setState({UnfriendButton: false});
+    };
     }
 
 

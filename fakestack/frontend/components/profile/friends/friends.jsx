@@ -31,6 +31,7 @@ class Friends extends React.Component {
   }
 
   render() {
+    let friends = values(this.props.viewedUserProfile.friends);
     return (
     <div className="friendsContainer primaryContainer">
       <div className="sectionContainer">
@@ -44,7 +45,7 @@ class Friends extends React.Component {
               <button className="headerButton item find"> <FaPlus/> Find Friends</button>
             </div>
           </div>
-          <h4> All Friends </h4>
+          <h4> All Friends {friends.length} </h4>
         </div>
         {this.renderfriendsList()}
       </div>

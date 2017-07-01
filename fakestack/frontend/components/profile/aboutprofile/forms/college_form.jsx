@@ -21,20 +21,29 @@ class CollegeForm extends React.Component {
                    id: false,
                    editMode: false
     };
+
+    if (this.props.schoolHistory){
+      let {school, startDate, endDate, collegeType, concentrations, description, graduated, id} = this.props.schoolHistory;
+      this.state = {
+        school, college_type: collegeType, start_date: startDate, end_date: endDate, description, id, graduated, concentrations, editMode: true
+      };
+      }
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
     let {school, start_date, end_date, description, graduated, concentrations, college_type, id} = this.state;
     let props = {school, start_date, end_date, description, graduated, concentrations, college_type, id};
     // props.start_date = ${props.start_date.year} ${props.start_date.month};
     // props.end_date = `${props.end_date.year} ${props.end_date.month}`;
     props.concentrations = [props.concentrations];
     this.props.updateProfileProp({school_history: props}, 'schoolhistories');
+    let toggle = this.props.toggleEditMode || this.toggleEditMode;
+    toggle();
   }
 
   handleChange(prop) {
@@ -56,8 +65,7 @@ class CollegeForm extends React.Component {
     };
   }
 
-  toggleEditMode(e) {
-    e.preventDefault();
+  toggleEditMode() {
     this.setState({editMode: !this.state.editMode});
   }
 
@@ -74,7 +82,7 @@ class CollegeForm extends React.Component {
   renderForm(){
     let schoolFormInfo = {inputLabel: "School", value:this.state.school, instruction: "What school did you attend?", handleChange: this.handleChange('school')};
     let timePeriodInfo = {inputLabel: "TimePeriod", value: {start_date:this.state.start_date, end_date:this.state.end_date}, instruction: "", handleChangeStart: this.handleDateChange('start_date'), handleChangeEnd: this.handleDateChange('end_date')};
-    let descriptionInfo = {inputLabel: "Description", value:this.state.desription, instruction: "", handleChange: this.handleChange('description')};
+    let descriptionInfo = {inputLabel: "Description", value:this.state.description, instruction: "", handleChange: this.handleChange('description')};
     let graduatedInfo = {inputLabel: "Graduated", value:this.state.graduated, instruction: "", handleChange: this.handleCheckbox('graduated')};
     let concentrationInfo = {inputLabel: "Concentration", value:this.state.concentrations, instruction: "", handleChange: this.handleChange('concentrations')};
     let attendedInfo = {inputLabel: "Attended for", value:this.state.college_type, instruction: "", options: ['College', 'Graduate School'], handleChange: this.handleChange('college_type')};
@@ -88,7 +96,7 @@ class CollegeForm extends React.Component {
         <UnitFieldRadio formInfo={attendedInfo}/>
         <div className="formButtons">
           <button onClick={this.handleSubmit} className="submitForm"> Save Changes </button>
-          <button onClick={this.toggleEditMode} className="cancelForm"> Cancel </button>
+          <button onClick={this.props.toggleEditMode || this.toggleEditMode} className="cancelForm"> Cancel </button>
         </div>
       </div>
     );
@@ -96,9 +104,7 @@ class CollegeForm extends React.Component {
   }
 
   render(){
-
-    let currentUser = this.props.currentUserProfile.id === this.props.viewedUserProfile.id;
-    let formStyle = this.state.editMode && currentUser ? {} : {display: 'none'};
+    let formStyle = this.state.editMode ? {} : {display: 'none'};
     return (
 
         <div className="imgPropUnit">

@@ -6,6 +6,7 @@ class Api::SchoolhistoriesController < ApplicationController
       if school_history_params[:id]
         @history = Schoolhistory.find_by(id: school_history_params[:id])
         @history.update_attributes(school_history_params)
+        render :show
       else
         @history = Schoolhistory.new(school_history_params)
         @history.user_id = current_user.id

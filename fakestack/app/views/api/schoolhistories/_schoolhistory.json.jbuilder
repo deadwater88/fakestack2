@@ -6,4 +6,5 @@ json.set! schoolhistory.id do
   json.set! :graduated, schoolhistory.graduated
   json.set! :college_type, schoolhistory.college_type
   json.set! :concentrations, schoolhistory.concentrations[0]
+  json.set! :description, schoolhistory.description
 end

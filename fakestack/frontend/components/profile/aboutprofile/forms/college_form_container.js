@@ -2,9 +2,11 @@ import CollegeForm from "./college_form";
 import { connect } from 'react-redux';
 import { updateProfileProp } from '../../../../actions/profiles_actions';
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state, ownProps) =>({
   currentUserProfile: state.currentUserProfile,
-  viewedUserProfile: state.viewedUserProfile
+  viewedUserProfile: state.viewedUserProfile,
+  schoolHistory: ownProps.schoolHistory,
+  toggleEditMode: ownProps.toggleEditMode
 });
 
 const mapDispatchToProps = (dispatch) => ({

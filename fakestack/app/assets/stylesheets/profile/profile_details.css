@@ -2,3 +2,15 @@ ul#profileDetails svg {
   height: 15px;
   width: 15px;
 }
+
+.standard {
+  font-size: 12px;
+}
+
+.valueDisplay > .standard {
+  margin-bottom: 8px;
+}
+
+.gray {
+  color: #90949c;
+}
