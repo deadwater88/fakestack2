@@ -49,6 +49,7 @@ class User < ApplicationRecord
     class_name: :Schoolhistory
 
 
+
   def friends
     friends1 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.requester_id AND requesters.approved = 'true'")
     .where('requesters.recipient_id = ?', id)
