@@ -11,7 +11,10 @@ class HeaderNav extends React.Component {
     this.handleLogOut = this.handleLogOut.bind(this);
     this.showDropdown = this.showDropdown.bind(this);
     this.showRequests = this.showRequests.bind(this);
-
+    this.state = {showRequests: false};
+    document.addEventListener("click", ()=> {
+      this.setState({showRequests:false})}
+    );
   }
 
   handleLogOut(e) {
@@ -41,15 +44,15 @@ class HeaderNav extends React.Component {
   }
 
   showDropdown(e) {
-    e.preventDefault;
+    e.preventDefault();
     document.getElementsByClassName("dropDown-content logOut")[0].classList.toggle("show");
     document.addEventListener("click", this.addClickOut("dropDown-content logOut"));
   }
 
   showRequests(e){
-    e.preventDefault;
-    document.getElementsByClassName("dropDown-content requests")[0].classList.toggle("show");
-    document.addEventListener("click", this.addClickOut("dropDown-content requests"));
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({showRequests: !this.state.showRequests});
   }
 
   renderFriendsRequests(){
@@ -81,7 +84,7 @@ class HeaderNav extends React.Component {
             <div id="menu2">
               <div id="friendRequestsDrop" >
                 <div title={"Friend Requests"} onClick={this.showRequests}> <FaGroup className="icon" /></div>
-                {this.renderFriendsRequests()}
+                {this.state.showRequests ? this.renderFriendsRequests() : ""}
               </div>
               <FaCommentsO className="icon"/>
               <FaGlobe className="icon"/>
