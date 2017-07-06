@@ -13,12 +13,6 @@ res = Net::HTTP.start(url.host, url.port, use_ssl: url.scheme == 'https') {|http
 puts "Profiles retrieved"
 #
 profiles = JSON.parse(res.body)['results']
-# puts "Fetching quotes..."
-# quotes = getQuotes
-# puts "quotes retrieved"
-# puts "Fetching Cover Images..."
-# cover_images = getPexel
-# puts "Cover Images retrieved"
 
 quotes = JSON.parse(File.read('./db/generateProfiles/quotes.txt'))
 cover_images = JSON.parse(File.read('./db/generateProfiles/cover_urls.txt'))
@@ -27,7 +21,11 @@ puts "seeding..."
 profiles.each_with_index do |profile, index|
   hometown = Faker::Address.city
   first_name = profile['name']['first']
-  User.create(email: profile['email'],
+  birthyear = Date.parse(profile['dob']).year
+  age = Date.today.year - birthyear
+  valid_college_years = [birthyear + 17, Date.today.year]
+  user = User.create(
+              email: profile['email'],
               password: 'password',
               first_name: first_name.capitalize,
               last_name: profile['name']['last'].capitalize,
