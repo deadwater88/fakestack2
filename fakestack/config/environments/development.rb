@@ -26,6 +26,13 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  if ENV['REDIS_URL']
+    config.action_controller.perform_caching = true
+    config.cache_store = :redis_store
+  else
+    config.action_controller.perform_caching = false
+  end
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
