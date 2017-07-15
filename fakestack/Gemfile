@@ -40,6 +40,8 @@ gem 'redis-rails'
 
 gem 'redis-rack-cache'
 
+gem 'sidekiq'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -23,4 +23,6 @@ PEXEL_KEY : '563492ad6f9170000100000155c9cc8f281148c27d9cfef9e772f862'
 
 UPLOAD_PRESET: 'ayjwst7k'
 
-REDIS_URL: 'redis://h:peac96225fc5c3124274395252cebaca5ede53010593bc153977fd587b8390fb9@ec2-34-230-117-175.compute-1.amazonaws.com:9529'
+REDIS_URL: 'redis://127.0.0.1:6379/0'
+# 'redis://127.0.0.1:6379/0'
+# 'redis://h:peac96225fc5c3124274395252cebaca5ede53010593bc153977fd587b8390fb9@ec2-34-230-117-175.compute-1.amazonaws.com:9529'
