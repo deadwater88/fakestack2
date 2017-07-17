@@ -7,9 +7,14 @@ import {FaChevronDown, FaPencil, FaCamera, FaUserPlus, FaCheck, FaGroup, FaPlus}
 class FriendRequests extends React.Component {
   constructor(props){
     super(props);
+    const {currentUserProfile} = this.props;
+    let requests = currentUserProfile.requests;
+    let requesters = currentUserProfile.requesters;
+    requests = requests.map((userId)=>(requesters[userId]));
     this.friendsButtonContent = this.friendsButtonContent.bind(this);
     this.handleFriendClickId = this.handleFriendClickId.bind(this);
     this.handleDeleteRequest = this.handleDeleteRequest.bind(this);
+    this.state = {requests};
   }
 
   friendsButtonContent(id){
@@ -60,19 +65,17 @@ class FriendRequests extends React.Component {
    if (!currentUserProfile.requests) {
      return <div></div>;
    }
-   let requests = currentUserProfile.requests;
-   let requesters = currentUserProfile.requesters;
-   requests = requests.map((userId)=>(requesters[userId]));
+  let  {requests} = this.state;
    return (
-     <ul id = "friendsRequestsContainer" className = "dropDown-content requests">
+     <ul id = "friendsRequestsContainer" className = "dropDown-content requests" style={{display: 'flex'}}>
         <h4> Friend Requests </h4>
        {requests.map((request, idx)=>{
          const {firstName, lastName, profileImgUrl, id} = request;
          return (<div key={"fItem" + idx} className= "requestItem">
-           <ProfileIcon imgUrl={profileImgUrl} />
            <div className="friendsRequestsInfo">
+             <ProfileIcon imgUrl={profileImgUrl} />
              <div className= "friendInfo">
-               <h3 className={"requestLink"}><Link to={`/profile/${id}`}> {`${firstName} ${lastName}`} </Link> </h3>
+               <h3 className={"requestLink"}><Link className={"profileLink"} to={`/profile/${id}/timeline`}> {`${firstName} ${lastName}`} </Link> </h3>
              </div>
              <div className="buttonContainer">
                <button className="submitPost request" onClick= {this.handleFriendClickId(id)}>

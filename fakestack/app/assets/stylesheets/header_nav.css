@@ -224,7 +224,7 @@ svg.profileIcon, img.profileIcon {
 #friendsRequestsContainer img.profileIcon, #friendsRequestsContainer svg.profileIcon {
   height: 60px;
   width: 60px;
-  margin: 15px 10px 5px 30px;
+  margin: 5px;
 }
 
 #headerNav .requestItem {
@@ -253,4 +253,8 @@ svg.profileIcon, img.profileIcon {
   font-size: 20px;
   font-weight: bold;
   padding: 5px;
+}
+
+.profileLink:hover {
+  text-decoration: underline;
 }

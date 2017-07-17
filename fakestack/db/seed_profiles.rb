@@ -30,10 +30,10 @@ profiles.each_with_index do |profile, index|
               first_name: first_name.capitalize,
               last_name: profile['name']['last'].capitalize,
               profile_img_url: profile['picture']['large'],
-              current_city: profile['location']['city'],
+              current_city: profile['location']['city'].capitalize,
               intro: "My name is #{first_name}. I'm from #{hometown} and my favorite food is #{Faker::Food.ingredient}.",
               hometown: hometown,
               favorite_quotes: quotes[index],
               biography: "",
-              cover_img_url: cover_images[index])
+              cover_img_url: cover_images[index]||"")
 end

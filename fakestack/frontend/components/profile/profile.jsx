@@ -27,7 +27,7 @@ class Profile extends React.Component{
   }
 
   render(){
-    const {uploadPic, viewedUserProfile, currentUserProfile, match} = this.props;
+    const { viewedUserProfile, match} = this.props;
     return viewedUserProfile.id === undefined ? <div></div> : (
       <div id="profilePage">
         <ProfileHeaderContainer match={match}/>

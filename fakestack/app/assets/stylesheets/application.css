@@ -36,7 +36,7 @@ button, a {
 }
 
 ul.dropDown-content {
-  display: none;
+  /*display: none;*/
   flex-direction:column;
   position: absolute;
   color: black;
@@ -48,7 +48,7 @@ ul.dropDown-content {
   z-index: 3;
 }
 
-ul.dropDown-content a:hover {
+ul.dropDown-content > a:hover {
   cursor:pointer;
   background-color: #4267B2;
   color: white;
@@ -63,8 +63,10 @@ ul.dropDown-content a {
 
 }
 
+
+
 ul.show {
-  display: flex;
+  display: flex !important;
 
 }
 

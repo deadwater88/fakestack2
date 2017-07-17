@@ -38,7 +38,7 @@ ul.dropDown-content {
   z-index: 3;
 }
 
-ul.dropDown-content a:hover {
+ul.dropDown-content > a:hover {
   cursor:pointer;
   background-color: #4267B2;
   color: white;
@@ -50,11 +50,6 @@ ul.dropDown-content a {
   padding: 5px 22px 5px 22px;
   font-size: 12px;
   margin: 5px 0 5px 0;
-
-}
-
-ul.show {
-  display: flex !important;
 }
 
 .alert {
