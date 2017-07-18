@@ -114,3 +114,8 @@ a.navLink:hover {
   background-color: white;
   padding-bottom: 5px;
 }
+
+#root {
+  width: 100vw;
+  height: 100vh
+}
