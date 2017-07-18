@@ -66,7 +66,7 @@ class HeaderNav extends React.Component {
 
   hideRequests(evt){
     const friends_requests = ReactDOM.findDOMNode(this.refs.friends_requests);
-    if (friends_requests && !friends_requests.contains(evt.target)) {
+    if (friends_requests && !friends_requests.contains(evt.target) && !this.refs.friendRequestsDrop.contains(evt.target)) {
       this.setState({showRequests: false});
     }
   }
@@ -100,7 +100,7 @@ class HeaderNav extends React.Component {
                 <Link to='/home'>Home</Link>
             </div>
             <div id="menu2">
-              <div id="friendRequestsDrop" >
+              <div ref="friendRequestsDrop" id="friendRequestsDrop" >
                 <div title={"Friend Requests"} onClick={this.showRequests}> <FaGroup className="icon" /></div>
                 {this.state.showRequests ? this.renderFriendsRequests() : ""}
               </div>
