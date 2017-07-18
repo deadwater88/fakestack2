@@ -17,6 +17,7 @@ class FriendRequests extends React.Component {
     this.state = {requests};
   }
 
+
   friendsButtonContent(id){
     const { currentUserProfile} = this.props;
     let viewedId =  id||this.props.friend.id;
@@ -35,6 +36,8 @@ class FriendRequests extends React.Component {
   handleFriendClickId(id){
     return (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    console.log("fire2");
     const { currentUserProfile} = this.props;
     let viewedId = id;
     switch (true) {
@@ -54,7 +57,9 @@ class FriendRequests extends React.Component {
   }
   handleDeleteRequest(id){
     return (e) => {
+      console.log("fire");
       e.preventDefault();
+      e.stopPropagation();
       this.props.deleteFriending(id);
     };
   }

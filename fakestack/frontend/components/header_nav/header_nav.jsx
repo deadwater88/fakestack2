@@ -4,6 +4,7 @@ import NavSearchBar from './nav_search_bar';
 import {Link, Redirect, withRouter} from 'react-router-dom';
 import ProfileIcon from '../profile/profile_icon';
 import FriendsRequestsContainer from '../profile/friends/friend_requests_container';
+import ReactDOM from 'react-dom';
 
 class HeaderNav extends React.Component {
   constructor(props){
@@ -11,10 +12,8 @@ class HeaderNav extends React.Component {
     this.handleLogOut = this.handleLogOut.bind(this);
     this.showDropdown = this.showDropdown.bind(this);
     this.showRequests = this.showRequests.bind(this);
+    this.hideRequests = this.hideRequests.bind(this);
     this.state = {showRequests: false};
-    document.addEventListener("click", ()=> {
-      this.setState({showRequests:false})}
-    );
   }
 
   handleLogOut(e) {
@@ -26,6 +25,16 @@ class HeaderNav extends React.Component {
     this.props.fetchCurrentUser(this.props.currentUser.id);
     // this.props.fetchRelevantUsers(this.props.currentUser.id);
   }
+
+  componentDidMount () {
+    window.__root_container.addEventListener('click', this.hideRequests);
+  }
+
+  componentWillUnmount () {
+    window.__root_container.removeEventListener('click', this.hideRequests);
+  }
+
+
 
   addClickOut(className){
     const listener = (e) => {
@@ -55,11 +64,20 @@ class HeaderNav extends React.Component {
     this.setState({showRequests: !this.state.showRequests});
   }
 
+  hideRequests(evt){
+    const friends_requests = ReactDOM.findDOMNode(this.refs.friends_requests);
+    if (friends_requests && !friends_requests.contains(evt.target)) {
+      this.setState({showRequests: false});
+    }
+  }
+
   renderFriendsRequests(){
     if (!this.props.currentUserProfile) {
       return "";
     }
-    return (<FriendsRequestsContainer />);
+    return ( <div ref="friends_requests">
+      <FriendsRequestsContainer/>
+    </div> );
   }
 
   render(){
