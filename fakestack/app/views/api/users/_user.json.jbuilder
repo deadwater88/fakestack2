@@ -20,12 +20,12 @@ json.schoolhistories do
 end
 
 json.friends do
-  user.friends.each do |friend|
-    json.set! friend.id do
-      json.partial! 'api/users/liteuser.json', user: friend
-    end
-  end
+  user.friends
 end
+json.friendscount do
+  user.friends.length
+end
+
 json.requesters do
   user.requesters.each do |requester|
     json.set! requester.id do
@@ -40,4 +40,4 @@ json.recipients do
     end
   end
 end
-json.requests (user.requesters.pluck(:id) - user.friends.map{|friend| friend.id } )
+json.requests (user.requesters.pluck(:id) - user.friends.keys)

@@ -7,7 +7,7 @@ class User < ApplicationRecord
             presence: true
   validates :password, length: { minimum: 8, allow_nil: true }
   validates :email, :session_token, :password_digest, uniqueness: true
-
+  serialize :friends, Hash
 
 
 
@@ -48,9 +48,21 @@ class User < ApplicationRecord
     foreign_key: :user_id,
     class_name: :Schoolhistory
 
+  def add_friend(user)
+    friend = {}
+    friend[:id] = user.id
+    friend[:first_name] = user.first_name
+    friend[:last_name] = user.last_name
+    friend[:profile_img_url] = user.profile_img_url
+    self.friends[user.id] = friend
+    self.save
+  end
 
+  def remove_friend(user)
+    self.friends[user.id] = nil
+  end
 
-  def friends
+  def friendslist
     friends1 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.requester_id AND requesters.approved = 'true'")
     .where('requesters.recipient_id = ?', id)
     friends2 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.recipient_id AND requesters.approved = 'true'")

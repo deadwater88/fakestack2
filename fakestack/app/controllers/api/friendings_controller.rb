@@ -26,6 +26,9 @@ class Api::FriendingsController < ApplicationController
     @friending.destroy if @friending
     @friending = Friending.find_by(recipient_id: params[:id], requester_id: current_user)
     @friending.destroy if @friending
+    other_user = User.find_by(id: params[:id])
+    other_user.remove_friend(current_user)
+    current_user.remove_friend(other_user)
     @user = current_user
     render 'api/users/show'
   end

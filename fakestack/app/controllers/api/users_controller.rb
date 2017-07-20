@@ -38,7 +38,6 @@ class Api::UsersController < ApplicationController
      :intro,
      :hometown,
      :current_city,
-
      :biography,
      :cover_img_url,
      :favorite_quotes,

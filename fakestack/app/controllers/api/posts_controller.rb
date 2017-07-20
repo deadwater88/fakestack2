@@ -12,7 +12,7 @@ class Api::PostsController < ApplicationController
   def index
     @user = User.find_by(id: params[:user_id])
     if params[:type] == "feed"
-      @posts = @user.authored_posts.includes(:comments) + Post.includes(:comments).includes(:author).where({posts: {author: @user.friends}})
+      @posts = @user.authored_posts.includes(:comments) + Post.includes(:comments).includes(:author).where({posts: {author_id: @user.friends.keys}})
     else
       @posts = @user.wall_posts.includes(:comments).includes(:author)
     end
