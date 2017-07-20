@@ -11,23 +11,12 @@ Fakestack is a full-stack web app clone intended to replicate many of the featur
 
 ## Features & Implementation  
 
-### Note Rendering and Editing
+### Friending and Denormalization
 
-  The front-end store is a normalized state consisting of 7 top-level slices/resources: comments, currentUserProfile, notices, posts, relevantUsers, session, and viewedUserProfile.
+  In order to test scalability, over two thousand profiles have been seeded in both the production and development database. Friendships were generated randomly by script setting each user to have about 100 friend relationships and 20 request relationships leading to a total of 225936 entries in the 'Friending' table. This resulted in an incredibly slow response time upwards of 13-17 seconds to render a user profile completely as it involves loading all of the user's friends which is queried through the now super-inflated 'Friending' table.
 
-### Friending
+  What was my solution to this? Denormalization! By extracting all of a user's friends and converting into a hash and then serializing it and storing it in a single field on the users table, I managed to drive down the profile rendering time back down to around 250ms, a 97% reduction in response time! What are the drawbacks? Because we're effectively storing redundant data, about 10mb of extra memory was required to store these large 'friends' hashes for 2000 users (averaging 5 extra kilobytes per user). On top of that, there's now extra overhead involved in writing and deleting friendships due to the fact that we now have to update the denormalized data along with updating the Friending table. Although considering the fact that the expected use case is that friendship reads are far more common than friendships writes and inn context of the optimization gains that were captured, the trade-off is very acceptable.
 
-  Friending is handled using a friending table/model on the backend containing columns for `id`, `requester_id`, `recipient_id`, `approved` `createdAt` and `updated_at`. To determine a user's friends, the users table is joined to itself using the Friending as joining table and extracting all recipient_ids where the requester is the user and the approved is set to true. Since a `friendship` can also exist in a reverse relationship where the user is the recipient of a friend request, two queries are used to construct any particular user's friends.
-
-  ```ruby
-  def friends
-    friends1 = self.requesters.where(friendings: {approved: true})
-    friends2 = self.recipients.where(friendings: {approved: true})
-    friends1 + friends2
-  end
-  ```
-
-  Friending is stored as an array of reference Ids within userProfile state (currentUser or viewedUser). It is used in conjunction with another top-level state, relevantUsers to access user objects corresponding to the reference friends reference id.
 
 ### Posts and Comments
 
@@ -45,7 +34,7 @@ Fakestack is a full-stack web app clone intended to replicate many of the featur
 
   Limited photo upload capability is provided through Cloudinary widgets to allow for users to upload profile pictures and cover images.
 
-  It presented a significant challenge to generate uniformly styled forms, displays, and functions for what amounted to about 7 different profile details. To address this, modular components were created to handle similar data-types. At cost of some overhead time to generate a more complex, but modular component, I was able to successfully use quickly generate similar displays for different profile details.
+  It presented a significant challenge to generate uniformly styled forms, displays, and functions for what amounted to about 7 different profile details. To address this, modular components were created to handle similar data-types. At cost of some overhead development time to generate a more complex, but modular component, I was able to successfully use quickly generate similar displays for different profile details.
 
 ```Javascript
 
