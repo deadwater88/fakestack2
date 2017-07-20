@@ -14,8 +14,8 @@ puts "Profiles retrieved"
 #
 profiles = JSON.parse(res.body)['results']
 
-quotes = JSON.parse(File.read('./db/generateProfiles/quotes.txt'))
-cover_images = JSON.parse(File.read('./db/generateProfiles/cover_urls.txt'))
+quotes = JSON.parse(File.read('./db/scripts/generateProfiles/quotes.txt'))
+cover_images = JSON.parse(File.read('./db/scripts/generateProfiles/cover_urls.txt'))
 
 puts "seeding..."
 profiles.each_with_index do |profile, index|
