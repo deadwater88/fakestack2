@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'conversations/show'
+
+  get 'messages/show'
+
   root to: "static_pages#root"
 
   namespace :api, default: {format: :json} do

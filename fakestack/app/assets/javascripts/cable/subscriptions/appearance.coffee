@@ -1,1 +1,1 @@
-App.cable.subscriptions.create "AppearanceChannel"
+# App.cable.subscriptions.create "AppearanceChannel"
