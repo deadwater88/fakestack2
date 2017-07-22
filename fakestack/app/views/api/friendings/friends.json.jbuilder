@@ -1,4 +1,3 @@
-
 json.friends do
   @friends.each do |user_id, user|
     json.set! user_id do

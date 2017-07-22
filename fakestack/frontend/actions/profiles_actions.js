@@ -75,7 +75,9 @@ export const fetchViewedProfile = (id) => dispatch => {
 
 export const acceptFriending = (viewedId) => dispatch => {
     return FriendAPIUtil.acceptFriending(viewedId).then(
-      res => dispatch(receiveProp(res)),
+      res => {
+        dispatch(receiveCurrentUserProfile(res));
+      },
       err => dispatch(receiveProfileErrors(err.responseJSON))
     );
   };

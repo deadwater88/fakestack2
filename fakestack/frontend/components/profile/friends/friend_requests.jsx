@@ -37,7 +37,6 @@ class FriendRequests extends React.Component {
     return (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("fire2");
     const { currentUserProfile} = this.props;
     let viewedId = id;
     switch (true) {
@@ -57,7 +56,6 @@ class FriendRequests extends React.Component {
   }
   handleDeleteRequest(id){
     return (e) => {
-      console.log("fire");
       e.preventDefault();
       e.stopPropagation();
       this.props.deleteFriending(id);
@@ -70,7 +68,9 @@ class FriendRequests extends React.Component {
    if (!currentUserProfile.requests) {
      return <div></div>;
    }
-  let  {requests} = this.state;
+   let requests = currentUserProfile.requests;
+   let requesters = currentUserProfile.requesters;
+   requests = requests.map((userId)=>(requesters[userId]));
    return (
      <ul id = "friendsRequestsContainer" className = "dropDown-content requests" style={{display: 'flex'}}>
         <h4> Friend Requests </h4>
@@ -96,7 +96,7 @@ class FriendRequests extends React.Component {
        }
      </ul>
    );
-  };
+  }
 }
 
 

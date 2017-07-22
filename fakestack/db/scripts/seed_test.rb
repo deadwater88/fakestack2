@@ -14,5 +14,3 @@ puts "Profiles retrieved"
 #
 profiles = JSON.parse(res.body)['results']
 debugger
-
-puts "shit"
