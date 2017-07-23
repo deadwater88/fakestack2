@@ -1,5 +1,16 @@
 class Conversation < ApplicationRecord
-  validates :participant1_id, :participant2_id, presence: true
-  validates :participant1_id, unqiueness: {scope: :participant2_id}
+  validates :participants, presence: true
+
+  serialize :messages
+
+  def self.add_message_to_conversation(speaker_id, data)
+    recipient_id = data['recipient_id']
+    participants = [speaker_id, recipient_id].sort.join("-")
+    message = data['message']
+    conversation = Conversation.find_or_create_by(participants: participants)
+    conversation.messages = messages.concat(message)
+    conversation.save
+    conversation
+  end
 
 end

@@ -6,7 +6,7 @@ class Friending < ApplicationRecord
   belongs_to :requester, class_name: :User
   belongs_to :recipient, class_name: :User
 
-  validate :not_self,:equivalent_friending_present
+  validate :not_self, :equivalent_friending_present
 
 
 
