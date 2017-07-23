@@ -5,9 +5,13 @@ class User < ApplicationRecord
             :first_name,
             :last_name,
             presence: true
+
+
   validates :password, length: { minimum: 8, allow_nil: true }
   validates :email, :session_token, :password_digest, uniqueness: true
   serialize :friends, Hash
+  serialize :requesters, Hash
+  serialize :recipients, Hash
 
 
 
@@ -19,7 +23,7 @@ class User < ApplicationRecord
     foreign_key: :recipient_id,
     class_name: :Friending
 
-  has_many :requesters,
+  has_many :_requesters,
     through: :received_requests,
     source: :requester
 
@@ -28,9 +32,9 @@ class User < ApplicationRecord
     foreign_key: :requester_id,
     class_name: :Friending
 
-  has_many :recipients,
+  has_many :_recipients,
     through: :issued_requests,
-    class_name: :User
+    source: :recipient
 
   has_many :authored_posts,
     foreign_key: :author_id,
@@ -77,11 +81,12 @@ class User < ApplicationRecord
   end
 
   def friendscount
-    friends1 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.requester_id AND requesters.approved = 'true'")
-    .where('requesters.recipient_id = ?', id).count
-    friends2 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.recipient_id AND requesters.approved = 'true'")
-    .where('requesters.requester_id = ?', id).count
-    friends1 + friends2
+    # friends1 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.requester_id AND requesters.approved = 'true'")
+    # .where('requesters.recipient_id = ?', id).count
+    # friends2 = User.joins("INNER JOIN friendings AS requesters ON users.id = requesters.recipient_id AND requesters.approved = 'true'")
+    # .where('requesters.requester_id = ?', id).count
+    # friends1 + friends2
+    self.friends.length
   end
 
   def pending_friend_requests

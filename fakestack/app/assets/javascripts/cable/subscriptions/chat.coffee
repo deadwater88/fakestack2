@@ -1,1 +1,1 @@
-App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" }
+# App.room = App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" }

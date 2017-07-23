@@ -11,7 +11,8 @@ json.extract!(user,
               :places,
               :profile_img_url,
               :cover_img_url,
-              :biography)
+              :biography,
+              :friends)
 
 json.schoolhistories do
   user.school_histories.each do |history|
@@ -19,13 +20,7 @@ json.schoolhistories do
   end
 end
 
-json.friends do
-  user.friends
-end
-json.friendscount do
-  user.friends.length
-end
-
+json.friendscount user.friends.length
 json.requesters do
   user.requesters.each do |requester|
     json.set! requester.id do
@@ -33,6 +28,7 @@ json.requesters do
     end
   end
 end
+
 json.recipients do
   user.recipients.each do |recipient|
     json.set! recipient.id do
@@ -40,4 +36,4 @@ json.recipients do
     end
   end
 end
-json.requests (user.requesters.pluck(:id) - user.friends.keys)
+json.requests(user.requesters.pluck(:id) - user.friends.keys)

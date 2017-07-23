@@ -150,8 +150,8 @@ h1#requestsPageHeader {
 
 .submitPost.request svg {
   fill: #5A5A5A !important;
-  height: 15px; !important;
-  width: 15px; !important;
+  height: 15px !important;
+  width: 15px !important;
 }
 
 
