@@ -1,0 +1,41 @@
+#messagingRequestsDrop > .dropDown-content.messaging {
+  position: absolute;
+  top: 35px;
+  left: -200px;
+  background-color: white;
+  width: 450px;
+  height: 550px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 1px 2px grey;
+}
+
+.messaging-header {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  border-bottom: 1px solid #DDDFE2;
+  padding: 10px;
+
+}
+
+.messaging-header > h4 {
+  font-weight: bold;
+  color: #333333;
+  text-decoration: none;
+}
+
+.messaging-header  a {
+  color: #365899;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.messaging-header  a:hover {
+  text-decoration: underline;
+}
+
+#messagingRequestsDrop {
+  position: relative;
+}

@@ -21,7 +21,7 @@ class FriendItem extends React.Component {
       case !!currentUserProfile.friends[viewedId]:
         return (
         <div className= "dropDown">
-          <FaCheck/>Friends
+          <FaCheck/> Friends
             <ul className="dropDown-Friend">
               <div onClick={this.handleUnFriendClick(id)}>UnFriend</div>
             </ul>

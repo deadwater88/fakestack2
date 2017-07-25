@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     store = configureStore();
   }
+    App.room.receive = (data) => { console.log(data) ;}
     window.store = store;
     window.__root_container = document.getElementById('root');
     ReactDOM.render(<Root store={store} />, window.__root_container);

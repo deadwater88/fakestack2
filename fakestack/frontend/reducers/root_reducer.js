@@ -6,6 +6,7 @@ import RelevantUsersReducer from './relevant_users_reducer';
 import PostsReducer from './posts_reducer';
 import CommentsReducer from './comments_reducer';
 import NoticesReducer from './notices_reducer';
+import messagingReducer from './messaging_reducer';
 
 
 
@@ -17,16 +18,16 @@ const appReducer = combineReducers({
   relevantUsers: RelevantUsersReducer,
   posts: PostsReducer ,
   comments: CommentsReducer,
-  notices: NoticesReducer
+  notices: NoticesReducer,
+  conversations: messagingReducer
 });
 
 
 const rootReducer = (state, action) => {
   if (action.type === 'LOGOUT') {
-    state = undefined
+    state = undefined;
   }
-
-  return appReducer(state, action)
-}
+  return appReducer(state, action);
+};
 
 export default rootReducer;

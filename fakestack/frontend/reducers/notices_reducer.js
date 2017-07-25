@@ -9,14 +9,15 @@ const NoticesReducer = (state = {events: [], errors: []}, action) => {
     case RECEIVE_NOTICES:
       return action.notices;
     case RECEIVE_NOTICE:
-      newState.events.pop()
-      newState.events.shift(action.notice)
+      newState.events.pop();
+      newState.events.shift(action.notice);
       return newState;
     case RECEIVE_ERRORS:
       newState.errors = action.errors;
       return newState;
     case CLEAR_ERRORS:
       newState.errors = [];
+      return newState;
     default:
       return state;
   }
