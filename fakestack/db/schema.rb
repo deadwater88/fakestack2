@@ -32,11 +32,13 @@ ActiveRecord::Schema.define(version: 20170723094312) do
   end
 
   create_table "conversations", force: :cascade do |t|
-    t.text     "messages",     default: [],              array: true
-    t.string   "participants"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.index ["participants"], name: "index_conversations_on_participants", using: :btree
+    t.text     "messages",        default: [],              array: true
+    t.integer  "participant1_id"
+    t.integer  "participant2_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["participant1_id"], name: "index_conversations_on_participant1_id", using: :btree
+    t.index ["participant2_id"], name: "index_conversations_on_participant2_id", using: :btree
   end
 
   create_table "friendings", force: :cascade do |t|
@@ -92,7 +94,7 @@ ActiveRecord::Schema.define(version: 20170723094312) do
     t.text     "places",          default: [],                      array: true
     t.string   "cover_img_url",   default: ""
     t.string   "biography",       default: ""
-    t.text     "friends",         default: "{}"
+    t.text     "friends",         default: "--- {}\n"
     t.text     "requesters",      default: "--- {}\n"
     t.text     "recipients",      default: "--- {}\n"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
