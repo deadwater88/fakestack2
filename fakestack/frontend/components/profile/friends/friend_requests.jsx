@@ -69,8 +69,8 @@ class FriendRequests extends React.Component {
      return <div></div>;
    }
    let requests = currentUserProfile.requests;
-   let requesters = currentUserProfile.requesters;
-   requests = requests.map((userId)=>(requesters[userId]));
+  //  let requesters = currentUserProfile.requesters;
+  //  requests = requests.map((userId)=>(requesters[userId]));
    return (
      <ul id = "friendsRequestsContainer" className = "dropDown-content requests" style={{display: 'flex'}}>
         <h4> Friend Requests </h4>

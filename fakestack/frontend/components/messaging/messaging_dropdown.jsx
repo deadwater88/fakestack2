@@ -22,7 +22,8 @@ class MessagingDropdown extends React.Component {
   }
 
   render(){
-    const { conversations } = this.props;
+    let { conversations } = this.props;
+    conversations = conversations || [];
     return (
       <div className="dropDown-content messaging" >
         <div className="messaging-header">
@@ -54,7 +55,7 @@ class MessagingDropdown extends React.Component {
                     </div>
                   </div>
                   <div className="lm-bottom">
-                    <p className="LM-content plain-text"> lastMessage.content </p>
+                    <p className="LM-content plain-text"> {lastMessage.content} </p>
                     <div title={this.conversation.read ? "Mark as Read" : "Mark as Unread"} className="readIndicator">
                       <input type='radio' checked={this.conversation.read}> </input>
                     </div>

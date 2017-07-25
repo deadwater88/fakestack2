@@ -83,5 +83,7 @@ Rails.application.configure do
   end
 
   # Do not dump schema after migrations.
+  config.web_socket_server_url = "wss://fakestack.herokuapp.com/cable"
+  config.action_cable.allowed_request_origins = ['https://fakestack.herokuapp.com', 'http://fakestack.herokuapp.com']
   config.active_record.dump_schema_after_migration = false
 end
