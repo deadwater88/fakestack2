@@ -8,6 +8,7 @@ export const CREATE_ROOM = "CREATE_ROOM";
 export const OPEN_ROOM = "OPEN_ROOM";
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const RECEIVE_CONVERSATIONS = 'RECEIVE_CONVERSATIONS';
+export const RECEIVE_CONVERSATION = 'RECEIVE_CONVERSATION';
 
 
 export const fetchConversations = () => dispatch => {
@@ -26,11 +27,22 @@ export const openRoom = (recipient_id) => ({
   recipient_id
 });
 
-export const receiveConversations = (conversations)=>({
+export const receiveConversations = (conversations) => ({
   type: RECEIVE_CONVERSATIONS,
   conversations
+});
+
+export const receiveConversation = (conversation) => ({
+  type: RECEIVE_CONVERSATION,
+  conversation
 });
 
 export const createNewRoom = () => ({
   type: CREATE_ROOM
 });
+
+export const setupMessagingChannel = (store) => {
+    App.room.receive = (conversation) => {
+      store.dispatch(receiveConversation(conversation));
+    };
+};

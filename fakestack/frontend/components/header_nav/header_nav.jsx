@@ -4,7 +4,7 @@ import NavSearchBar from './nav_search_bar';
 import {Link, Redirect, withRouter} from 'react-router-dom';
 import ProfileIcon from '../profile/profile_icon';
 import FriendsRequestsContainer from '../profile/friends/friend_requests_container';
-import MessagingDropdown from '../messaging/messaging_dropdown';
+import MessagingDropdownContainer from '../messaging/messaging_dropdown_container';
 import ReactDOM from 'react-dom';
 
 class HeaderNav extends React.Component {
@@ -109,7 +109,7 @@ class HeaderNav extends React.Component {
                 <div title={"Message a Friend"} onClick={this.showMessaging}>
                   <FaCommentsO className="icon"/>
                 </div>
-                <MessagingDropdown/>
+                <MessagingDropdownContainer/>
               </div>
               <FaGlobe className="icon"/>
             </div>

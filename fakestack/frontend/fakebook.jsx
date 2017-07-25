@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Root from './components/root';
 import configureStore from './store/store';
 import Modal from 'react-modal';
+import {setupMessagingChannel} from './actions/messaging_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
     Modal.setAppElement('body');
@@ -14,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     store = configureStore();
   }
-    App.room.receive = (data) => { console.log(data) ;}
     window.store = store;
+    setupMessagingChannel(store);
     window.__root_container = document.getElementById('root');
     ReactDOM.render(<Root store={store} />, window.__root_container);
 

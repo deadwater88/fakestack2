@@ -1,4 +1,5 @@
 import React from 'react';
+import ProfileIcon from '../profile/profile_icon';
 
 class MessagingDropdown extends React.Component {
   constructor(props){
@@ -21,7 +22,7 @@ class MessagingDropdown extends React.Component {
   }
 
   render(){
-    const { conversations } = this.props
+    const { conversations } = this.props;
     return (
       <div className="dropDown-content messaging" >
         <div className="messaging-header">
@@ -34,11 +35,13 @@ class MessagingDropdown extends React.Component {
         </div>
         <ul className="conversations">
           {conversations.map((conversation)=>{
-            let lastMessage = conversation.messages[conversation.messages.length - 1]
+            let lastMessage = conversation.messages[conversation.messages.length - 1];
+            let timestamp = lastMessage.timestamp;
+            let recipient = conversation.recipient;
             return (
             <div key={"conversation" + conversation.recipient.id} className="conversationItem">
               <div className="dropDownProfileImg">
-
+                <ProfileIcon imgUrl={recipient.profileImgUrl}/>
               </div>
               <div className="lastMessageContainer">
                 <div className="lastMessage-content">
