@@ -5,6 +5,7 @@ import {Link, Redirect, withRouter} from 'react-router-dom';
 import ProfileIcon from '../profile/profile_icon';
 import FriendsRequestsContainer from '../profile/friends/friend_requests_container';
 import MessagingDropdownContainer from '../messaging/messaging_dropdown_container';
+import dropDownConnect from '../../utils/dropdown_connect';
 import ReactDOM from 'react-dom';
 
 class HeaderNav extends React.Component {
@@ -15,6 +16,10 @@ class HeaderNav extends React.Component {
     this.showRequests = this.showRequests.bind(this);
     this.hideRequests = this.hideRequests.bind(this);
     this.state = {showRequests: false};
+    let messageSwitch = () =>
+      (<div title={"Message a Friend"}><FaCommentsO className="icon"/>
+    </div>);
+    this.MessageDropDown = dropDownConnect(messageSwitch, MessagingDropdownContainer)
   }
 
   handleLogOut(e) {
@@ -61,7 +66,6 @@ class HeaderNav extends React.Component {
 
   showRequests(e){
     e.preventDefault();
-    e.stopPropagation();
     this.setState({showRequests: !this.state.showRequests});
   }
 
@@ -83,6 +87,7 @@ class HeaderNav extends React.Component {
 
   render(){
     const {firstName} = this.props.currentUser;
+
     return (
       <div id="headerMaster">
         <div id="headerNavContent"></div>
@@ -106,10 +111,7 @@ class HeaderNav extends React.Component {
                 {this.state.showRequests ? this.renderFriendsRequests() : ""}
               </div>
               <div id="messagingRequestsDrop">
-                <div title={"Message a Friend"} onClick={this.showMessaging}>
-                  <FaCommentsO className="icon"/>
-                </div>
-                <MessagingDropdownContainer/>
+                <this.MessageDropDown/>
               </div>
               <FaGlobe className="icon"/>
             </div>

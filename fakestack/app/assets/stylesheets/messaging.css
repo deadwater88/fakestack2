@@ -1,4 +1,4 @@
-#messagingRequestsDrop > .dropDown-content.messaging {
+#messagingRequestsDrop  .dropDown-content.messaging {
   position: absolute;
   top: 35px;
   left: -200px;
@@ -38,4 +38,29 @@
 
 #messagingRequestsDrop {
   position: relative;
+}
+
+#messaging-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 20px;
+}
+
+.messaging-room {
+  background-color: white;
+  width: 250px;
+  height: 450px;
+}
+
+.messageInputContainer {
+  padding: 7px;
+}
+
+.messageInputContainer > label input {
+  margin-left: 10px;
+}
+
+.bottomBorderGray {
+  border-bottom: 1px solid #DDDFE2;
 }
