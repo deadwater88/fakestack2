@@ -15,10 +15,9 @@ class User < ApplicationRecord
 
   has_many :conversations,
     through: :users_conversations,
-    source: :Conversation
+    source: :conversation
 
-  has_many :user_conversations
-
+  has_many :users_conversations
 
   after_initialize :ensure_token
   attr_reader :password

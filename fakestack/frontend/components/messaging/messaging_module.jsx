@@ -9,7 +9,7 @@ class MessagingModule extends React.Component {
   }
 
   componentDidMount(){
-    // this.props.fetchConversations();
+    this.props.fetchConversations();
     setupMessagingChannel(store);
   }
 

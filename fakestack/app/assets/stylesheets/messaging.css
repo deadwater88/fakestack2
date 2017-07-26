@@ -17,7 +17,6 @@
   align-self: stretch;
   border-bottom: 1px solid #DDDFE2;
   padding: 10px;
-  background-color: #4080ff;
   color:white;
   font-weight:bold;
 
@@ -65,6 +64,10 @@
 }
 .messageInputContainer {
   margin-left: 10px;
+}
+
+.messaging-header.room {
+    background-color: #4080ff;
 }
 
 .messageInputContainer > label input {

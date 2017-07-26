@@ -20,7 +20,6 @@ class MessagingRoom extends React.Component {
   }
 
   submitMessage(e){
-    console.log("message event");
     let input = ReactDOM.findDOMNode(this.refs.messageInput);
     e.preventDefault();
     let data = {recipient_id: this.state.recipient.id};
@@ -67,9 +66,8 @@ class MessagingRoom extends React.Component {
 
   renderConversation(){
     let {recipient} = this.state;
-    let {conversations} = this.props
-    let conversation = (conversations[recipient && recipient.id]) ? conversations[recipient.id].messages : []
-    console.log(conversation);
+    let {conversations} = this.props;
+    let conversation = (conversations[recipient && recipient.id]) ? conversations[recipient.id].messages : [];
     return (
       <div className="conversation-content bottomBorderGray">
         {conversation.map((message,idx)=> {
@@ -97,15 +95,15 @@ class MessagingRoom extends React.Component {
     let {recipient} = this.state;
     return (
       <div className="messaging-room">
-        <div className="messaging-header">
+        <div className="messaging-header room">
           {recipient ? `${recipient.firstName} ${recipient.lastName}` : "New Message"}
         </div>
         {recipient ? "" : this.renderInput()}
         {this.renderConversation()}
         <form className="conversation-form" onSubmit={this.submitMessage}>
-          <input ref="messageInput" type="text" onChange={this.updateMessage}
+           {recipient ? (<input ref="messageInput" type="text" onChange={this.updateMessage}
             value={this.state.message} placeholder="Type a message...">
-          </input>
+          </input>) : ""}
         </form>
       </div>);
 

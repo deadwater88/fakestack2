@@ -13,7 +13,9 @@ export const RECEIVE_CONVERSATION = 'RECEIVE_CONVERSATION';
 
 export const fetchConversations = () => dispatch => {
   return MessagingAPIUtil.fetchConversations().then(
-    (res) => dispatch(receiveConversations(res)),
+    (res) => {
+      dispatch(receiveConversations(res))
+    },
     (err) => dispatch(receiveErrors(err))
   );
 };
