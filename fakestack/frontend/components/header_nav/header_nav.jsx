@@ -19,7 +19,7 @@ class HeaderNav extends React.Component {
     let messageSwitch = () =>
       (<div title={"Message a Friend"}><FaCommentsO className="icon"/>
     </div>);
-    this.MessageDropDown = dropDownConnect(messageSwitch, MessagingDropdownContainer)
+    this.MessageDropDown = dropDownConnect(messageSwitch, MessagingDropdownContainer);
   }
 
   handleLogOut(e) {

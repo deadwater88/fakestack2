@@ -51,6 +51,8 @@
   background-color: white;
   width: 250px;
   height: 450px;
+  display: flex;
+  flex-direction: column;
 }
 
 .messageInputContainer {
@@ -63,4 +65,17 @@
 
 .bottomBorderGray {
   border-bottom: 1px solid #DDDFE2;
+}
+
+.conversation-content {
+  flex-grow: 1;
+}
+.conversation-form {
+  align-self: stretch;
+  padding: 10px;
+}
+
+.conversation-form input {
+  outline: none;
+  border: none;
 }

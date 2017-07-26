@@ -4,12 +4,29 @@ import React from 'react';
 class MessagingRoom extends React.Component {
   constructor(props){
     super(props);
-    this.state = props;
+    this.state = {query: "", recipient: props.recipient};
   }
 
   submitConversation(e){
     e.preventDefault();
+  }
 
+  loadConversation(e){
+    e.preventDefault(e);
+    let recipient = e.target.data;
+    this.setState({recipient});
+  }
+
+  filter(e){
+    e.preventDefault();
+  }
+
+  renderCandidates(){
+    return (
+      <div className="messagingCandidates">
+
+      </div>
+    );
   }
 
   renderInput(){
@@ -19,6 +36,7 @@ class MessagingRoom extends React.Component {
           <input type="text" onChange={this.filter}>
           </input>
         </label>
+        {this.state.query === "" ? "" : renderCandidates()}
       </form>
     );
   }
@@ -30,16 +48,14 @@ class MessagingRoom extends React.Component {
           NewMessage
         </div>
         {this.state.recipient ? "" : this.renderInput()}
-        <div className="conversation-content">
+        <div className="conversation-content bottomBorderGray">
           Conversation goes here
         </div>
-        <form onSubmit={this.submitConversation}>
-          <input type="text">
-
+        <form className="conversation-form" onSubmit={this.submitConversation}>
+          <input ref="messageInput" type="text" placeholder="Type a message...">
           </input>
         </form>
-      </div>
-    );
+      </div>);
 
   }
 
