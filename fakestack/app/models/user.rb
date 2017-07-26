@@ -13,7 +13,11 @@ class User < ApplicationRecord
   serialize :requesters, Hash
   serialize :recipients, Hash
 
+  has_many :conversations,
+    through: :users_conversations,
+    source: :conversation
 
+  has_many :users_conversations
 
   after_initialize :ensure_token
   attr_reader :password

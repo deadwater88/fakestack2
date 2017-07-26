@@ -115,6 +115,11 @@ a.navLink:hover {
   padding-bottom: 5px;
 }
 
+ .boldBlack {
+   font-weight: bold;
+   color: black;
+ }
+
 #root {
   width: 100vw;
   height: 100vh

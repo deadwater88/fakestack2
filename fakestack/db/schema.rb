@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721183347) do
+ActiveRecord::Schema.define(version: 20170726072538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,13 +32,11 @@ ActiveRecord::Schema.define(version: 20170721183347) do
   end
 
   create_table "conversations", force: :cascade do |t|
-    t.text     "messages",        default: [],              array: true
-    t.integer  "participant1_id"
-    t.integer  "participant2_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["participant1_id"], name: "index_conversations_on_participant1_id", using: :btree
-    t.index ["participant2_id"], name: "index_conversations_on_participant2_id", using: :btree
+    t.text     "messages"
+    t.string   "participants"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["participants"], name: "index_conversations_on_participants", using: :btree
   end
 
   create_table "friendings", force: :cascade do |t|
@@ -94,7 +92,7 @@ ActiveRecord::Schema.define(version: 20170721183347) do
     t.text     "places",          default: [],                      array: true
     t.string   "cover_img_url",   default: ""
     t.string   "biography",       default: ""
-    t.text     "friends",         default: "--- {}\n"
+    t.text     "friends",         default: "{}"
     t.text     "requesters",      default: "--- {}\n"
     t.text     "recipients",      default: "--- {}\n"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -102,6 +100,15 @@ ActiveRecord::Schema.define(version: 20170721183347) do
     t.index ["last_name"], name: "index_users_on_last_name", using: :btree
     t.index ["password_digest"], name: "index_users_on_password_digest", unique: true, using: :btree
     t.index ["session_token"], name: "index_users_on_session_token", unique: true, using: :btree
+  end
+
+  create_table "users_conversations", id: false, force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "conversation_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["conversation_id"], name: "index_users_conversations_on_conversation_id", using: :btree
+    t.index ["user_id"], name: "index_users_conversations_on_user_id", using: :btree
   end
 
   create_table "workhistories", force: :cascade do |t|

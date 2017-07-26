@@ -21,19 +21,12 @@ json.schoolhistories do
 end
 
 json.friendscount user.friends.length
-json.requesters do
-  user.requesters.each do |requester|
-    json.set! requester.id do
-      json.partial! 'api/users/liteuser.json', user: requester
-    end
-  end
+json.requesters user.requesters
+json.recipients user.recipients
+
+requests = user.requesters.dup
+user.friends.each do |k, v|
+  requests.delete(k)
 end
 
-json.recipients do
-  user.recipients.each do |recipient|
-    json.set! recipient.id do
-      json.partial! 'api/users/liteuser.json', user: recipient
-    end
-  end
-end
-json.requests(user.requesters.pluck(:id) - user.friends.keys)
+json.requests requests.values

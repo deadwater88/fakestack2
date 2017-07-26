@@ -6,6 +6,7 @@ import HeaderContainer from './header_nav/header_container';
 import NewsFeedContainer from './newsfeed/newsfeed_container';
 import ProfileContainer from './profile/profile_container';
 import FriendRequestsContainerPage from './profile/friends/friend_requests_page_container';
+import MessagingModuleContainer from './messaging/messaging_module_container';
 
 
 const App = (props) =>  {
@@ -20,6 +21,7 @@ const App = (props) =>  {
       <ProtectedRoute path="/friends/requests" component={FriendRequestsContainerPage} > LoggedIn </ProtectedRoute>
       <AuthRoute path="/" component={AuthFormContainer}></AuthRoute>
     </Switch>
+    <ProtectedRoute path="/" component={MessagingModuleContainer} > </ProtectedRoute>
   </div>
 );
 

@@ -1,0 +1,122 @@
+#messagingRequestsDrop  .dropDown-content.messaging {
+  position: absolute;
+  top: 35px;
+  left: -200px;
+  background-color: white;
+  width: 450px;
+  height: 550px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 1px 2px grey;
+}
+
+.messaging-header {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  border-bottom: 1px solid #DDDFE2;
+  padding: 10px;
+  color:white;
+  font-weight:bold;
+
+}
+
+.messaging-header > h4 {
+  font-weight: bold;
+  color: #333333;
+  text-decoration: none;
+}
+
+.messaging-header  a {
+  color: #365899;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.messaging-header  a:hover {
+  text-decoration: underline;
+}
+
+#messagingRequestsDrop {
+  position: relative;
+}
+
+#messaging-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 20px;
+}
+
+.messaging-room {
+  background-color: white;
+  width: 300px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  max-height: 680px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+}
+
+.messaging-room:focus .messaging-header {
+  background-color: #4080ff;
+}
+.messageInputContainer {
+  margin-left: 10px;
+}
+
+.messaging-header.room {
+    background-color: #4080ff;
+}
+
+.messageInputContainer > label input {
+  outline: none;
+  border: none;
+  padding: 5px;
+  font-size: 18px;
+}
+
+.bottomBorderGray {
+  border-bottom: 1px solid #DDDFE2;
+}
+
+.conversation-content {
+  flex-grow: 1;
+}
+.conversation-form {
+  align-self: stretch;
+  padding: 10px;
+}
+
+.conversation-form input {
+  outline: none;
+  border: none;
+}
+
+.messagingCandidate svg, .messagingCandidate img {
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+}
+
+.messagingCandidate {
+  display: flex;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.messagingCandidate:hover {
+  cursor: pointer;
+  background-color: #4267b2;
+  color: white;
+}
+
+.messagingCandidatesList {
+  position: absolute;
+  z-index: 2;
+  background-color: white;
+  border: 1px solid black;
+  width: 250px;
+  left: 25px;
+}
