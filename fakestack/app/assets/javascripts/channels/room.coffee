@@ -5,8 +5,7 @@ App.room = App.cable.subscriptions.create "RoomChannel",
   disconnected: ->
     # Called when the subscription has been terminated by the server
 
-  received: (data) ->
-    console.log(data)
+  # received: (data) ->
     # Called when there's incoming data on the websocket for this channel
 
   speak: (message) ->

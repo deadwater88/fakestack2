@@ -18,8 +18,8 @@ export const fetchConversations = () => dispatch => {
   );
 };
 
-export const sendMessage = (recipient_id, data) => () => {
-  return MessagingAPIUtil.sendMessage(recipient_id, data);
+export const sendMessage = (data) => {
+  return MessagingAPIUtil.sendMessage(data);
 };
 
 export const openRoom = (recipient_id) => ({
@@ -42,7 +42,7 @@ export const createNewRoom = () => ({
 });
 
 export const setupMessagingChannel = (store) => {
-    App.room.receive = (conversation) => {
+    App.room.received = (conversation) => {
       store.dispatch(receiveConversation(conversation));
     };
 };

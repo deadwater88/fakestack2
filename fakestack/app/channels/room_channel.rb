@@ -21,7 +21,8 @@ class RoomChannel < ApplicationCable::Channel
     redis.set("#{id}", "false")
   end
 
-  def speak(data)
+  def speak(message)
+    data = message['message']
     listener_id = data['recipient_id']
     # ActionCable.server.broadcast "room_channel", message: data['message']
     conversation = Conversation.add_message_to_conversation(current_user.id, data)

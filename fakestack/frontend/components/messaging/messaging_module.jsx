@@ -1,14 +1,16 @@
 import React from 'react';
 import ProfileIcon from '../profile/profile_icon';
-import MessagingRoom from './messaging_room';
+import MessagingRoomContainer from './messaging_room_container';
+import {setupMessagingChannel} from '../../actions/messaging_actions';
 
 class MessagingModule extends React.Component {
   constructor(props){
     super(props);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     // this.props.fetchConversations();
+    setupMessagingChannel(store);
   }
 
   createNewRoom(e){
@@ -24,7 +26,7 @@ class MessagingModule extends React.Component {
   render(){
     return (
       <div id="messaging-bar">
-        <MessagingRoom/>
+        <MessagingRoomContainer/>
       </div>
     );
   }
