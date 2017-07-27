@@ -6,6 +6,7 @@ import {setupMessagingChannel} from '../../actions/messaging_actions';
 class MessagingModule extends React.Component {
   constructor(props){
     super(props);
+    this.state = {conversations: {}};
   }
 
   componentDidMount(){
@@ -13,9 +14,18 @@ class MessagingModule extends React.Component {
     setupMessagingChannel(store);
   }
 
-  createNewRoom(e){
+  createEmptyRoom(e){
     e.preventDefault();
-    this.props.creatNewRoom();
+    this.props.creatEmptyRoom();
+  }
+
+  bindRoom(timeStamp){
+    return (recipient) =>{
+      return (e)=> {
+        e.preventDefault();
+        this.props.bindEmptyRoom({recipient, timeStamp});
+      };
+    };
   }
 
   openRoom(e){
@@ -24,9 +34,12 @@ class MessagingModule extends React.Component {
   }
 
   render(){
+    let {activeConversations} = this.props;
     return (
       <div id="messaging-bar">
-        <MessagingRoomContainer/>
+        {activeConversations.map((conversation)=> {
+          return <MessagingRoomContainer conversation={conversation} key={conversation.timeStamp + `${conversation.recipient}`} />;
+        })}
       </div>
     );
   }

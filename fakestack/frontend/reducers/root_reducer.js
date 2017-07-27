@@ -7,6 +7,7 @@ import PostsReducer from './posts_reducer';
 import CommentsReducer from './comments_reducer';
 import NoticesReducer from './notices_reducer';
 import messagingReducer from './messaging_reducer';
+import activeConversationsReducer from './active_conversations_reducer';
 
 
 
@@ -19,7 +20,8 @@ const appReducer = combineReducers({
   posts: PostsReducer ,
   comments: CommentsReducer,
   notices: NoticesReducer,
-  conversations: messagingReducer
+  conversations: messagingReducer,
+  activeConversations: activeConversationsReducer
 });
 
 

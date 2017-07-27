@@ -1,14 +1,16 @@
 import React from 'react';
 import ProfileIcon from '../profile/profile_icon';
+import {FaClose} from 'react-icons/lib/fa/';
 import ReactDOM from 'react-dom';
 class MessagingRoom extends React.Component {
   constructor(props){
     super(props);
-    this.state = {query: "", recipient: props.recipient, message: ""};
+    this.state = {query: "", recipient: props.conversation.recipient, message: ""};
     this.filter = this.filter.bind(this);
     this.loadConversation = this.loadConversation.bind(this);
     this.submitMessage = this.submitMessage.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
+    this.deleteRoom = this.deleteRoom.bind(this);
   }
   componentDidMount(){
 
@@ -31,11 +33,21 @@ class MessagingRoom extends React.Component {
     this.setState({message: ""});
   }
 
-  loadConversation(friend){
+  loadConversation(recipient){
+    let {timeStamp} = this.props.conversation;
     return (e) => {
     e.preventDefault();
-    this.setState({recipient: friend, query: ""});
+    let conversation = {recipient, timeStamp};
+    conversation.recipient = recipient;
+    this.props.bindEmptyRoom(conversation);
     };
+  }
+
+  deleteRoom(e){
+    e.preventDefault();
+    let {recipient, timeStamp} = this.props.conversation;
+    let conversation = {recipient, timeStamp};
+    this.props.deleteRoom(conversation);
   }
   filter(e){
     e.preventDefault();
@@ -97,6 +109,9 @@ class MessagingRoom extends React.Component {
       <div className="messaging-room">
         <div className="messaging-header room">
           {recipient ? `${recipient.firstName} ${recipient.lastName}` : "New Message"}
+          <div title={"Press Esc to Close"} onClick={this.deleteRoom}>
+            <FaClose className="cIcon"/>
+          </div>
         </div>
         {recipient ? "" : this.renderInput()}
         {this.renderConversation()}

@@ -6,7 +6,8 @@ import MessagingModule from './messaging_module';
 
 const mapStateToProps = (state) =>({
   currentUserProfile: state.currentUserProfile,
-  conversations: state.conversations
+  conversations: state.conversations,
+  activeConversations: processConversations(state.activeConversations)
 
 });
 
@@ -16,6 +17,13 @@ const mapDispatchToProps = (dispatch) => ({
   createNewRoom: () => dispatch(createNewRoom()),
   fetchConversations: () => dispatch(fetchConversations())
 });
+
+
+function processConversations(conversations) {
+  return values(conversations).sort((conversation)=>{
+    return conversation.timeStamp;
+  });
+}
 
 export default connect(mapStateToProps,
                mapDispatchToProps)(MessagingModule);

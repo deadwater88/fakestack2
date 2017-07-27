@@ -144,3 +144,7 @@ svg.profileIcon, img.profileIcon {
 .small {
   font-size: 14px;
 }
+
+.nonBold {
+  font-weight: normal;
+}

@@ -23,4 +23,9 @@ export const processedConversations = (conversations, currentUserProfile) => {
     output[recipient_id] = conversation;
   });
   return output;
-}
+};
+
+
+export const processMessages = (messages) => {
+  let output = [];
+};

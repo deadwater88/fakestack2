@@ -7,23 +7,24 @@ class MessagingDropdown extends React.Component {
     super(props);
     this.state = {visible: false};
     this.updateReadStatus = this.updateReadStatus.bind(this);
-    this.createNewRoom = this.createNewRoom.bind(this);
+    this.createEmptyRoom = this.createEmptyRoom.bind(this);
+    this.createRoom = this.createRoom.bind(this);
   }
 
   componentWillMount(){
-    // this.props.fetchConversations();
   }
 
-  createNewRoom(recipient){
-    return (e) => {
+  createEmptyRoom(e){
     e.preventDefault();
-    this.props.creatNewRoom(recipient);
-  };
+    this.props.createEmptyRoom();
   }
 
-  openRoom(e){
+
+  createRoom(recipient){
+    return (e)=> {
     e.preventDefault();
-    this.props.loadRoom();
+    this.props.createRoom(recipient);
+    };
   }
   updateReadStatus(){
 
@@ -32,13 +33,13 @@ class MessagingDropdown extends React.Component {
   render(){
     let { conversations } = this.props;
     conversations = conversations || [];
-    conversations = conversations.sort((conversation)=> -conversation.messages[conversation.messages.length - 1].timeStamp);
+    conversations = conversations.sort((c2, c1) => c1.messages[c1.messages.length - 1].timeStamp - c2.messages[c2.messages.length - 1].timeStamp);
     return (
       <div className="dropDown-content messaging" >
         <div className="messaging-header">
           <h4> Recent Messages</h4>
           <div className="messaging-header-options">
-            <a onClick={this.createNewRoom}>
+            <a onClick={this.createEmptyRoom} className="nonBold">
               New message
             </a>
           </div>
@@ -50,7 +51,7 @@ class MessagingDropdown extends React.Component {
             let recipient = conversation.recipient;
             let name = `${recipient.firstName} ${recipient.lastName}`;
             return (
-            <div key={"conversation" + conversation.recipient.id} className="conversationItem" onClick={this.createNewRoom(recipient)}>
+            <div key={lastMessage.timeStamp} className="conversationItem" onClick={this.createRoom(recipient)}>
               <div className="dropDownProfileImg">
                 <ProfileIcon imgUrl={recipient.profileImgUrl}/>
               </div>
@@ -60,7 +61,7 @@ class MessagingDropdown extends React.Component {
                     <h4 className="lm-name medium-bold-black heavybold">
                       {name}
                     </h4>
-                    <div className="lm-timestamp plain-text gray">
+                    <div className="lm-timestamp plain-text gray small">
                       {timestamp}
                     </div>
                   </div>

@@ -1,8 +1,11 @@
 import { connect } from 'react-redux';
-import { sendMessage, openRoom, createNewRoom, fetchConversations } from '../../actions/messaging_actions';
+import { bindEmptyRoom, deleteRoom } from '../../actions/active_conversations_actions';
+import { sendMessage } from '../../actions/messaging_actions';
 import MessagingRoom from './messaging_room';
 import {processedConversations} from '../../utils/messaging_api_util';
 import values from 'lodash/values';
+
+
 const mapStateToProps = (state, ownProps={}) =>({
   friends: values(state.currentUserProfile.friends),
   conversations: processedConversations(state.conversations, state.currentUserProfile),
@@ -12,8 +15,8 @@ const mapStateToProps = (state, ownProps={}) =>({
 
 const mapDispatchToProps = (dispatch) => ({
   sendMessage: (data) => sendMessage(data),
-  openRoom: (recipient_id) => dispatch(openRoom(recipient_id)),
-  createNewRoom: () => dispatch(createNewRoom())
+  deleteRoom: (conversation) => dispatch(deleteRoom(conversation)),
+  bindEmptyRoom: (conversation) => dispatch(bindEmptyRoom(conversation))
 });
 
 
