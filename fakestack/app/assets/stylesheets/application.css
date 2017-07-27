@@ -124,3 +124,23 @@ a.navLink:hover {
   width: 100vw;
   height: 100vh
 }
+
+svg.profileIcon, img.profileIcon {
+  height: 24px;
+  width: 24px;
+  /*background-color: #a3a3a3;*/
+}
+
+.medium-bold-black {
+  font-weight: bold;
+  color: #333333;
+  text-decoration: none
+}
+
+.heavybold {
+  font-weight: bolder;
+}
+
+.small {
+  font-size: 14px;
+}

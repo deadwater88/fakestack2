@@ -28,7 +28,7 @@ div#headerNav div {
 }
 
 
-div#headerNav input {
+input.searchFriends {
   border: none;
   font-size: 14px;
   font-family: Helvetica, Arial, sans-serif;
@@ -130,17 +130,24 @@ div#menu1 a:hover {
   background-color: #355089;
 }
 
-div#headerNavMenu svg {
+
+
+
+svg.icon {
   height: 23px;
   width: 23px;
   fill: black;
   margin-right: 15px;
 }
 
-div#menu2 svg:hover, div#menu3 svg:hover {
-  fill: white;
+#menu1 svg.profileIcon {
+  fill: black;
+  margin-right: 7px;
 }
 
+svg.icon:hover {
+  fill:white;
+}
 div#menu1 a {
   color: white;
 }
@@ -177,10 +184,7 @@ ul#searchFriends:active {
   font-size: 14px;
 }
 
-svg.profileIcon, img.profileIcon {
-  height: 24px;
-  width: 24px;
-}
+
 
 #searchFriends svg, #searchFriends img {
   margin-right: 10px;

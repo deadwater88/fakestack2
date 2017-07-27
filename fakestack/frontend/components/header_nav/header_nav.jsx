@@ -98,34 +98,34 @@ class HeaderNav extends React.Component {
             <NavSearchBar relevantUsers={this.props.arrayRelevantUsers} fetchRelevantUsers={this.props.fetchRelevantUsers} fetc/>
           </div>
             <div id="headerNavMenu">
-            <div id="menu1">
-              <Link title={"Profile"} to={`/profile/${this.props.currentUser.id}/timeline`} id={"profilelink"}>
-                <ProfileIcon imgUrl={this.props.currentUserProfile.profileImgUrl} className="profileIcon"/>
-                <h3 className="firstName">{firstName}</h3>
-              </Link>
-                <Link to='/home'>Home</Link>
-            </div>
-            <div id="menu2">
-              <div ref="friendRequestsDrop" id="friendRequestsDrop" >
-                <div title={"Friend Requests"} onClick={this.showRequests}> <FaGroup className="icon" /></div>
-                {this.state.showRequests ? this.renderFriendsRequests() : ""}
+              <div id="menu1">
+                <Link title={"Profile"} to={`/profile/${this.props.currentUser.id}/timeline`} id={"profilelink"}>
+                  <ProfileIcon imgUrl={this.props.currentUserProfile.profileImgUrl} className="profileIcon"/>
+                  <h3 className="firstName">{firstName}</h3>
+                </Link>
+                  <Link to='/home'>Home</Link>
               </div>
-              <div id="messagingRequestsDrop">
-                <this.MessageDropDown/>
+              <div id="menu2">
+                <div ref="friendRequestsDrop" id="friendRequestsDrop" >
+                  <div title={"Friend Requests"} onClick={this.showRequests}> <FaGroup className="icon" /></div>
+                  {this.state.showRequests ? this.renderFriendsRequests() : ""}
+                </div>
+                <div id="messagingRequestsDrop">
+                  <this.MessageDropDown/>
+                </div>
+                <FaGlobe className="icon"/>
               </div>
-              <FaGlobe className="icon"/>
-            </div>
-            <div id="menu3">
-              <FaQuestionCircle  className="icon"/>
-              <div className="dropDown" title="Log Out">
-                <FaChevronDown onClick={this.showDropdown} className="icon"/>
-                <ul className="dropDown-content logOut">
-                  <a onClick={this.handleLogOut}>Log Out</a>
-                </ul>
+              <div id="menu3">
+                <FaQuestionCircle  className="icon"/>
+                <div className="dropDown" title="Log Out">
+                  <FaChevronDown onClick={this.showDropdown} className="icon"/>
+                  <ul className="dropDown-content logOut">
+                    <a onClick={this.handleLogOut}>Log Out</a>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </div>);
   }
 }

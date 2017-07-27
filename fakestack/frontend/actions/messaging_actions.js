@@ -14,7 +14,7 @@ export const RECEIVE_CONVERSATION = 'RECEIVE_CONVERSATION';
 export const fetchConversations = () => dispatch => {
   return MessagingAPIUtil.fetchConversations().then(
     (res) => {
-      dispatch(receiveConversations(res))
+      dispatch(receiveConversations(res));
     },
     (err) => dispatch(receiveErrors(err))
   );
@@ -39,8 +39,9 @@ export const receiveConversation = (conversation) => ({
   conversation
 });
 
-export const createNewRoom = () => ({
-  type: CREATE_ROOM
+export const createNewRoom = (recipient) => ({
+  type: CREATE_ROOM,
+  recipient
 });
 
 export const setupMessagingChannel = (store) => {
