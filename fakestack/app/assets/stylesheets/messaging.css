@@ -43,11 +43,12 @@
 }
 
 #messaging-bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   padding-right: 20px;
   display: flex;
+  z-index: 1000;
 }
 
 .messaging-room {

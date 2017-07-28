@@ -159,3 +159,8 @@ h1#requestsPageHeader {
   display: flex;
   align-items: center;
 }
+
+  .friendItem .profileIcon {
+    height: 100px;
+    width: 100px;
+  }
