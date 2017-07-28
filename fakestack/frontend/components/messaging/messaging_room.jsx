@@ -2,6 +2,9 @@ import React from 'react';
 import ProfileIcon from '../profile/profile_icon';
 import {FaClose} from 'react-icons/lib/fa/';
 import ReactDOM from 'react-dom';
+import { partitionMessages } from '../../utils/messaging_api_util';
+
+
 class MessagingRoom extends React.Component {
   constructor(props){
     super(props);
@@ -79,12 +82,25 @@ class MessagingRoom extends React.Component {
   renderConversation(){
     let {recipient} = this.state;
     let {conversations} = this.props;
-    let conversation = (conversations[recipient && recipient.id]) ? conversations[recipient.id].messages : [];
+    let messages = (conversations[recipient && recipient.id]) ? conversations[recipient.id].messages : [];
+    messages = partitionMessages(messages);
+    let current_id = this.props.currentUserProfile.id;
+
     return (
       <div className="conversation-content bottomBorderGray">
-        {conversation.map((message,idx)=> {
-          return (<div className="content" key={idx + "message"}>
-            {message.content}
+        {messages.map((messageBlock,idx)=> {
+          return (
+          <div className="messageBlock" key={idx + "message"}>
+            {messageBlock.map((message)=>{
+              let current = (message.author_id === current_id);
+              let side = current ? "right" : "left";
+              return <div className={`mBlock ${side}`} key={idx + `${message.timeStamp}`}>
+                {current ? "" : <ProfileIcon imgUrl={recipient.profileImgUrl}/>}
+                <div className={`mContent ${side}`}>
+                  {message.content}
+                </div>
+              </div>;
+            })}
           </div>);
         })}
       </div>

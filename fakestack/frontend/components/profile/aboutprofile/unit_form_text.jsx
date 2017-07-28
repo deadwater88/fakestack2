@@ -27,6 +27,7 @@ handleChange(e){
 
 handleSubmit(propName){
   return (e)=> {
+    e.preventDefault();
     const userId = this.state.viewedUserId;
     const value = this.state[propName];
     this.state.editMode = false;

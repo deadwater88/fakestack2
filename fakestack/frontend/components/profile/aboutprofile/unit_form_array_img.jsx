@@ -44,6 +44,7 @@ autocomplete(){
 
 handleSubmit(propName, idx1){
   return (e)=> {
+    e.preventDefault();
     const userId = this.state.viewedUserId;
     let value = this.state[propName].concat([]);
     value.pop();

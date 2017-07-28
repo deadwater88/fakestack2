@@ -79,9 +79,6 @@ class AboutEducationForm extends React.Component {
           })}
           {currentUser ?  <CollegeFormContainer/> : "" }
         </div>
-        <div className="propertyContainer">
-          <h3 className="contentHeader"> OTHER PLACES LIVED </h3>
-        </div>
       </div>
     );
     }

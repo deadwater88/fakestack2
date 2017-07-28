@@ -26,6 +26,15 @@ export const processedConversations = (conversations, currentUserProfile) => {
 };
 
 
-export const processMessages = (messages) => {
-  let output = [];
+export const partitionMessages = (messages) => {
+  let output = [[messages[0]]];
+  for (let i = 1; i < messages.length; i++ ){
+    let lastGroup = output[output.length - 1];
+    if (lastGroup[0].author_id === messages[i].author_id ){
+      lastGroup.push(messages[i]);
+    } else {
+      output.push([messages[i]]);
+    }
+  }
+  return output;
 };

@@ -4,6 +4,7 @@ class Api::FriendingsController < ApplicationController
     @friending = Friending.new(friending_params)
     @friending.requester_id = current_user.id
     if @friending.save
+      Friending.create_friending(current_user, friending_params[:recipient_id])
       @recipients = current_user.recipients
       render 'api/friendings/recipients.json'
     else
@@ -15,6 +16,7 @@ class Api::FriendingsController < ApplicationController
     @friending = Friending.find_by(requester_id: params[:friending][:requester_id], recipient_id: current_user.id)
     if @friending.update_attributes(friending_params)
       @friends = current_user.friends
+      Friending.approve_friends(current_user.id, params[:friending][:requester_id])
       @user = current_user
       render 'api/users/show'
     else

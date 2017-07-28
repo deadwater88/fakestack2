@@ -183,3 +183,37 @@ div.lm-bottom {
   align-self: stretch;
   justify-content: space-between;
 }
+
+.mBlock {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.mBlock.left {
+  align-items: flex-start;
+}
+
+.mBlock.right {
+
+  align-items: flex-end;
+}
+.mContent{
+  padding: 8px;
+  border-radius: 15px;
+  border-collapse: collapse;
+  white-space: pre-wrap;
+  max-width: 160px;
+  line-height: 20px;
+
+}
+
+.mContent.right {
+  color:white;
+  background-color: #4080ff;
+}
+
+.mContent.left {
+  color:black;
+  background-color: #F1F0F0;
+}

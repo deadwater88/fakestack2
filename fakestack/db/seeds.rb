@@ -64,33 +64,11 @@ User.create(email: 'Dobrynin@gmail.com', password: 'password', first_name: 'Davi
 User.create(email: 'Li@gmail.com', password: 'password', first_name: 'Victor', last_name: 'Li'),
 User.create(email: 'Cruz@gmail.com', password: 'password', first_name: 'Louis', last_name: 'Cruz')]
 
-1000.times do
-  # User.create(email:)
-end
-
 
 demo = User.find_by(email: "Vader@gmail.com");
 
-users.each do |user1|
-  users.each_with_index do |user2, idx|
-    scenario = rand(0..5)
-    case (scenario)
-    when 0
-      Friending.create(recipient_id: user2.id, requester_id: user1.id)
-    when 1
-      Friending.create(recipient_id: user1.id, requester_id: user2.id)
-    when 2
-      Friending.create(recipient_id: user1.id, requester_id: user2.id, approved: true)
-    end
-  end
-end
-
-
-
-
-url = URI.parse('http://www.example.com/index.html')
-req = Net::HTTP::Get.new(url.to_s)
-res = Net::HTTP.start(url.host, url.port) {|http|
-  http.request(req)
-}
-puts res.body
+require_relative './scripts/seed_profiles.rb'
+require_relative './scripts/generate_friendships.rb'
+require_relative './scripts/denormalize_friends.rb'
+require_relative './scripts/denormalize_recipients.rb'
+require_relative './scripts/denormalize_requesters.rb'

@@ -9,9 +9,9 @@ class User < ApplicationRecord
 
   validates :password, length: { minimum: 8, allow_nil: true }
   validates :email, :session_token, :password_digest, uniqueness: true
-  serialize :friends, Hash
-  serialize :requesters, Hash
-  serialize :recipients, Hash
+  serialize :friends, JSON
+  serialize :requesters, JSON
+  serialize :recipients, JSON
 
   has_many :conversations,
     through: :users_conversations,
