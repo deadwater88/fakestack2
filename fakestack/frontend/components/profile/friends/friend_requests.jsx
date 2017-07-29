@@ -2,19 +2,16 @@ import React from 'react';
 import ProfileIcon from '../profile_icon';
 import {Link} from 'react-router-dom';
 import {FaChevronDown, FaPencil, FaCamera, FaUserPlus, FaCheck, FaGroup, FaPlus} from 'react-icons/lib/fa/';
+import values from 'lodash/values';
 
 
 class FriendRequests extends React.Component {
   constructor(props){
     super(props);
-    const {currentUserProfile} = this.props;
-    let requests = currentUserProfile.requests;
-    let requesters = currentUserProfile.requesters;
-    requests = requests.map((userId)=>(requesters[userId]));
     this.friendsButtonContent = this.friendsButtonContent.bind(this);
     this.handleFriendClickId = this.handleFriendClickId.bind(this);
     this.handleDeleteRequest = this.handleDeleteRequest.bind(this);
-    this.state = {requests};
+    this.state = this.props.requests;
   }
 
 
@@ -68,7 +65,7 @@ class FriendRequests extends React.Component {
    if (!currentUserProfile.requests) {
      return <div></div>;
    }
-   let requests = currentUserProfile.requests;
+   let requests = values(currentUserProfile.requests);
   //  let requesters = currentUserProfile.requesters;
   //  requests = requests.map((userId)=>(requesters[userId]));
    return (
@@ -86,7 +83,7 @@ class FriendRequests extends React.Component {
                <button className="submitPost request" onClick= {this.handleFriendClickId(id)}>
                  {this.friendsButtonContent(id)}
                </button>
-                {currentUserProfile.requests.includes(id) ? <button onClick={this.handleDeleteRequest(id)} className="headerButton request">
+                {currentUserProfile.requests[id] ? <button onClick={this.handleDeleteRequest(id)} className="headerButton request">
                    Delete Request
                  </button> :
                  ""}

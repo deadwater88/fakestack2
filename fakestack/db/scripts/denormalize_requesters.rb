@@ -3,9 +3,9 @@ User.all.each do |user|
   user._requesters.each do |friend|
     requester = {}
     requester[:id] = friend.id
-    requester[:firstName] = friend.first_name
-    requester[:lastName] = friend.last_name
-    requester[:profileImgUrl] = friend.profile_img_url
+    requester[:first_name] = friend.first_name
+    requester[:last_name] = friend.last_name
+    requester[:profile_img_url] = friend.profile_img_url
     requesters[friend.id] = requester
   end
 

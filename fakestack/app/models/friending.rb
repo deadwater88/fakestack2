@@ -37,6 +37,7 @@ class Friending < ApplicationRecord
     recipient.requesters[user.id] = user.attributes.slice('id', 'first_name', 'last_name', 'profile_img_url')
     user.save
     recipient.save
+    user.recipients
   end
 
 end

@@ -4,9 +4,8 @@ class Api::FriendingsController < ApplicationController
     @friending = Friending.new(friending_params)
     @friending.requester_id = current_user.id
     if @friending.save
-      Friending.create_friending(current_user, friending_params[:recipient_id])
-      @recipients = current_user.recipients
-      render 'api/friendings/recipients.json'
+      @recipients = Friending.create_friending(current_user, friending_params[:recipient_id])
+      render 'api/friendings/_recipients.json'
     else
       render json: ['Failed to Add Friend'], status: 400
     end

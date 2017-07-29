@@ -3,9 +3,9 @@ User.all.each do |user|
   user._recipients.each do |friend|
     recipient = {}
     recipient[:id] = friend.id
-    recipient[:firstName] = friend.first_name
-    recipient[:lastName] = friend.last_name
-    recipient[:profileImgUrl] = friend.profile_img_url
+    recipient[:first_name] = friend.first_name
+    recipient[:last_name] = friend.last_name
+    recipient[:profile_img_url] = friend.profile_img_url
     recipients[friend.id] = recipient
   end
 

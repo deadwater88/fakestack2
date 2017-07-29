@@ -11,22 +11,24 @@ json.extract!(user,
               :places,
               :profile_img_url,
               :cover_img_url,
-              :biography,
-              :friends)
+              :biography)
 
+json.friendscount user.friends.length
 json.schoolhistories do
   user.school_histories.each do |history|
     json.partial! 'api/schoolhistories/schoolhistory.json',  formats: [:json], schoolhistory: history
   end
 end
 
-json.friendscount user.friends.length
-json.requesters user.requesters
-json.recipients user.recipients
+json.partial! 'api/friendings/friends.json',  formats: [:json], friends: user.friends
+json.partial! 'api/friendings/requesters.json',  formats: [:json], requesters: user.requesters
+json.partial! 'api/friendings/recipients.json',  formats: [:json], recipients: user.recipients
 
-requests = user.requesters.dup
+
+
+requests = user.requesters.dup.deep_symbolize_keys
 user.friends.each do |k, v|
-  requests.delete(k)
+  requests.delete(k.to_sym)
 end
 
-json.requests requests.values
+json.partial! 'api/friendings/requests.json',  formats: [:json], requests: requests

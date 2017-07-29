@@ -65,6 +65,7 @@ User.create(email: 'Li@gmail.com', password: 'password', first_name: 'Victor', l
 User.create(email: 'Cruz@gmail.com', password: 'password', first_name: 'Louis', last_name: 'Cruz')]
 
 
+
 demo = User.find_by(email: "Vader@gmail.com");
 
 require_relative './scripts/seed_profiles.rb'

@@ -67,7 +67,10 @@ class User < ApplicationRecord
   end
 
   def remove_friend(user)
-    self.friends[user.id] = nil
+    self.friends.delete(user.id.to_s)
+    self.requesters.delete(user.id.to_s)
+    self.recipients.delete(user.id.to_s)
+    self.save
   end
 
   def friendslist
