@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   has_many :users_conversations
 
-  after_initialize :ensure_token
+  after_initialize :ensure_token, :set_defaults
   attr_reader :password
 
   has_many :received_requests,
@@ -126,6 +126,12 @@ class User < ApplicationRecord
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
     user && user.is_password?(password) ? user : nil
+  end
+
+  def set_defaults
+    self.friends ||= {}
+    self.requesters ||= {}
+    self.recipients ||= {}
   end
 
 
