@@ -106,11 +106,14 @@
 .conversation-form {
   align-self: stretch;
   padding: 10px;
+  display: flex;
 }
 
 .conversation-form input {
   outline: none;
   border: none;
+  flex-grow: 1;
+  padding: 5px;
 }
 
 .messagingCandidate svg, .messagingCandidate img {

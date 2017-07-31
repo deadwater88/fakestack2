@@ -11,7 +11,8 @@ const mapStateToProps = (state, ownProps) =>({
   viewedUserProfile: state.viewedUserProfile,
   post: ownProps.post,
   relevantUsers: state.relevantUsers,
-  comments: state.comments
+  comments: state.comments,
+  current_user: state.currentUserProfile.id === state.viewedUserProfile.id
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -15,8 +15,19 @@ class MessagingRoom extends React.Component {
     this.updateMessage = this.updateMessage.bind(this);
     this.deleteRoom = this.deleteRoom.bind(this);
   }
-  componentDidMount(){
+  componentDidUpdate(){
+    this.updateScroll();
+  }
 
+  componentDidMount(){
+    this.updateScroll();
+  }
+  
+  updateScroll(){
+    let el = this.chatElement;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
   }
 
   updateMessage(e){
@@ -90,7 +101,7 @@ class MessagingRoom extends React.Component {
       </div>;
     }
     return (
-      <div className="conversation-content bottomBorderGray">
+      <div className="conversation-content bottomBorderGray" ref={(c)=> this.chatElement = c}>
         {messages.map((messageBlock,idx)=> {
           let current = (messageBlock[0].author_id === current_id);
           let side = current ? "right" : "left";

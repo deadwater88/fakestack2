@@ -11,7 +11,8 @@ class Api::CommentsController < ApplicationController
   end
 
   def index
-    @posts = Post.where(location_id: params[:user_id]).includes(:comments)
+    # @posts = Post.where(location_id: params[:user_id]).includes(:comments)
+    @posts = Post.all.includes(:comments)
     render :index
   end
 

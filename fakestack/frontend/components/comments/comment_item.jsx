@@ -63,9 +63,9 @@ class CommentItem extends React.Component{
     return (
     <div className="CommentItemContainer" key={ id + "commentItemContainer" + this.props.idx }>
       <div className= "commentHeader" >
-        <div className="dropDown comment" onClick={this.handleDeleteComment}>
+        {this.props.currentUserProfile.id === authorId ? <div className="dropDown comment" onClick={this.handleDeleteComment}>
           <FaClose/>
-        </div>
+        </div> : ""}
         <ProfilePictureContainer imgUrl={author.profileImgUrl}
            className="commentIcon"/>
         <div className="commentData">

@@ -1,11 +1,17 @@
 
-rocks = %w'Jack_Donaghy Liz_Lemon Jenna_Maroney Tracy_Jordan Kenneth_Parcell Frank_Rossitano Pete_Hornberger Devon_Banks'
-
+rocks = %w'Cerie_Xerox Jack_Donaghy Liz_Lemon Jenna_Maroney Tracy_Jordan Kenneth_Parcell Frank_Rossitano Pete_Hornberger Devon_Banks'
+users = []
 rocks.each do |name|
   first_name, last_name = name.split("_")
-  User.create(first_name: first_name, last_name: last_name, password: 'password', email: "#{last_name}@gmail.com")
+  user = User.find_by(last_name: last_name)
+  users.push(user)
 end
 
+users.each do |user1|
+  users.each do |user2|
+    Friending.create(requester_id: user1.id, recipient_id: user2.id, approved: true)
+  end
+end
 
 liz = User.find_by(first_name: "Liz")
 

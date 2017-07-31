@@ -44,9 +44,9 @@ class PostItem extends React.Component{
     <div className="PostItemContainer" key={"postItemContainer" + this.props.idx }>
       <div className="postProper">
         <div className="postHeader" >
-          <div className="dropDown post" onClick={this.handleDeletePost}>
+          {this.props.currentUserProfile.id === authorId ? <div className="dropDown post" onClick={this.handleDeletePost}>
             <FaClose/>
-          </div>
+          </div> : ""}
 
           <ProfilePictureContainer imgUrl={author.profileImgUrl}
              className="postIcon"/>

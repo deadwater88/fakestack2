@@ -19,11 +19,13 @@ class LogIn extends React.Component {
   }
 
   handleSubmit(e){
+    e.preventDefault();
     this.props.login({user: this.state });
   }
 
   handleDemo(e){
-    this.props.login({user:{email: "Vader@gmail.com", password: "password"}});
+    e.preventDefault();
+    this.props.login({user:{email: "Lemon@gmail.com", password: "password"}});
   }
 
   handleEnter(e){
