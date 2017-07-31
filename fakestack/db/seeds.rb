@@ -1,4 +1,6 @@
 
+User.destroy_all
+
 User.create!([
   {email: "David@gmail.com", password_digest: "$2a$10$wBNpKZLBbhTzwSgaiMvuY.infpvGis/RXtM56OgsMLmbUAZnKvQM.", session_token: "of-gG5qwrkcce1zK0ULCIQ", first_name: "David", last_name: "Wong", profile_img_url: "", intro: "", hometown: "", current_city: "", other_names: [], favorite_quotes: "", places: [], cover_img_url: "", biography: "", friends: {}, requesters: {}, recipients: {}},
   {email: "Kenobi@gmail.com", password_digest: "$2a$10$DYA2CePr5xH6NOppl5DBnevkWkdWqIdoUnAB7A0XvPRp0dLFI9au6", session_token: "nM7dsydXajpK7rRDjZVQbA", first_name: "Ben", last_name: "Kenobi", profile_img_url: "", intro: "", hometown: "", current_city: "", other_names: [], favorite_quotes: "", places: [], cover_img_url: "", biography: "", friends: {}, requesters: {}, recipients: {}},
