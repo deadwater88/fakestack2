@@ -63,6 +63,9 @@ h1.intro {
 section.intro h5 {
   align-self: center;
   padding: 10px;
+  text-align: center;
+  margin-right: 15px;
+
 }
 
 #introContainer {
@@ -78,8 +81,10 @@ section.intro h5 {
   display: flex;
 }
 
-#introContainer svg {
+#introContainer .editPencil {
+  align-self: flex-start;
   position: absolute;
+  top: 5px;
   right: 5px;
   display: none;
 }

@@ -1,3 +1,4 @@
+json.requesters({})
 json.requesters do
   requesters.deep_symbolize_keys.each do |k, v|
     json.set! k do

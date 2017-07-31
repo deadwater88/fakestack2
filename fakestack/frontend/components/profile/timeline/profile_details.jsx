@@ -29,7 +29,7 @@ class ProfileDetails extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     this.props.updateProp({intro: this.state.intro}, this.props.currentUserProfile.id);
-    this.toggleEditMode();
+    this.toggleEditMode(e);
   }
 
   toggleEditMode(e){

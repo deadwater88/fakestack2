@@ -85,22 +85,25 @@ class MessagingRoom extends React.Component {
     let messages = (conversations[recipient && recipient.id]) ? conversations[recipient.id].messages : [];
     messages = partitionMessages(messages);
     let current_id = this.props.currentUserProfile.id;
-
+    if (messages[0].length === 0) {
+      return <div className="conversation-content bottomBorderGray">
+      </div>;
+    }
     return (
       <div className="conversation-content bottomBorderGray">
         {messages.map((messageBlock,idx)=> {
+          let current = (messageBlock[0].author_id === current_id);
+          let side = current ? "right" : "left";
           return (
-          <div className="messageBlock" key={idx + "message"}>
+          <div className={`messageBlock  ${side}`} key={idx + "message"}>
+            {current ? "" : <ProfileIcon imgUrl={recipient.profileImgUrl}/>}
+            <div className={`mBlock ${side}`} >
             {messageBlock.map((message)=>{
-              let current = (message.author_id === current_id);
-              let side = current ? "right" : "left";
-              return <div className={`mBlock ${side}`} key={idx + `${message.timeStamp}`}>
-                {current ? "" : <ProfileIcon imgUrl={recipient.profileImgUrl}/>}
-                <div className={`mContent ${side}`}>
+                return <div className={`mContent ${side}`} key={idx + `${message.timeStamp}`}>
                   {message.content}
-                </div>
-              </div>;
+                </div>;
             })}
+          </div>
           </div>);
         })}
       </div>
@@ -129,8 +132,7 @@ class MessagingRoom extends React.Component {
             <FaClose className="cIcon"/>
           </div>
         </div>
-        {recipient ? "" : this.renderInput()}
-        {this.renderConversation()}
+        {recipient ? this.renderConversation() : this.renderInput()}
         <form className="conversation-form" onSubmit={this.submitMessage}>
            {recipient ? (<input ref="messageInput" type="text" onChange={this.updateMessage}
             value={this.state.message} placeholder="Type a message...">

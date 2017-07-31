@@ -35,8 +35,6 @@ User.create(email: 'Liquid@gmail.com', password: 'password', first_name: 'Liquid
 User.create(email: 'Campbell@gmail.com', password: 'password', first_name: 'Roy', last_name: 'Campbell'),
 User.create(email: 'Archer@gmail.com', password: 'password', first_name: 'Sterling', last_name: 'Archer'),
 User.create(email: 'Saitama@gmail.com', password: 'password', first_name: 'Caped Baldy', last_name: 'Saitama'),
-User.create(email: 'Lemon@gmail.com', password: 'password', first_name: 'Elizabeth', last_name: 'Lemon'),
-User.create(email: 'Donaughy@gmail.com', password: 'password', first_name: 'Jack', last_name: 'Donaughy'),
 User.create(email: 'Picard@gmail.com', password: 'password', first_name: 'Jean Luc', last_name: 'Picard'),
 User.create(email: 'Rosie@gmail.com', password: 'password', first_name: 'Rosie', last_name: 'Jetson'),
 User.create(email: 'Scooby@gmail.com', password: 'password', first_name: 'Scooby', last_name: 'Doo'),
@@ -46,7 +44,7 @@ User.create(email: 'Skywalker@gmail.com', password: 'password', first_name: 'Luk
 User.create(email: 'Targaryen@gmail.com', password: 'password', first_name: 'Daenerys', last_name: 'Targaryen'),
 User.create(email: 'Gaiman@gmail.com', password: 'password', first_name: 'Neil', last_name: 'Gaiman'),
 User.create(email: 'Obrien@gmail.com', password: 'password', first_name: 'Conan', last_name: 'Obrien'),
-User.create(email: 'Colbert@gmail.com', password: 'password', first_name: 'Stephen', last_name: 'Colbert'),
+User.create(email: 'sColbert@gmail.com', password: 'password', first_name: 'Stephen', last_name: 'Colbert'),
 User.create(email: 'Pham@gmail.com', password: 'password', first_name: 'Vu', last_name: 'Pham'),
 User.create(email: 'Wilborn@gmail.com', password: 'password', first_name: 'Robin F.', last_name: 'Wilborn'),
 User.create(email: 'Manning@gmail.com', password: 'password', first_name: 'Sam Faber', last_name: 'Manning'),
@@ -66,10 +64,12 @@ User.create(email: 'Cruz@gmail.com', password: 'password', first_name: 'Louis', 
 
 
 
-demo = User.find_by(email: "Vader@gmail.com");
 
-require_relative './scripts/seed_profiles.rb'
-require_relative './scripts/generate_friendships.rb'
-require_relative './scripts/denormalize_friends.rb'
-require_relative './scripts/denormalize_recipients.rb'
-require_relative './scripts/denormalize_requesters.rb'
+require_relative './scripts/30rock.rb'
+
+
+# require_relative './scripts/seed_profiles.rb'
+# require_relative './scripts/generate_friendships.rb'
+# require_relative './scripts/denormalize_friends.rb'
+# require_relative './scripts/denormalize_recipients.rb'
+# require_relative './scripts/denormalize_requesters.rb'

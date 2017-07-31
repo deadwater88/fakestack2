@@ -1,5 +1,5 @@
 recipients ||= @recipients
-
+json.recipients({})
 json.recipients do
   recipients.deep_symbolize_keys.each do |k, v|
     json.set! k do

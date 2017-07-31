@@ -136,9 +136,8 @@ div.formButtons {
   justify-content: center;
   align-items: center;
   padding-top: 15px;
-  align-self: center;
-  width: 589px;
-  flex-grow: 1;
+  align-self: stretch;
+  /*width: 589px;*/
   border-top: 1px solid #DDDFE2;
 }
 
@@ -176,6 +175,7 @@ div.infoDisplay {
   flex-direction: row;
   flex-grow: 1;
   align-items: center;
+  text-align: center;
 
 }
 
@@ -215,7 +215,7 @@ h1.valueDisplay {
 h4.valueDisplay {
   color: #4b4f56;
   max-width:  550px;
-  word-break: break-all;
+  word-break: break-word;
   white-space: pre-line;
   text-align: left;
   font-size: 14px;
@@ -227,6 +227,7 @@ div.valueDisplay {
   flex-direction: column;
   flex-grow: 1;
   justify-content: center;
+  align-items: flex-start;
 }
 
 button.cancelForm {
@@ -239,6 +240,18 @@ button.cancelForm {
   padding: 10px;
   margin-right: 10px;
   transition: background-color .4s;
+}
+
+.deletePropButton {
+}
+
+.deletePropButton svg {
+  fill: #365899;
+  margin-bottom: 2px;
+}
+
+.deletePropButton:hover svg {
+  fill: white;
 }
 
 

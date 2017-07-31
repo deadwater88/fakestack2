@@ -32,7 +32,7 @@ class CommentItem extends React.Component{
     this.setState({showMode: true});
   }
 
-  handleDeleteComment(e){
+  handleDeleteComment(){
     this.props.deleteComment(this.props.comment.id);
   }
 

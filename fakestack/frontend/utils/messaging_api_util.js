@@ -27,6 +27,9 @@ export const processedConversations = (conversations, currentUserProfile) => {
 
 
 export const partitionMessages = (messages) => {
+  if (messages.length == 0) {
+    return [[]];
+  }
   let output = [[messages[0]]];
   for (let i = 1; i < messages.length; i++ ){
     let lastGroup = output[output.length - 1];

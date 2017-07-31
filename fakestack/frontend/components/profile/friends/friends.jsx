@@ -39,9 +39,10 @@ class Friends extends React.Component {
           <div className="firstRowHeader">
             <h1> <FaGroup/> Friends</h1>
             <div className="friend buttonContainer">
+              {this.props.authorized ? (
               <Link to={'/friends/requests'}>
                 <button id="requestsButton" className="headerButton item"> Friend Requests {this.props.currentUserProfile.requests.length} </button>
-              </Link>
+              </Link>) : ""}
               <button className="headerButton item find"> <FaPlus/> Find Friends</button>
             </div>
           </div>

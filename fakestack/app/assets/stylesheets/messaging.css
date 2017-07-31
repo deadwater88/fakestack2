@@ -72,6 +72,8 @@
 .messaging-header.room {
     background-color: #4080ff;
     padding: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .messaging-header.room:hover {
@@ -99,6 +101,7 @@
 
 .conversation-content {
   flex-grow: 1;
+  overflow-y: scroll;
 }
 .conversation-form {
   align-self: stretch;
@@ -184,28 +187,39 @@ div.lm-bottom {
   justify-content: space-between;
 }
 
+.messageBlock {
+}
+
+.messageBlock.left {
+  display: flex;
+  align-items: flex-end;
+}
+
 .mBlock {
   display: flex;
   flex-direction: column;
   margin: 10px;
 }
+.messageBlock .profileIcon {
+  height: 40px;
+  width: 40px;
+  margin: 0 0 17px 10px;
+}
 
 .mBlock.left {
   align-items: flex-start;
 }
-
 .mBlock.right {
-
   align-items: flex-end;
 }
 .mContent{
-  padding: 8px;
+  padding: 9px;
   border-radius: 15px;
   border-collapse: collapse;
   white-space: pre-wrap;
   max-width: 160px;
   line-height: 20px;
-
+  margin: 5px;
 }
 
 .mContent.right {

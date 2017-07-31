@@ -11,7 +11,6 @@ class CommentForm extends React.Component {
   handleSubmitComment(e){
     if (e.charCode === 13) {
       e.preventDefault();
-      const target = e.currentTarget;
       const {parent_type, parent_id} = this.props.parent;
       const comment = {parent_type, parent_id, content: e.currentTarget.innerHTML};
       this.props.publishComment(comment);
@@ -22,7 +21,6 @@ class CommentForm extends React.Component {
     }
   }
   render(){
-    const className = this.props.className;
     return (
       <form id={this.props.id} className="commentForm">
         <ProfilePictureContainer imgUrl={this.props.currentUserProfile.profileImgUrl} className="commentIcon"/>

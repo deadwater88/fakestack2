@@ -20,9 +20,7 @@
                   :content,
                   :parent_type)
     json.set! :author do
-      json.set! :author do
         json.partial! 'api/users/liteuser.json', user: reply.author
-      end
     end
   end
 

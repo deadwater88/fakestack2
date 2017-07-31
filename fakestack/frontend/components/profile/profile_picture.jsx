@@ -10,6 +10,7 @@ class ProfilePicture extends React.Component {
 
 
   uploadProfilePic(e){
+    e.stopPropagation();
     e.preventDefault();
     const upLoadProfilePic = this.props.uploadProfilePic;
     const userId = this.props.currentUserProfile.id;

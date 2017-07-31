@@ -81,14 +81,15 @@ div.commentData {
   padding: 0px;
   margin-top: 10px;
   margin-left:0px;
-  display: inline;
+  display: flex;
   word-wrap: break-word;
   font-size: 14px;
   white-space: pre-wrap;
-  width: 388px;
-  width: 85%;
+  // width: 388px;
+  // width: 85%;
+  flex-direction: column;
+  line-height: 20px;
 }
-
 .commentMetaContent a  {
   color: #365899;
   text-decoration: none;

@@ -21,6 +21,7 @@ class ProfileHeader extends React.Component {
 
   uploadCoverPic(e){
     e.preventDefault();
+
     const uploadPic = this.props.uploadPic;
     const userId = this.props.currentUserProfile.id;
     window.cloudinary.openUploadWidget(window.cloudinary_options,
@@ -53,7 +54,7 @@ class ProfileHeader extends React.Component {
     const { currentUserProfile, viewedUserProfile} = this.props;
     let viewedId = viewedUserProfile.id;
     switch (true) {
-      case Object.keys(currentUserProfile.friends).includes(viewedId):
+      case !!currentUserProfile.friends[viewedId]:
         return <div> <FaCheck/>Friends </div>;
       case !!currentUserProfile.requesters[viewedId]:
         return <div> <FaUserPlus/> Accept Friend Request </div>;

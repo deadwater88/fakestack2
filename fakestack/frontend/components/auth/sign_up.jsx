@@ -28,7 +28,7 @@ class SignUp extends React.Component {
   }
 
   handleSubmit(e){
-    e.preventDefault()
+    e.preventDefault();
     const {email, first_name, last_name, password} = this.state;
     this.props.signup({email, first_name, last_name, password});
   }
@@ -39,12 +39,12 @@ class SignUp extends React.Component {
                   FaMusic];
     let title = ["See posts and comments",
                   "Make new friends",
-                  "Find your interests"];
+                  "Please"];
     let sub = ["from friends in News Feed.",
                   "through friends.",
-                  "with fakestack Search."];
+                  "don't sue me."];
     return (<div id="features">
-      <h2>Stay Connected.</h2>
+      <h2>Were Definitely NOT Facebook</h2>
       {images.map((Imagel, index)=>
         (<div key={index +"img"} className="feature">
           <Imagel className="icon"/>

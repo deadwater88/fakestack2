@@ -1,3 +1,5 @@
+
+json.friends({})
 json.friends do
   friends.deep_symbolize_keys.each do |k, v|
     json.set! k do
