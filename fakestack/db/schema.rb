@@ -76,20 +76,20 @@ ActiveRecord::Schema.define(version: 20170726072538) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                                null: false
-    t.string   "password_digest",                      null: false
-    t.string   "session_token",                        null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.string   "email",                          null: false
+    t.string   "password_digest",                null: false
+    t.string   "session_token",                  null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "profile_img_url", default: ""
     t.string   "intro",           default: ""
     t.string   "hometown",        default: ""
     t.string   "current_city",    default: ""
-    t.text     "other_names",     default: [],                      array: true
+    t.text     "other_names",     default: [],                array: true
     t.string   "favorite_quotes", default: ""
-    t.text     "places",          default: [],                      array: true
+    t.text     "places",          default: [],                array: true
     t.string   "cover_img_url",   default: ""
     t.string   "biography",       default: ""
     t.text     "friends",         default: "{}"
