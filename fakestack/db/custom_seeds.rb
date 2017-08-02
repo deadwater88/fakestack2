@@ -66,7 +66,7 @@ require 'net/http'
 
 
 
-require_relative './scripts/seed_profiles.rb'
+# require_relative './scripts/seed_profiles.rb'
 require_relative './scripts/generate_friendships.rb'
 require_relative './scripts/denormalize_friends.rb'
 require_relative './scripts/denormalize_recipients.rb'
