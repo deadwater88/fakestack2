@@ -13,6 +13,6 @@ users.each do |id1|
     friend_id = users[rand(max)]
     Friending.create(recipient_id: id1, requester_id: friend_id, approved: false)
     cases += 1
+    puts "#{cases} cases processed" if cases % 500 == 0
   end
-    puts "#{cases} cases processed" if cases % 100 == 0
 end
