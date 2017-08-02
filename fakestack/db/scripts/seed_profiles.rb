@@ -24,7 +24,7 @@ profiles.each_with_index do |profile, index|
   birthyear = Date.parse(profile['dob']).year
   age = Date.today.year - birthyear
   valid_college_years = [birthyear + 17, Date.today.year]
-  user = User.create(
+  user = User.new(
               email: profile['email'],
               password: 'password',
               first_name: first_name.capitalize,
@@ -36,4 +36,5 @@ profiles.each_with_index do |profile, index|
               favorite_quotes: quotes[index],
               biography: "",
               cover_img_url: cover_images[index]||"")
+  user.save
 end
