@@ -25,6 +25,7 @@ profiles.each_with_index do |profile, index|
   age = Date.today.year - birthyear
   valid_college_years = [birthyear + 17, Date.today.year]
   user = User.new(
+              id: rand(100000000),
               email: profile['email'],
               password: 'password',
               first_name: first_name.capitalize,
