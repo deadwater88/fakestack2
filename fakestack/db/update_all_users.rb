@@ -10,4 +10,5 @@ def update_all_users
     user.save
   end
   r = Redis.new.set("all_users", users.to_json)
+  puts users
 end
