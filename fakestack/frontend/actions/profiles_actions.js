@@ -59,8 +59,8 @@ export const fetchCurrentUser = (id) => dispatch => {
   });
 };
 
-export const fetchRelevantUsers = (id) => dispatch => {
-    return UserApiUtil.fetchRelevantUsers(id).then(
+export const fetchRelevantUsers = (query) => dispatch => {
+    return UserApiUtil.fetchRelevantUsers(query).then(
       res => dispatch(receiveRelevantUsers(res)),
       err => dispatch(receiveProfileErrors(err.responseJSON))
     );

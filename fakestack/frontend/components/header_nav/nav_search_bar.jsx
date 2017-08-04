@@ -22,9 +22,9 @@ class NavSearchBar extends React.Component {
   }
 
 
-  filterUsers (value) {
-    this.setState({query: value});
-    this.props.fetchRelevantUsers(value).then(()=>{
+  filterUsers (query) {
+    this.setState({query});
+    this.props.fetchRelevantUsers(query).then(()=>{
       this.setState({filteredUsers: this.props.relevantUsers});
     });
 
