@@ -31,4 +31,4 @@ class DropZone extends React.Component {
 
 }
 
-export default DropZone
+export default DropZone;

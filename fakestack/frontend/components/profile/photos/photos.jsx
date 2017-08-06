@@ -3,34 +3,45 @@ import {FaChevronDown, FaPencil, FaCamera, FaUserPlus, FaCheck, FaGroup, FaPlus}
 import {Route, NavLink} from 'react-router-dom';
 import Albums from './albums';
 import AllPhotos from './all_photos';
-import values from 'lodash/values';
+import UploadModal from './upload_modal';
 
 class Photos extends React.Component {
   constructor(props){
     super(props);
-    this.state = {currentpath: this.props.location.pathname};
+    this.state = {currentpath: this.props.location.pathname, modalIsOpen: false};
     this.currentpath = this.props.location.pathname;
     this.albumspath = this.props.location.pathname + '/album';
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
+  openModal(){
+    console.log("modal button fired");
+    this.setState({modalIsOpen: true}, ()=> console.log(this.state))
+  }
+
+  closeModal(){
+    this.setState({modalIsOpen: false});
+  }
 
   render() {
     let authorized = true;
     return (
-    <div className="friendsContainer primaryContainer">
+    <div className="photosContainer primaryContainer">
       <div className="sectionContainer">
         <div className="secondaryContainer">
-          <div className="firstRowheader">
+          <div className="firstRowHeader">
             <h1>
               <FaCamera/>
-              "Photos"
+              Photos
             </h1>
-            <div className="friend buttonContainer">
-              {authorized ? (
-                <button id="addPhotosButton" className="headerButton item"> Add a Photo  </button>
-                ) : ""}
-              <button id="createAlbum" className="headerButton item"> <FaPlus/> Create Album </button>
-            </div>
+            {authorized ? (
+              <div className="photos buttonContainer">
+                <button id="createAlbum" className="headerButton item"> <FaPlus/> Create Album </button>
+                <button id="addPhotosButton" onClick={this.openModal} className="headerButton item"> Add a Photo  </button>
+                <UploadModal open={this.state.modalIsOpen} onRequestClose={this.closeModal}/>
+              </div>
+              ) : ""}
           </div>
           <h4>
             <NavLink className="navLink"

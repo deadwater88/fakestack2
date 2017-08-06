@@ -89,6 +89,10 @@ ul#friendsListContainer {
   border: 1px solid #CED0D4;
 }
 
+.buttonContainer .headerButton:first-child {
+  margin-right: -2px;
+}
+
 .friend.buttonContainer > .headerButton.item {
   margin: 0px;
 }

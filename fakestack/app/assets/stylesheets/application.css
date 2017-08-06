@@ -148,3 +148,7 @@ svg.profileIcon, img.profileIcon {
 .nonBold {
   font-weight: normal;
 }
+
+.ReactModal__Body--open {
+    overflow: hidden;
+}
