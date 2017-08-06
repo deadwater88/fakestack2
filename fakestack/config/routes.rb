@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :notices, only: [:index]
     resources :workhistories, only: [:create, :update, :destroy]
     resources :schoolhistories, only: [:create, :update, :destroy]
+    resources :s3keys, only: [:index]
   end
 
   mount ActionCable.server => '/cable'

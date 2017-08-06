@@ -17,4 +17,12 @@ class ApplicationController < ActionController::Base
     session[:session_token] = nil
   end
 
+  def set_s3_direct_post(filename, filetype)
+    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/#{filename}",
+                                               success_action_status: '201',
+                                               acl: 'public-read',
+                                               expires: DateTime.now + 120.seconds,
+                                               content_type: filetype)
+  end
+
 end
