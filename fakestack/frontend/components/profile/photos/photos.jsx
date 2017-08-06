@@ -8,16 +8,16 @@ import UploadModal from './upload_modal';
 class Photos extends React.Component {
   constructor(props){
     super(props);
-    this.state = {currentpath: this.props.location.pathname, modalIsOpen: false};
+    this.state = {currentpath: this.props.location.pathname, modalIsOpen: false, uploadedFiles: []};
     this.currentpath = this.props.location.pathname;
     this.albumspath = this.props.location.pathname + '/album';
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
-  openModal(){
-    console.log("modal button fired");
-    this.setState({modalIsOpen: true}, ()=> console.log(this.state))
+  openModal(e){
+    let files = e.target.files;
+    this.setState({modalIsOpen: true, uploadedFiles: files});
   }
 
   closeModal(){
@@ -38,8 +38,11 @@ class Photos extends React.Component {
             {authorized ? (
               <div className="photos buttonContainer">
                 <button id="createAlbum" className="headerButton item"> <FaPlus/> Create Album </button>
-                <button id="addPhotosButton" onClick={this.openModal} className="headerButton item"> Add a Photo  </button>
-                <UploadModal open={this.state.modalIsOpen} onRequestClose={this.closeModal}/>
+                <label id="addPhotosButton" className="headerButton item">
+                  <input className="fileInput" type="file" onChange={this.openModal} multiple/>
+                  Add a Photo
+                </label>
+                <UploadModal open={this.state.modalIsOpen} files={this.state.uploadedFiles} onRequestClose={this.closeModal}/>
               </div>
               ) : ""}
           </div>
