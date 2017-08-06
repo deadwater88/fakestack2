@@ -5,6 +5,7 @@ import {Route} from 'react-router-dom';
 import Timeline from './timeline/timeline';
 import AboutProfileContainer from './aboutprofile/about_profile_container';
 import FriendsContainer from './friends/friends_container';
+import Photos from './photos/photos'
 
 
 class Profile extends React.Component{
@@ -34,6 +35,7 @@ class Profile extends React.Component{
         <Route path="/profile/:userId/timeline" component={Timeline}></Route>
         <Route path="/profile/:userId/about" component={AboutProfileContainer}></Route>
         <Route exact={true} path="/profile/:userId/friends" component={FriendsContainer}></Route>
+        <Route path="/profile/:userId/photos" component={Photos}></Route>
       </div>
     );
   }

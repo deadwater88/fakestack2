@@ -18,6 +18,8 @@
 
 .secondaryContainer > h4 {
   margin-top: 10px;
+  display: flex;
+
 }
 
 .buttonContainer {
