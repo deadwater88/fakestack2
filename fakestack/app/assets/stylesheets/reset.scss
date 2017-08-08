@@ -17,6 +17,14 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   vertical-align: baseline;
   font-family: Helvetica, Arial, sans-serif;
 }
+
+input {
+    background-color: white;
+    border: 0px solid;
+    color: black;
+    flex: 1;
+}
+
 /* remember to define focus styles! */
 :focus {
   outline: 0;

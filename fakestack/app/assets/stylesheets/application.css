@@ -131,10 +131,28 @@ svg.profileIcon, img.profileIcon {
   /*background-color: #a3a3a3;*/
 }
 
+.blue-submit-button {
+  padding: 5px 15px 5px 15px;
+  border-style: none;
+  border-radius: 3px;
+  background-color: #4267B2;
+  font-weight: bold;
+  color: white;
+  transition: background-color 400ms;
+}
+
+.blue-submit-button:hover {
+  background-color: #365899
+}
+
 .medium-bold-black {
   font-weight: bold;
   color: #333333;
   text-decoration: none
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .heavybold {
