@@ -62,10 +62,39 @@
   margin: 10px 0 10px 0;
 }
 
+.imageUpload {
+  position: relative;
+}
+
+.removePhoto {
+  position: absolute;
+  right: 10px;
+  top : 10px;
+  height: 17px;
+  width: 17px;
+  color:#D3D6DB;
+  visibility: collapse;
+}
+
+.imageUpload:hover img {
+  filter: brightness(75%);
+}
+
+.imageUpload:hover .removePhoto {
+  visibility: visible;
+}
+
+.removePhoto:hover {
+  right: 9px;
+  cursor: pointer;
+  color: white;
+}
+
 .imageUpload img {
   height: 130px;
   width: 130px;
   margin: 5px;
+  transition: filter 500ms;
 }
 
 .uploadHeader {

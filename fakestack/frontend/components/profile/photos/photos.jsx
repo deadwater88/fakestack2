@@ -21,7 +21,7 @@ class Photos extends React.Component {
   }
 
   closeModal(){
-    this.setState({modalIsOpen: false});
+    this.setState({modalIsOpen: false, uploadedFiles:[]});
   }
 
   render() {

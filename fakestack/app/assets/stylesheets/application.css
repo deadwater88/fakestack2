@@ -63,7 +63,9 @@ ul.dropDown-content a {
 
 }
 
-
+.aura-focus:focus {
+  box-shadow: 0 0 3px 3px #7DA8FB;
+}
 
 ul.show {
   display: flex !important;

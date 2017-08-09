@@ -1,8 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
-import values from 'lodash/values';
 import ProfileIcon from '../profile_icon';
 import {FaClose} from 'react-icons/lib/fa/';
+import {merge, values} from 'lodash';
 const customStyles = {
   content : {
     top                   : '50%',
@@ -22,6 +22,8 @@ class UploadModal extends React.Component {
   constructor(props){
     super(props);
     this.uploadPhotos = this.uploadPhotos.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.removeFile = this.removeFile.bind(this);
     this.state = {files: {}};
     this.state.modalprops = {style: customStyles,
                   onAfterOpen: this.onAfterOpen,
@@ -41,6 +43,15 @@ class UploadModal extends React.Component {
       this.setState({files});
   }, false);
     reader.readAsDataURL(file);
+  }
+
+  removeFile(file){
+    return (e) => {
+      e.preventDefault();
+      let files = merge({},this.state.files);
+      delete files[file.name];
+      this.setState({files});
+    };
   }
 
   componentWillReceiveProps(newprops){
@@ -86,11 +97,15 @@ class UploadModal extends React.Component {
           </div>
 
           <li className="uploadedPhotosContainer">
-            {files.map((file)=>{
+            {files.map((file, idx)=>{
               console.log(file);
-              return <ul key={file.name} className="imageUpload">
+              return (
+              <ul key={file.name} className="imageUpload">
                 <img src={file.src}/>
-              </ul>;
+                <a className="aura-focus">
+                  <FaClose onClick={this.removeFile(file)} className="removePhoto"/>
+                </a>
+              </ul>);
             })}
           </li>
 
