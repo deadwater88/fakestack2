@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20170726072538) do
     t.text     "places",          default: [],                      array: true
     t.string   "cover_img_url",   default: ""
     t.string   "biography",       default: ""
-    t.text     "friends",         default: "{}"
+    t.text     "friends",         default: "--- {}\n"
     t.text     "requesters",      default: "--- {}\n"
     t.text     "recipients",      default: "--- {}\n"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
